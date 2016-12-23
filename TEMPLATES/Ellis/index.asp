@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <style>body{display:none}</style>
 <%
-	DBHpath = "http://192.168.1.128/dbh/v0/"
-	DBHpath = "https://rawgit.com/Naujiano/DBH/master"
+	DBHpath = "http://192.168.1.128/dbh"
+	DBHpath = "https://rawgit.com/Naujiano/DBH/master/v0/"
 	session.codepage=65001
 	response.Charset="utf-8"
 	server.scripttimeout=6000
 	session.timeout=60
 	Set getPage = Server.CreateObject("Microsoft.XMLHTTP" )
-	getPage.Open "GET", DBHpath & "/v0/main.html?v=1231", false
+	getPage.Open "GET", DBHpath & "main.html", false
 	getPage.Send
 	response.write getPage.responseText
 %>
@@ -26,7 +26,7 @@
 </ul>
 </div>
 <%
-	getPage.Open "GET", DBHpath & "/v0/cdn.html?v=1231", false
+	getPage.Open "GET", DBHpath & "cdn.html", false
 	getPage.Send
 	response.write getPage.responseText
 	Set getPage = Nothing

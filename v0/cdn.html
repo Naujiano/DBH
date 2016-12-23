@@ -18,9 +18,9 @@
 		let DBHpath = $('#DBHpath').val()
 		console.log(DBHpath)
 		let calls = ''
-		calls += `<link rel="stylesheet" href="${DBHpath}/v0/css/main.css">`
-		calls += `<link rel="stylesheet" href="${DBHpath}/v0/css/dbh-nauj-tempstyles.css">`
-		calls += `<script type="text/javascript" src="${DBHpath}/v0/js/DBH.js"><\/script> `
+		calls += `<link rel="stylesheet" href="${DBHpath}css/main.css">`
+		calls += `<link rel="stylesheet" href="${DBHpath}css/dbh-nauj-tempstyles.css">`
+		calls += `<script type="text/javascript" src="${DBHpath}js/DBH.js"><\/script> `
 		$('head').append($(calls))
 		loadRest()
 		function loadRest() {
@@ -28,18 +28,18 @@
 				setTimeout(loadRest,20)
 				return false
 			}
-			calls = `<script type="text/javascript" src="${DBHpath}/v0/js/dbh-queryEditor.js"><\/script> `
-			calls += `<script type="text/javascript" src="${DBHpath}/v0/js/general.js"><\/script> `
-			calls += `<script type="text/javascript" src="${DBHpath}/v0/js/blockButton.js"><\/script> `
-			calls += `<script type="text/javascript" src="${DBHpath}/v0/js/inlineform.js"><\/script> `
-			calls += `<script type="text/javascript" src="${DBHpath}/v0/js/toplevelform.js"><\/script> `
-			calls += `<script type="text/javascript" src="${DBHpath}/v0/js/multistatebutton.js"><\/script> `
-			calls += `<script type="text/javascript" src="${DBHpath}/v0/js/docs.js"><\/script> `
-			calls += `<script type="text/javascript" src="${DBHpath}/v0/js/alimentador.js"><\/script> `
-			calls += `<script type="text/javascript" src="${DBHpath}/v0/js/index.js"><\/script> `
-			calls += `<script type="text/javascript" src="${DBHpath}/v0/js/listadoCuerpo.js"><\/script> `
-			calls += `<script type="text/javascript" src="${DBHpath}/v0/js/myAjax.js"><\/script> `
-			calls += `<script type="text/javascript" src="${DBHpath}/v0/js/DBH.cache.js"><\/script> `
+			calls = `<script type="text/javascript" src="${DBHpath}js/dbh-queryEditor.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/general.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/blockButton.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/inlineform.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/toplevelform.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/multistatebutton.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/docs.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/alimentador.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/index.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/listadoCuerpo.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/myAjax.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/DBH.cache.js"><\/script> `
 			$('head').append($(calls))
 			DBH.start()
 		}
