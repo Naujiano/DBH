@@ -1,26 +1,19 @@
 <!DOCTYPE html>
 <style>body{display:none}</style>
 <%
-	DBHversion = request ( "v" )
-	if DBHversion = "" then DBHversion = "0"
-	DBHpath = "http://dbh.naujcloud.com/v" & DBHversion & "/"
-	DBHpath = "http://192.168.1.128/dbh/v" & DBHversion & "/"
-	DBHpath = "https://cdn.rawgit.com/Naujiano/DBH/master/v0/"
-	DBHroot = "http://dbh.naujcloud.com/"
-	DBHroot = "http://192.168.1.128/dbh/"
+	DBHpath = "http://192.168.1.128/dbh/v0/"
+	DBHpath = "https://rawgit.com/Naujiano/DBH/master"
 	session.codepage=65001
 	response.Charset="utf-8"
 	server.scripttimeout=6000
 	session.timeout=60
 	Set getPage = Server.CreateObject("Microsoft.XMLHTTP" )
-	getPage.Open "GET", DBHpath & "main.html?v=1231", false
-	'getPage.Open "GET", "https://cdn.rawgit.com/Naujiano/DBH/master/v0/main.html", false
+	getPage.Open "GET", DBHpath & "/v0/main.html?v=1231", false
 	getPage.Send
 	response.write getPage.responseText
 %>
 <input type="hidden" id="apppath" value="<%=left(request.servervariables("PATH_INFO"), len(request.servervariables("PATH_INFO")) - 9 ) %>">
 <input type="hidden" id="DBHpath" value="<%=DBHpath%>">
-<input type="hidden" id="DBHroot" value="<%=DBHroot%>">
 <input type="hidden" id="regXPag" value="200">
 <input type="hidden" id="template_title" value="Ellis (Local)">
 <input type="hidden" id="dbh_version" value="<%=DBHversion%>">
@@ -33,7 +26,7 @@
 </ul>
 </div>
 <%
-	getPage.Open "GET", DBHpath & "cdn.html?v=1231", false
+	getPage.Open "GET", DBHpath & "/v0/cdn.html?v=1231", false
 	getPage.Send
 	response.write getPage.responseText
 	Set getPage = Nothing
