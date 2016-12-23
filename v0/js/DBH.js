@@ -29,8 +29,8 @@ var DBH = ( function () {
 		$('.grupodf #usuario').val(localStorage['usuario'])
 		$('.grupodf #contrasena').val(localStorage['contrasena'])
 		$('.grupodf #recordarcontra')[0].checked=localStorage['recordarcontra']
-		$head.append( '<title>' + template_title + '</title>' )
-		$head.append( '<link rel="shortcut icon" href="' + DBHroot + 'favicon.ico" />' )
+		//$head.append( '<title>' + template_title + '</title>' )
+		//$head.append( '<link rel="shortcut icon" href="' + DBHroot + 'favicon.ico" />' )
 		if ( !urlparams.log ) $('.layout-log-container').hide()
 		/*
 		//$head.append( '<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">' )

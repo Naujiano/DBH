@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <style>body{display:none}</style>
 <%
-	DBHpath = "http://192.168.1.128/dbh"
-	DBHpath = "https://rawgit.com/Naujiano/DBH/master/v0/"
+	DBHversion = "master"
+	DBHpath = "http://192.168.1.128/dbh/v0/"
+	DBHpath = "https://rawgit.com/Naujiano/DBH/" + DBHversion + "/v0/"
 	session.codepage=65001
 	response.Charset="utf-8"
 	server.scripttimeout=6000
@@ -12,10 +13,11 @@
 	getPage.Send
 	response.write getPage.responseText
 %>
+<title>Ellis (Local)</title>
+
 <input type="hidden" id="apppath" value="<%=left(request.servervariables("PATH_INFO"), len(request.servervariables("PATH_INFO")) - 9 ) %>">
 <input type="hidden" id="DBHpath" value="<%=DBHpath%>">
 <input type="hidden" id="regXPag" value="200">
-<input type="hidden" id="template_title" value="Ellis (Local)">
 <input type="hidden" id="dbh_version" value="<%=DBHversion%>">
 <input type="hidden" id="sessionid" value="<%=Session.SessionID%>">
 <input type="hidden" id="docpath" value="D:\\data\\iis\\DBH\\TEMPLATES\\Ellis\\documentos">
