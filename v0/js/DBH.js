@@ -1,6 +1,6 @@
 var DBH = ( function () {
 	var that = this
-	this.init = function () {
+	this.start = function () {
 		var urlparams = {};
 		if (location.search) {
 			var parts = location.search.substring(1).split('&');
@@ -31,9 +31,9 @@ var DBH = ( function () {
 		$('.grupodf #recordarcontra')[0].checked=localStorage['recordarcontra']
 		$head.append( '<title>' + template_title + '</title>' )
 		$head.append( '<link rel="shortcut icon" href="' + DBHroot + 'favicon.ico" />' )
-		
-		//$head.append( '<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">' )
 		if ( !urlparams.log ) $('.layout-log-container').hide()
+		/*
+		//$head.append( '<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">' )
 		if ( ! urlparams.min ) {
 			console.log('not min')//,{title:'Load Mode'})
 			$head.append( '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">' )
@@ -68,6 +68,7 @@ var DBH = ( function () {
 			$head.append( '<link rel="stylesheet" href="'+dbhpath+'css/03-dbh-nauj-tempstyles.css">' )
 			$head.append( '<link rel="stylesheet" href="'+DBHroot+'css/LIBRARIES.min.css">' )
 		}
+		*/
 		//CHECK IF LOGGUED
 		//console.log(sessionStorage["usu_id"])
 		function checkLogin() {
@@ -1529,6 +1530,3 @@ Array.prototype.removeAS = function ( ) {
 		})
 		return this;
 	}
-$(document).ready(function(){
-	DBH.init()
-})

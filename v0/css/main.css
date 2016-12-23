@@ -106,7 +106,7 @@
   margin-right: 10px;
 }
 .layout-tree-toolbar-container:after {
-  content: 'áreas';
+  content: 'Ã¡reas';
 }
 .layout-form-toolbar-container .toolbar:after {
   content: 'formulario';
@@ -294,7 +294,7 @@ select:after {
 /*===============================================*/
 
 
-/* XXX: > Histórico alertas  */
+/* XXX: > HistÃ³rico alertas  */
 
 .layout-alertas-container {
   height: 27px;
@@ -1350,7 +1350,7 @@ button.pestanas.active {
   content: 'HERRAMIENTAS';
 }
 #treemenu .jstree-node[title="[VALORES]"]:before {
-  content: 'CONFIGURACIÓN';
+  content: 'CONFIGURACIÃ“N';
 }
 #treemenu .jstree-node {
   margin-left: 0px;
@@ -1918,7 +1918,7 @@ label.filter-locked:before {
 /*===============================================*/
 
 
-/* XXX: Descripción query*/
+/* XXX: DescripciÃ³n query*/
 
 .layout-list-toolbar-container .dbh-recordsinfo-container {
   float: right;
@@ -2609,7 +2609,7 @@ td.dbh_valores_color {
 /*===============================================*/
 
 
-/* XXX: > Telón básico  */
+/* XXX: > TelÃ³n bÃ¡sico  */
 
 #divtelon {
   background: rgba(255, 255, 255, 0.6);
@@ -2704,7 +2704,7 @@ td.dbh_valores_color {
   background: #2c9086;
 }
 
-/* XXX: > Telón "iniciando" */
+/* XXX: > TelÃ³n "iniciando" */
 
 .init-cover {
   width: 100vw;
@@ -2737,7 +2737,7 @@ td.dbh_valores_color {
 
 }
 
-/* XXX: > Telón "cargando" */
+/* XXX: > TelÃ³n "cargando" */
 
 #divteloninit {
   background: rgba(50, 171, 159, 0.95);

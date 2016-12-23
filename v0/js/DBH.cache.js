@@ -141,6 +141,7 @@
 	
    // DBH.sqlQuery = sqlQuery
     //DBH.mapa_sql = mapa_sql
+
 	DBH.mapaSql = function ( name , sqlQueryObj ) {
 		//console.log(JSON.stringify(sqlQueryObj))
 		let instance = false

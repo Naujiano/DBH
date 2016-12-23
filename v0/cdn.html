@@ -1,0 +1,47 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/genericons/3.1/genericons.css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">
+<link rel="stylesheet" href="http://dbh.naujcloud.com/jquery-simple-datetimepicker-master/jquery.simple-dtpicker.css">
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script type='text/javascript' src='http://code.jquery.com/ui/1.12.1/jquery-ui.min.js'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.6.0/mousetrap.min.js'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/jstree.min.js'></script>
+<script type="text/javascript" src="http://dbh.naujcloud.com/jquery-simple-datetimepicker-master/jquery.simple-dtpicker.js"></script> 
+<script type="text/javascript" src="customCode/customCode.js"></script> 
+
+
+<script>
+	$(document).ready(function(){
+		//return false
+		let DBHpath = $('#DBHpath').val()
+		let calls = ''
+		calls += `<link rel="stylesheet" href="${DBHpath}css/main.css">`
+		calls += `<link rel="stylesheet" href="${DBHpath}css/dbh-nauj-tempstyles.css">`
+		calls += `<script type="text/javascript" src="${DBHpath}js/DBH.js"><\/script> `
+		$('head').append($(calls))
+		loadRest()
+		function loadRest() {
+			if ( typeof DBH == 'undefined' ) {
+				setTimeout(loadRest,20)
+				return false
+			}
+			calls = `<script type="text/javascript" src="${DBHpath}js/dbh-queryEditor.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/general.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/blockButton.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/inlineform.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/toplevelform.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/multistatebutton.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/docs.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/alimentador.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/index.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/listadoCuerpo.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/myAjax.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/DBH.cache.js"><\/script> `
+			$('head').append($(calls))
+			DBH.start()
+		}
+	})
+</script>
+

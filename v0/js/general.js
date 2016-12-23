@@ -1,4 +1,4 @@
-/********************************´
+/********************************Â´
 ***********************************************************/
 /**  esFechaIgualoPosterior ( d1, m1, a1, d2, m2, a2 );                                   **/
 /**  esFechaValida (fecha);                                                         **/
@@ -133,11 +133,11 @@ function esFechaValida (fecha)
 
   if (mes == "" || isNaN(mes) || mes < 1 || mes > 12 || (mes - Math.round(mes)) != 0) return false
 
-  // Compruebo el año.
+  // Compruebo el aÃ±o.
 
   if (ano == "" || isNaN(ano) || ano < 1900 || (ano - Math.round(ano)) != 0) return false
 
-  // Compruebo el día.
+  // Compruebo el dÃ­a.
 
   if (mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12)
     diaMax = 31
@@ -172,11 +172,11 @@ function esFechaValida (fecha)
     
     if (mes.toString() == "" || isNaN(mes) || mes < 1 || mes > 12 || (mes - Math.round(mes)) != 0) return false
     
-    // Compruebo el año.
+    // Compruebo el aÃ±o.
     
     if (ano.toString() == "" || isNaN(ano) || ano < 1900 || (ano - Math.round(ano)) != 0) return false
     
-    // Compruebo el día.
+    // Compruebo el dÃ­a.
     
     if (mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12)
       var diaMax = 31
@@ -210,11 +210,11 @@ function esFechaValidaAbreviada (fecha)
 
   if (mes == "" || isNaN(mes) || mes < 1 || mes > 12 || (mes - Math.round(mes)) != 0) return false
 
-  // Compruebo el año.
+  // Compruebo el aÃ±o.
 
   if (ano == "" || isNaN(ano) || ano < 0 || (ano - Math.round(ano)) != 0) return false
 
-  // Compruebo el día.
+  // Compruebo el dÃ­a.
 
   if (mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12)
     diaMax = 31
@@ -494,7 +494,7 @@ function esNifValido(s) {
   {
   	if ( ! esFechaValida ( dia1 , mes1 , anos1 )  || ! esFechaValida ( dia2 , mes2 , anos2 ) ) 
   	{
-  		alert ( "Mensaje de la función 'edad_actuarial()'.\nLas fechas introducidas no son válidas" )
+  		alert ( "Mensaje de la funciÃ³n 'edad_actuarial()'.\nLas fechas introducidas no son vÃ¡lidas" )
   		return
   	}
   	
@@ -510,12 +510,12 @@ function esNifValido(s) {
     else
       anos = anos2 - anos1 - 1
       
-    // Calculo la edad actuarial (Si la persona cumple años menos de 6 meses después de la fecha de efecto se considera que tiene un año más de los que tiene realmente)
+    // Calculo la edad actuarial (Si la persona cumple aÃ±os menos de 6 meses despuÃ©s de la fecha de efecto se considera que tiene un aÃ±o mÃ¡s de los que tiene realmente)
 
-    caso1 = ((dm == 0) && (dia1 > dia2)) // La persona cumple años antes de que acabe el mes.
-    caso2 = ((dm > 0) && (dm < 6)) // La persona cumple años en menos de 6 meses.
-    caso3 = ((dm < 0) && (dm < -6)) // La persona cumple años en menos de 6 meses.
-    caso4 = ((dm == 6 || dm == -6) && (dia1 < dia2)) // La persona cumple en 6 meses menos algunos días.
+    caso1 = ((dm == 0) && (dia1 > dia2)) // La persona cumple aÃ±os antes de que acabe el mes.
+    caso2 = ((dm > 0) && (dm < 6)) // La persona cumple aÃ±os en menos de 6 meses.
+    caso3 = ((dm < 0) && (dm < -6)) // La persona cumple aÃ±os en menos de 6 meses.
+    caso4 = ((dm == 6 || dm == -6) && (dia1 < dia2)) // La persona cumple en 6 meses menos algunos dÃ­as.
 	
     if (caso1 || caso2 || caso3 || caso4) anos = anos + 1
     
@@ -533,31 +533,31 @@ function esNifValido(s) {
   function formathtml(s) {         
   	return s
   var translate = {
-      "á": "&aacute;", "Á": "&Aacute;"
-    , "é": "&aecute;", "É": "&Eacute;"
-    , "í": "&iacute;", "Í": "&Iacute;"
-    , "ó": "&oacute;", "Ó": "&Oacute;"
-    , "ú": "&uacute;", "Ú": "&Uacute;"
-    , "ñ": "&ntilde;", "Ñ": "&Ntilde;"
+      "Ã¡": "&aacute;", "Ã": "&Aacute;"
+    , "Ã©": "&aecute;", "Ã‰": "&Eacute;"
+    , "Ã­": "&iacute;", "Ã": "&Iacute;"
+    , "Ã³": "&oacute;", "Ã“": "&Oacute;"
+    , "Ãº": "&uacute;", "Ãš": "&Uacute;"
+    , "Ã±": "&ntilde;", "Ã‘": "&Ntilde;"
   };
-  var translate_re = /[áÁéÉíÍóÓúÚñÑ]/g;
+  var translate_re = /[Ã¡ÃÃ©Ã‰Ã­ÃÃ³Ã“ÃºÃšÃ±Ã‘]/g;
   return ( s.replace(translate_re, function(match) { return translate[match]; } ) );
   }	
   function tildes_unicode(str){
-	str = str.replace('á','\u00e1');
-	str = str.replace('é','\u00e9');
-	str = str.replace('í','\u00ed');
-	str = str.replace('ó','\u00f3');
-	str = str.replace('ú','\u00fa');
+	str = str.replace('Ã¡','\u00e1');
+	str = str.replace('Ã©','\u00e9');
+	str = str.replace('Ã­','\u00ed');
+	str = str.replace('Ã³','\u00f3');
+	str = str.replace('Ãº','\u00fa');
 
-	str = str.replace('Á','\u00c1');
-	str = str.replace('É','\u00c9');
-	str = str.replace('Í','\u00cd');
-	str = str.replace('Ó','\u00d3');
-	str = str.replace('Ú','\u00da');
+	str = str.replace('Ã','\u00c1');
+	str = str.replace('Ã‰','\u00c9');
+	str = str.replace('Ã','\u00cd');
+	str = str.replace('Ã“','\u00d3');
+	str = str.replace('Ãš','\u00da');
 
-	str = str.replace('ñ','\u00f1');
-	str = str.replace('Ñ','\u00d1');
+	str = str.replace('Ã±','\u00f1');
+	str = str.replace('Ã‘','\u00d1');
 	return str;
 }  
 function monthtext(m){
