@@ -5,6 +5,7 @@
 	if DBHversion = "" then DBHversion = "0"
 	DBHpath = "http://dbh.naujcloud.com/v" & DBHversion & "/"
 	DBHpath = "http://192.168.1.128/dbh/v" & DBHversion & "/"
+	DBHpath = "https://cdn.rawgit.com/Naujiano/DBH/master/v0/"
 	DBHroot = "http://dbh.naujcloud.com/"
 	DBHroot = "http://192.168.1.128/dbh/"
 	session.codepage=65001
@@ -13,6 +14,7 @@
 	session.timeout=60
 	Set getPage = Server.CreateObject("Microsoft.XMLHTTP" )
 	getPage.Open "GET", DBHpath & "main.html?v=1231", false
+	'getPage.Open "GET", "https://cdn.rawgit.com/Naujiano/DBH/master/v0/main.html", false
 	getPage.Send
 	response.write getPage.responseText
 %>
