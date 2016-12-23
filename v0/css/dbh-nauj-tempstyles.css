@@ -1,0 +1,63 @@
+/* ESTOS SPAN TIENEN QUE LLEVAR EL ESTILO DE LOS INPUT */
+
+.dbh-query-editor .parentesis span {
+	font-size: 14px;font-weight:bold;padding:0 2px;
+}
+
+.init-cover .init-cover-logo {
+	max-width: 400px;
+	filter: grayscale(100%) hue-rotate(90deg);
+}
+
+#divacceso .app-logo img {
+	width:100%;
+	filter: grayscale(100%);
+}
+.log-date {
+	color: blue;
+	padding-right: 5px;
+}
+.log-title.setTablaAuxiliar {
+	color: brown;
+	padding-right: 5px;
+}
+.log-title.Load.Mode {
+	color: green;
+	padding-right: 5px;
+}
+body, div, table, td, form {
+	//font-size:12px;
+}
+.divinlineform .inputText, .divinlineform .inputText-nowrite, .divinlineform label, .divinlineform button {
+	font-size:11px;
+}
+.inline-search-table {
+	width: 100%;
+}
+.inline-search-table thead {
+	position: fixed;
+	color: #32AB9F;
+	background: #eee;
+	border: 0 solid #ddd;
+	border-width: 1px 0 0 1px;
+	margin-left:-1px;
+}
+.inline-search-table thead td {
+	overflow:hidden;
+	float:left;
+}
+.inline-search-table tr.hovered,.inline-search-table tr.hovered td{
+	background:#eee;
+}
+.inline-search-table td{
+	padding: 5px;
+	border: 1px solid #eee;
+	border-width: 0 1px 0 0;
+}
+.inlinesearch-tempfield.no-filter {
+	background:white;
+}
+.divinlineform .lineamodelo select.inputTextTransparent, .divinlineform .lineamodelo select.inputTextTransparent-nowrite {
+	//appearance : menulist;
+	-webkit-appearance : menulist;
+}

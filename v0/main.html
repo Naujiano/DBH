@@ -1,0 +1,632 @@
+<html>
+
+<body style="overflow:hidden">
+	<!-- XXX: > Telón "iniciando"-->
+
+	<div class="init-cover" >
+		<img class="init-cover-logo" src="http://dbh.naujcloud.com/img/DB-hunter(for_dark_BG).png">
+		<img class="init-cover-loader" src="http://dbh.naujcloud.com/img/ring-alt.svg" alt="">
+		<br>
+		<div class="init-cover-text">Inicializando...</div>
+	</div>
+
+	<div class="layout-main-container layout-flex-container">
+
+		<!-- XXX: >> HEADER -->
+
+		<div class="layout-header-container">
+
+			<div class="cabecera-general">
+				<div class="container">
+					<div class="app-logo" onclick="window.open('http://dbhunter.naujcloud.com')"></div>
+					<button class="app-version" id=""><span id="btnversion"></span></button>
+					<button class="app-title" id="" style="width:auto;">
+							<span id="btntitle" style="letter-spacing:0px;width:auto"></span>
+							<div class="selected-area" id="divnombreusuariogeneral"></div>
+						</button>
+					<button class="boton" onclick="if(!formCabecera.formModificado('')||confirm('Hay cambios sin guardar.\n\nDesea continuar de todas formas y perder los cambios no guardados?')){if(confirm('Cerrar sesion y salir?')){DBH.logout()}}" title="Desconectar el usuario"><i class="fa fa-power-off" aria-hidden="true">&nbsp;</i>Logout</button>
+					<button class="boton" onmouseup="showtip('rnd')" id="buttonhelp" title="Tips">Tips</button>
+					<button class="boton" id="btnherramientas" onmousedown="event.stopPropagation();var $div = $('#herramientas_container');if($div.is(':visible')){$div.hide()}else{$div.show()}" title="Herramientas"><i class="fa fa-cog" aria-hidden="true">&nbsp;</i>Herramientas</button>
+					<button class="boton boton-avisos-general" onclick="DBH.avisos.show()" oncontextmenu="$(this).toggleClass('switched');$('.layout-tasks-container').slideToggle();event.preventDefault();" title="Avisos"><i class="fa fa-bell" aria-hidden="true">&nbsp;</i><span id="btnusuario"></span> (&nbsp;<span id="avisosgeneral"></span>&nbsp;)</button>
+				</div>
+			</div>
+
+		</div>
+		<!-- /HEADER-->
+
+		<!-- XXX: >> TOOLBAR-->
+
+		<div class="layout-toolbar-container">
+
+			<div class="toolbar">
+				<div class="container">
+					<div class="divsMenu botonesform" id="menuprincipallistado">
+						<div class="toolbar-column view-column">
+							<div class="label">Vista</div>
+							<button class="boton boton-toolbar boton-switch boton-switch-checked" id="" perfiles="Matriz" title="ÁRBOL&#13;Ver/Ocultar el Árbol" onclick="$('.layout-tree-container').toggle();ajustarAnchoEncabezados()">
+									<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 256 256" style="enable-background:new 0 0 256 256;" xml:space="preserve">
+									<path d="M229.2,226.5H26.8C12,226.5,0,214.5,0,199.7V56.3c0-14.8,12-26.8,26.8-26.8h202.4c14.8,0,26.8,12,26.8,26.8v143.4 C256,214.5,244,226.5,229.2,226.5z M239.8,195.8V60.2c0-8-6.5-14.5-14.5-14.5H90.7v164.6h134.6C233.3,210.3,239.8,203.8,239.8,195.8 z"/>
+									</svg>
+								</button>
+							<button class="boton boton-toolbar boton-switch boton-switch-checked" id="" perfiles="Matriz" title="FORMULARIO&#13;Ver/Ocultar el Formulario" onclick="$('.layout-form-container').toggle();ajustarAnchoEncabezados()">
+									<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 256 256" style="enable-background:new 0 0 256 256;" xml:space="preserve">
+									<path d="M229.2,226.5H26.8C12,226.5,0,214.5,0,199.7V56.3c0-14.8,12-26.8,26.8-26.8h202.4c14.8,0,26.8,12,26.8,26.8v143.4 C256,214.5,244,226.5,229.2,226.5z M90.7,45.7h-60c-8,0-14.5,6.5-14.5,14.5v135.6c0,8,6.5,14.5,14.5,14.5h60V45.7z M239.8,195.8 V60.2c0-8-6.5-14.5-14.5-14.5h-60v164.6h60C233.3,210.3,239.8,203.8,239.8,195.8z"/>
+									</svg>
+								</button>
+							<button class="boton boton-toolbar boton-switch boton-switch-checked" id="btntogglelistado" perfiles="Matriz" title="LISTADO&#13;Ver/Ocultar el Listado" onclick="$('.layout-list-container').toggle();ajustarAnchoEncabezados();if($('.layout-list-container').is(':visible')){$('.layout-form-container').css({'flex':'none'})}else{$('.layout-form-container').css({'flex':'2'})};ajustarAnchoEncabezados();DBH.area().topform.$container.find('textarea.inputText').each(function(){setTextareaHeight(this)})">
+									<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 256 256" style="enable-background:new 0 0 256 256;" xml:space="preserve">
+									<path d="M229.2,226.5H26.8C12,226.5,0,214.5,0,199.7V56.3c0-14.8,12-26.8,26.8-26.8h202.4c14.8,0,26.8,12,26.8,26.8v143.4 C256,214.5,244,226.5,229.2,226.5z M165.3,45.7H30.7c-8,0-14.5,6.5-14.5,14.5v135.6c0,8,6.5,14.5,14.5,14.5h134.6V45.7z"/>
+									</svg>
+								</button>
+						</div>
+						<div class="toolbar-template-container"></div>
+						<div class="toolbar-column toolbar-group-otros">
+							<div class="label">Otros</div>
+							<button type="button" title="REGENERAR ÁREA&#13;Regenerar el área actual" class="boton boton-toolbar boton-toolbar-reloadarea" id="" onclick="vars.reloadArea()"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 510 510" style="enable-background:new 0 0 510 510;" xml:space="preserve"><g>	<g id="history">		<path style="opacity:0.9;enable-background:new    ;" d="M267.75,12.75c-89.25,0-168.3,48.45-209.1,122.4L0,76.5v165.75h165.75			l-71.4-71.4c33.15-63.75,96.9-107.1,173.4-107.1C372.3,63.75,459,150.45,459,255s-86.7,191.25-191.25,191.25			c-84.15,0-153-53.55-181.05-127.5H33.15c28.05,102,122.4,178.5,234.6,178.5C402.9,497.25,510,387.6,510,255			C510,122.4,400.35,12.75,267.75,12.75z M229.5,140.25V270.3l119.85,71.4l20.4-33.15l-102-61.2v-107.1H229.5z"/>	</g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg></button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- /TOOL BAR -->
+
+		<div class="layout-data-container layout-flex-container">
+
+			<!-- XXX: >> TREE -->
+
+			<div class="layout-tree-container">
+
+				<div class="layout-tree-toolbar-container tree-etiqueta">
+					<div class="toolbar">
+						<button onclick="DBH.tree.expand(this)" style="" class="boton boton-toolbar color-blue" title="EXPANDIR / CONTRAER&#13;Expandir / Contraer árbol">
+							<svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+							viewBox="0 0 256 256" style="enable-background:new 0 0 256 256;" xml:space="preserve">
+								<path d="M256,128c0,70.7-57.3,128-128,128S0,198.7,0,128S57.3,0,128,0S256,57.3,256,128z M94.1,133v51.8h54.2v9.3h50.3v-28.4h-50.3
+							v9.3h-44.5V133h7.9v9.3h50.3V114h-50.3v9.3H67.1V80.9h8.2l0,9.3h50.3V61.9H75.3l0,9.3H57.4V133H94.1z"/>
+							</svg>
+						</button>
+						<button onclick="DBH.tree.nodes().toggle(this)" class="boton boton-toolbar" title="MOSTRAR ÁREAS DE NIVEL 2&#13;Ver / Ocultar áreas de nivel 2">
+							<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+							viewBox="0 0 256 256" style="enable-background:new 0 0 256 256;" xml:space="preserve">
+								<path d="M256,128c0,70.7-57.3,128-128,128S0,198.7,0,128S57.3,0,128,0S256,57.3,256,128z M92.8,114.7v5.9h104.5v-17.8H92.8v5.9h-28
+							V81.9h5.1l0,5.9h104.5V70H69.9l0,5.9H58.7v38.8v26.7v38.8h34v5.9h104.5v-17.8H92.8v5.9h-28v-26.7h5.1l0,5.9h104.5v-17.8H69.9l0,5.9
+							h-5.1v-26.7H92.8z"/>
+							</svg>
+						</button>
+					</div>
+				</div>
+				<div class="layout-tree-cuerpo">
+					<div id="treemenu" class="tree-lvl2-hidden"></div>
+				</div>
+
+				<div class="layout-alertas-container layout-flex-container">
+					<ol></ol>
+				</div>
+
+			</div>
+
+			<!-- /TREE -->
+
+			<!-- XXX: >> FORM -->
+
+			<div class="layout-form-container layout-flex-container">
+
+				<div class="layout-form-toolbar-container dbh-js-hook">
+				</div>
+				<div class="layout-form-etiqueta-container">
+					<div class="etiqueta-content">Formularios</div>
+					<div id="iframeFormCabecera" class="celdaaffectedby_ajustarAnchoForm" colspan="2">
+						<div id="divCabeceraEtiquetas" class="cabecera-etiquetas"></div>
+					</div>
+				</div>
+				<div class="layout-form-cuerpo">
+					<div class="container" id="celdaforms">
+					</div>
+				</div>
+
+			</div>
+
+			<!-- /FORM -->
+
+			<!-- XXX: >> LISTADO -->
+
+			<div class="layout-list-container layout-flex-container">
+
+				<div class="layout-list-toolbar-container dbh-js-hook">
+				</div>
+				<div class="layout-list-etiqueta-container">
+					<div class="etiqueta-content">Listado</div>
+					<div id="divInfoWhere" class="divInfoWhere dbh-listado-etiqueta-template dbh-template">
+						<div class="dbh-query-editor-main-container dbh-template"></div>
+					</div>
+				</div>
+				<div class="layout-list-encabezados-container">
+					<div class="encabezados" id="divencabezados">
+						<table id="tablaEncabezado" class="tablaListado">
+							<tr class="" id="trCeldasEncabezados">
+								<td class="celdaCampoEncabezado" id="celdaCampo0">&nbsp;</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="layout-list-cuerpo">
+					<div class="container" id="iframeListadoCuerpo">
+						<div id="divcajaloadingtext" class="caja-loading"></div>
+						<div id="listadoCuerpoContainer" class="listadoCuerpoContainer listadoCuerpoContainer-template">
+							<input type="hidden" class="no-select" id="idlistado" value="">
+							<input type="hidden" id="pkname" value="">
+							<input type="hidden" id="listadoView" value="">
+							<input type="hidden" id="memoryfilter" value="">
+							<input type="hidden" id="checkedids" value="">
+							<input type="hidden" id="fullLoaded" value="">
+							<input type="hidden" id="vinculada_pkname" class="vinculada_pkname" value="">
+							<input type="hidden" id="vinculada_fkname" class="vinculada_fkname" value="">
+							<input type="hidden" id="vinculada_sql" class="vinculada_sql" value="">
+							<input type="hidden" id="vinculada_sql_text" class="vinculada_sql_text" value="">
+							<input type="hidden" id="sqlsentence" value="">
+							<input type="hidden" id="listadoWhere" value="1=2">
+							<input type="hidden" id="listadoWhereText" value="No mostrar ningún registro">
+							<input type="hidden" id="listadoOrderBy" value="nombre">
+							<input type="hidden" id="listadoOrderByIndex" value="1">
+							<input type="hidden" id="listadoOrderByDesc" value="">
+							<input type="hidden" id="listadoPagina" value="1">
+							<input type="hidden" id="numregs" value="">
+							<input type="hidden" id="etiquetasCampos" value="a">
+							<input type="hidden" id="nombresCampos" value="a">
+							<input type="hidden" id="scrollTop" value="0">
+
+							<div style="width:100%;height:100%;" class="tablalistadogeneral">
+								<div style="overflow:auto;position:; height:100%; width:100%; max-width:100%; min-width:0px; padding:0px 0 0 0;margin:0px 0 0 0;border:1px solid #dddddd; border-width:0px 0 0 0" id="divlist" class="divlist" onscroll="scrollEventHandler(this)">
+									<table class="tablaListado tablalistado" id="tablaListado" style="margin-left:0px;width:100%;height:0;min-width:100%;position:;overflow:visible">
+										<tr class="filaListado" id="trListado" onclick="var idListado=this.id.substr(9,this.id.length);var ifr=parent.document.getElementById('iframeFormCuerpo');var res=$(ifr).data('topform').load(idListado);if(res){document.getElementById('idlistado').value=idListado;}">
+											<td class="celdaCampoAncho">
+												</td>
+										</tr>
+										<tr class="filaListado" id="trCeldasEncabezadosReflejo">
+											<td class="celdaCampoEncabezado" id="celdaCampoListado0"></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- /LISTADO -->
+
+		</div>
+
+		<!-- XXX: >> TASKS -->
+
+		<div class="layout-tasks-container layout-flex-container" style="overflow-x:auto;overflow-y:hidden;align-items:flex-start;background:#ECECEC;z-index:3">
+
+			<div id="alertaaviso" style="cursor:pointer;display:none" ondblclick="DBH.aviso(this).go();" title="Doble click para editar esta tarea">
+				<button class="boton" onclick="$(this).parent().hide();" title="Cerrar">
+						<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"	  viewBox="0 0 470.95 470.95" style="enable-background:new 0 0 470.95 470.95;"	 xml:space="preserve"><g>	<g id="Layer_2_23_">		<g>			<path d="M235.472,0.004C105.633,0.004,0,105.638,0,235.476c0,129.839,105.633,235.47,235.472,235.47				c129.848,0,235.478-105.631,235.478-235.471C470.949,105.638,365.319,0.004,235.472,0.004z M235.472,416.254				c-99.683,0-180.778-81.1-180.778-180.779c0-99.684,81.096-180.782,180.778-180.782c99.688,0,180.784,81.098,180.784,180.782				C416.256,335.155,335.16,416.254,235.472,416.254z"/>			<path d="M235.472,343.714c-9.439,0-17.09,7.649-17.09,17.092v17.472c0,9.438,7.65,17.094,17.09,17.094				c9.443,0,17.092-7.656,17.092-17.094v-17.472C252.562,351.364,244.915,343.714,235.472,343.714z"/>			<path d="M235.472,75.585c-9.439,0-17.09,7.646-17.09,17.085v21.267c0,9.443,7.65,17.09,17.09,17.09				c9.443,0,17.092-7.647,17.092-17.09V92.67C252.562,83.23,244.915,75.585,235.472,75.585z"/>			<path d="M110.145,218.378H92.67c-9.438,0-17.088,7.655-17.088,17.097c0,9.439,7.65,17.089,17.088,17.089h17.475				c9.437,0,17.087-7.65,17.087-17.089C127.231,226.032,119.581,218.378,110.145,218.378z"/>			<path d="M378.276,218.378h-21.269c-9.442,0-17.093,7.655-17.093,17.097c0,9.439,7.649,17.089,17.093,17.089h21.269				c9.438,0,17.093-7.65,17.093-17.089C395.369,226.032,387.715,218.378,378.276,218.378z"/>		</g>	</g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
+					</button>
+				<button class="boton" onclick="DBH.aviso(this).posponer(15);$(this).parent().hide()" title="+15 minutos">
+						<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"	  viewBox="0 0 470.946 470.947" style="enable-background:new 0 0 470.946 470.947;"	 xml:space="preserve"><g>	<g id="Layer_2_22_">		<g>			<path d="M235.475,0.001C105.632,0.001,0,105.634,0,235.476c0,129.84,105.632,235.469,235.475,235.469				c129.833,0,235.471-105.629,235.471-235.469C470.945,105.634,365.309,0.001,235.475,0.001z M235.475,416.253				c-99.686,0-180.783-81.098-180.783-180.778c0-99.684,81.098-180.786,180.783-180.786c99.682,0,180.781,81.102,180.781,180.786				C416.256,335.156,335.156,416.253,235.475,416.253z"/>			<path d="M235.475,343.715c-9.438,0-17.093,7.649-17.093,17.092v17.472c0,9.438,7.654,17.088,17.093,17.088				c9.434,0,17.091-7.65,17.091-17.088v-17.472C252.566,351.365,244.908,343.715,235.475,343.715z"/>			<path d="M110.138,218.378H92.67c-9.438,0-17.09,7.655-17.09,17.098c0,9.438,7.651,17.088,17.09,17.088h17.468				c9.444,0,17.093-7.65,17.093-17.089C127.23,226.033,119.582,218.378,110.138,218.378z"/>			<path d="M235.475,75.585c-0.516,0-1.015,0.036-1.525,0.039v158.321h161.372C394.495,146.485,323.122,75.585,235.475,75.585z"/>		</g>	</g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
+					</button>
+				<button class="boton" onclick="DBH.aviso(this).posponer(30);$(this).parent().hide()" title="+30 minutos">
+						<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"	  viewBox="0 0 470.94 470.94" style="enable-background:new 0 0 470.94 470.94;"	 xml:space="preserve"><g>	<g id="Layer_2_27_">		<g>			<path d="M235.467,0C105.632,0,0,105.634,0,235.471C0,365.311,105.632,470.94,235.467,470.94				c129.851,0,235.474-105.629,235.474-235.469C470.939,105.634,365.316,0,235.467,0z M235.467,416.249				c-99.676,0-180.779-81.098-180.779-180.778c0-99.684,81.104-180.782,180.779-180.782c99.689,0,180.783,81.098,180.783,180.782				C416.25,335.151,335.156,416.249,235.467,416.249z"/>			<path d="M110.139,218.374H92.663c-9.431,0-17.091,7.658-17.091,17.098c0,9.438,7.66,17.088,17.091,17.088h17.476				c9.442,0,17.093-7.65,17.093-17.088C127.232,226.031,119.581,218.374,110.139,218.374z"/>			<path d="M235.467,75.581c-0.127,0-0.264,0.015-0.389,0.015v319.75c0.125,0,0.262,0.01,0.389,0.01				c88.158,0,159.892-71.727,159.892-159.887C395.357,147.307,323.625,75.581,235.467,75.581z"/>		</g>	</g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
+					</button>
+				<button class="boton" onclick="DBH.aviso(this).posponer(60);$(this).parent().hide()" title="+1 hora">
+						<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"	  viewBox="0 0 470.947 470.947" style="enable-background:new 0 0 470.947 470.947;"	 xml:space="preserve"><g>	<g id="Layer_2_26_">		<g>			<path d="M235.471,77.494c-87.107,0-157.97,70.869-157.97,157.979c0,87.107,70.862,157.977,157.97,157.977				c87.111,0,157.978-70.869,157.978-157.977C393.448,148.362,322.582,77.494,235.471,77.494z"/>			<path d="M235.471,470.944C105.632,470.944,0,365.314,0,235.473C0,105.636,105.632,0.003,235.471,0.003				s235.476,105.633,235.476,235.47C470.946,365.314,365.311,470.944,235.471,470.944z M235.471,54.691				c-99.681,0-180.777,81.098-180.777,180.782c0,99.681,81.097,180.779,180.777,180.779c99.686,0,180.782-81.099,180.782-180.779				C416.253,135.79,335.156,54.691,235.471,54.691z"/>		</g>	</g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
+					</button>
+				<button class="boton" onclick="DBH.aviso(this).posponer(1440);$(this).parent().hide()" title="+1 día">
+						<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"	  viewBox="0 0 461.497 461.497" style="enable-background:new 0 0 461.497 461.497;"	 xml:space="preserve"><g>	<g id="Layer_2_17_">		<g>			<path d="M268.616,409.893c-3.622,0.977-7.318,1.848-10.986,2.602c-9.596,1.955-15.789,11.32-13.829,20.917				c0.11,0.548,0.247,1.069,0.404,1.593c2.618,8.674,11.466,14.086,20.518,12.239c4.378-0.896,8.79-1.939,13.115-3.103				c9.46-2.544,15.062-12.277,12.517-21.737C287.807,412.932,278.076,407.346,268.616,409.893z"/>			<path d="M144.994,400.018c-3.425-1.524-6.842-3.174-10.157-4.908c-8.687-4.529-19.396-1.163-23.926,7.523				c-2.236,4.272-2.55,9.039-1.258,13.317c1.334,4.412,4.369,8.307,8.772,10.605c3.957,2.061,8.024,4.032,12.104,5.851				c8.941,3.992,19.43-0.016,23.425-8.956C157.949,414.502,153.936,404.02,144.994,400.018z"/>			<path d="M205.979,415.609c-3.73-0.3-7.514-0.723-11.228-1.245c-9.699-1.382-18.673,5.367-20.051,15.065				c-0.374,2.636-0.145,5.213,0.575,7.602c1.933,6.405,7.433,11.441,14.496,12.449c4.419,0.624,8.917,1.125,13.362,1.479				c9.766,0.791,18.317-6.487,19.103-16.247C223.021,424.946,215.747,416.395,205.979,415.609z"/>			<path d="M325.738,383.44c-3.081,2.12-6.277,4.178-9.494,6.12c-7.089,4.271-10.115,12.719-7.833,20.294				c0.42,1.388,1.02,2.748,1.802,4.051c5.052,8.389,15.953,11.083,24.343,6.033c3.825-2.307,7.625-4.761,11.288-7.28				c8.066-5.553,10.11-16.596,4.556-24.661C344.849,379.924,333.803,377.888,325.738,383.44z"/>			<path d="M395.453,335.48c-7.944-5.728-19.028-3.931-24.757,4.008c-2.188,3.037-4.504,6.05-6.875,8.941				c-3.89,4.75-4.9,10.908-3.255,16.375c0.985,3.254,2.911,6.269,5.736,8.585c7.577,6.205,18.75,5.091,24.955-2.487				c2.831-3.45,5.595-7.043,8.202-10.664C405.189,352.294,403.396,341.213,395.453,335.48z"/>			<path d="M420.276,270.883c-9.4-2.746-19.247,2.654-21.989,12.056c-1.054,3.601-2.228,7.217-3.485,10.745				c-1.334,3.713-1.354,7.585-0.292,11.092c1.568,5.203,5.495,9.614,10.994,11.584c9.222,3.307,19.371-1.483,22.683-10.7				c1.504-4.204,2.901-8.508,4.146-12.792C435.074,283.471,429.676,273.62,420.276,270.883z"/>			<path d="M453.552,155.337l-23.307,7.242c-17.688-54.204-54.93-98.746-105.337-125.798c-5.074-2.725-10.221-5.229-15.431-7.53				c-0.038-0.018-0.068-0.033-0.103-0.056c-0.218-0.092-0.447-0.178-0.659-0.272C262.758,8.814,211.901,5.002,163.15,18.204				c-0.383,0.075-0.766,0.147-1.144,0.254c-1.628,0.444-3.271,0.925-4.892,1.409c-2.661,0.804-5.338,1.67-7.964,2.571				c-0.311,0.107-0.604,0.24-0.906,0.36c-43.518,15.075-80.577,42.869-107.015,80.005c-0.094,0.128-0.2,0.238-0.289,0.365				c-2.584,3.629-5.087,7.392-7.451,11.188c-0.148,0.243-0.271,0.496-0.412,0.747c-2.358,3.824-4.624,7.736-6.77,11.726				C4.395,167.665-3.964,213.292,1.739,258.362c0.013,0.103,0.025,0.199,0.034,0.301c0.009,0.072,0.025,0.147,0.042,0.222				c1.55,12.04,4.096,24.041,7.671,35.895c9.388,31.125,25.053,59.112,46.557,83.188c6.523,7.302,17.735,7.932,25.041,1.409				c7.302-6.525,7.939-17.74,1.411-25.04c-10.735-12.013-19.719-25.208-26.91-39.424c-0.077-0.175-0.145-0.354-0.229-0.522				c-1.691-3.354-3.298-6.792-4.786-10.233c-0.008-0.027-0.017-0.043-0.029-0.065c-2.708-6.334-5.069-12.854-7.093-19.553				c-23.243-77.066,6.399-157.708,67.912-202.796c0.91-0.662,1.819-1.33,2.738-1.972c15.792-11.138,33.604-19.97,53.098-25.848				c19.618-5.914,39.457-8.398,58.887-7.816c0.314,0.014,0.619,0.023,0.93,0.032c1.186,0.036,2.368,0.099,3.548,0.165				c0.477,0.025,0.952,0.051,1.428,0.081c60.587,3.79,116.456,37.44,147.82,90.305c0.017,0.03,0.029,0.064,0.05,0.094				c0.465,0.785,0.919,1.569,1.375,2.363c0.054,0.089,0.113,0.168,0.165,0.259c6.001,10.523,11.05,21.784,14.977,33.701				l-23.306,7.246c-6.473,2.011-7.11,6.668-1.429,10.35l50.719,32.852c5.686,3.685,12.468,1.575,15.061-4.676l23.171-55.82				C463.182,156.804,460.02,153.327,453.552,155.337z"/>			<path d="M155.288,231.23c-17.092,12.662-28.75,23.646-34.964,32.95c-6.208,9.303-9.932,19.235-11.155,29.796h106.935v-29.053				h-55.657c3.268-3.213,6.111-5.805,8.533-7.785c2.423-1.991,7.217-5.457,14.395-10.418c12.074-8.517,20.404-16.335,24.985-23.455				c4.577-7.114,6.868-14.582,6.868-22.4c0-7.349-1.997-13.987-5.993-19.912c-3.999-5.919-9.486-10.311-16.456-13.17				c-6.969-2.855-16.728-4.288-29.273-4.288c-12.014,0-21.419,1.505-28.219,4.514c-6.792,3.004-12.061,7.319-15.792,12.944				c-3.735,5.636-6.299,13.467-7.702,23.497l35.704,2.887c0.991-7.229,2.933-12.278,5.818-15.135				c2.891-2.859,6.604-4.29,11.161-4.29c4.373,0,8.006,1.388,10.892,4.16c2.886,2.766,4.332,6.109,4.332,10.02				c0,3.619-1.458,7.438-4.377,11.466C172.406,217.582,165.726,223.476,155.288,231.23z"/>			<path d="M323.651,293.977v-23.979h16.099V242.34h-16.099v-78.844h-31.066l-64.93,77.187v29.315h64.93v23.979H323.651				L323.651,293.977z M258.28,242.34l34.305-40.366v40.366H258.28z"/>		</g>	</g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
+					</button>
+				<button class="boton" onclick="DBH.aviso(this).olvidar();$(this).parent().hide()" title="No recordar más" style="float:right">
+						<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"	  viewBox="0 0 488.022 488.022" style="enable-background:new 0 0 488.022 488.022;"	 xml:space="preserve"><g>	<g id="Layer_2_21_">		<g>			<path d="M408.871,206.974l21.833-53.701c2.447-6.023-0.619-9.328-6.807-7.355l-21.717,6.921				c-24.075-50.386-66.184-88.565-118.759-107.589c-53.09-19.216-110.488-16.603-161.617,7.35				C70.68,76.555,31.939,118.988,12.723,172.079c-13.64,37.707-16.278,77.577-8.08,115.838c3.346,15.615,8.495,30.958,15.438,45.774				c23.958,51.127,66.384,89.868,119.474,109.081c53.093,19.217,110.491,16.604,161.617-7.354				c7.252-3.396,14.491-6.814,20.985-11.325c8.619-5.987,17.692-11.305,8.786-24.34c-9.014-13.19-26.874-3.275-44.197,4.883				c-42.862,20.184-91.064,22.295-135.622,6.171c-44.549-16.122-80.154-48.633-100.26-91.538				c-5.825-12.438-10.147-25.31-12.956-38.414c-6.873-32.104-4.664-65.573,6.788-97.208c16.124-44.554,48.63-80.164,91.532-100.263				c42.906-20.104,91.072-22.292,135.628-6.176c42.629,15.441,77.037,45.892,97.536,86.083l-22.52,7.184				c-6.19,1.974-6.774,6.445-1.296,9.942l48.878,31.154C399.939,215.061,406.425,212.991,408.871,206.974z"/>			<path d="M200.435,120.945v122.212l-82.918,67.61c-5.891,4.802-6.772,13.474-1.968,19.362c2.718,3.336,6.68,5.063,10.676,5.063				c3.058,0,6.135-1.013,8.688-3.099l93.048-75.863V120.945c0-7.603-6.164-13.765-13.762-13.765				C206.589,107.18,200.435,113.342,200.435,120.945z"/>			<path d="M432.902,253.705c-14.729,0-28.564,5.734-38.756,15.903l-17.808,17.097l-17.546-16.837				c-10.403-10.428-24.26-16.163-38.988-16.163c-14.726,0-28.569,5.761-38.957,16.163c-10.428,10.407-16.167,24.239-16.167,38.981				c0,14.704,5.732,28.56,16.155,38.957c10.383,10.417,24.23,16.162,38.969,16.162c14.717,0,28.577-5.731,38.744-15.926				l17.799-17.075l17.562,16.839c10.404,10.417,24.265,16.162,38.994,16.162c14.716,0,28.549-5.731,38.952-16.162				c10.42-10.381,16.167-24.241,16.167-38.982s-5.724-28.562-16.167-38.979C461.439,259.439,447.606,253.705,432.902,253.705z				 M336.217,325.236c-8.77,8.773-24.04,8.773-32.817,0c-4.393-4.387-6.807-10.221-6.807-16.4c0-6.205,2.414-12.013,6.832-16.424				c4.362-4.387,10.191-6.804,16.38-6.804c6.191,0,12.025,2.417,16.656,7.026l16.853,16.215L336.217,325.236z M449.302,325.236				c-8.773,8.784-23.827,8.997-33.062-0.226l-16.86-16.213l17.097-16.398c8.772-8.786,24.052-8.786,32.825-0.025				c4.388,4.411,6.8,10.221,6.8,16.425C456.102,314.992,453.689,320.85,449.302,325.236z"/>		</g>	</g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
+					</button>
+				<!--<button class="boton" onclick="DBH.aviso().desactivar();$(this).parent().hide()">Desactivar</button>-->
+				<!--<button class="boton" onclick="DBH.aviso(this).go();">Editar tarea</button>-->
+				<!--<button class="boton" onclick="DBH.aviso().save($(this).parent().find('input').val());$(this).parent().hide()">Guardar fecha</button>-->
+				<div class="clear" style="border:1px solid #aaa;border-width:0 0 1px 0;margin:5px 0"></div>
+				<div class="fa fa-play" style="transform:rotate(-90deg) ;float:left;position:;margin:-40px 0 0 0;font-size:23px;color:white;text-shadow:2px 0px 5px #ddd;display:none"></div>
+				<div style="margin: 0 0 0px 0;color:#666;" class="info">
+					<input class='inputText' style="width:111px;display:;border:0;padding:0;margin:0;pointer-events:none;background:transparent" disabled>
+					<div class='textcontainer'></div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- /TASKS -->
+
+		<!-- XXX: >> LOG -->
+
+		<div class="layout-log-container layout-flex-container" style="display:;height:100px;overflow-x:auto;overflow-y:auto;align-items:flex-start;flex-flow:column nowrap;background:#ECECEC;z-index:3;border:1px solid #ddd">
+		</div>
+		
+		<!-- /LOG -->
+
+		
+	</div>
+
+
+	<!-- XXX: >> FIXED HTML -->
+
+	<!-- XXX: > Telón básico-->
+	<div id="divtelon"></div>
+
+
+
+	<!-- XXX: > Telón "cargando"-->
+	<div id="divteloninit">
+		<i class="fa fa-circle-o-notch fa-spin zoomin" style=""></i>
+		<div class="loading-info">
+			Generando el Área<br> Puede tomar varios segundos
+		</div>
+		<div id="info"></div>
+	</div>
+
+	<!-- XXX: > Navegador incompatible -->
+	<div id="browsersalert">
+		<div style="display:inline-block;float:none;position:relative;top: 50%;transform: translateY(-50%);text-align:center;"><img src="http://dbh.naujcloud.com/img/logo-white-01.svg">
+			<div class="clear" style="height:40px"></div>
+			<img src="http://dbh.naujcloud.com/img/chrome.png" style="cursor:pointer" onclick="window.open('https://www.google.com/chrome/')"><br><br>
+			<div style="position:relative;left:50%;transform:translateX(-50%);color:white;font-size:20px;display;width:800px">
+				Diseñado para <a href="https://www.google.com/chrome/">Google Chrome<span style="vertical-align: super;zoom:0.6">&reg;</span></a>
+			</div>
+			<div class="clear" style="height:80px"></div>
+			<img src="http://dbh.naujcloud.com/img/sandbox-icon-noie.png" style="width:100px">
+			<br><br>
+			<div style="position:relative;left:50%;transform:translateX(-50%);color:#aaa;font-size:14px;display;width:400px">
+				Actualmente Internet Explorer<span style="vertical-align: super;zoom:0.6">&reg;</span> no está soportado.
+			</div>
+			<div class="clear" style="height:40px"></div>
+			<button class="boton" onclick="$('#browsersalert').hide()">Continuar</button>
+		</div>
+	</div>
+
+	<!-- XXX: > Pantalla Login -->
+	<div id="divacceso">
+		<div class="app-logo"><img src="http://dbh.naujcloud.com/img/DB-hunter(for_dark_BG).png"></div>
+		<div class="grupodf">
+			<div class="campoFormulario">
+				<label for="usuario">Usuario</label>
+				<input id="usuario" class="inputText campo-extragrande" onkeypress="tecla=(document.all)?event.keyCode:event.which;if(tecla==13){DBH.login()}">
+			</div>
+			<div class="campoFormulario">
+				<label for="contrasena">Contrase&ntilde;a</label>
+				<input id="contrasena" class="inputText campo-extragrande" type="password" onkeypress="tecla=(document.all)?event.keyCode:event.which;if(tecla==13){DBH.login()}" value="">
+			</div>
+			<div class="checkbox-field">
+				<input id="recordarcontra" type="checkbox" onclick="event.stopPropagation()" class="inputText checkbox">
+				<label for="recordarcontra">Recordarme</label>
+			</div>
+			<div class="campoFormulario login-button">
+				<button type="button" class="boton botonancho botongenericons" value="Entrar" onclick="DBH.login()">ENTRAR</button>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+
+	<!-- XXX: > Carga documentos -->
+	<div id="divsubirdocs">
+		<div class="uploader-container">
+			<iframe id="iframesubirdocs" src="filedrag/index.html" frameborder="no" scrolling="no"></iframe>
+		</div>
+	</div>
+
+	<!-- XXX: > Alimentador formulario -->
+	<div id="alimentador" class="divMenuContextual">
+		<div class="bandatitulo">
+			<div id="alimentadorTitulo"></div>
+			<div id="alimentadorCampoId"></div>
+			<button class="boton close" onclick="$('#alimentador').fadeOut('fast')"></button>
+		</div>
+		<div class="bandalenguetas">
+			<div class="lengueta">Filtrar</div>
+			<div class="lengueta">Añadir</div>
+			<div class="lengueta">Renombrar</div>
+			<div class="lengueta">Quitar</div>
+			<div class="lengueta"><i class="fa fa-binoculars" style="width:15px"></i></div>
+		</div>
+		<div id="content0" class="content">
+			<input class="inputText" id="alimentadorFiltro" title="Para que el formulario tome en cuenta este filtro, haga CLICK DERECHO en el botón de búsqueda." onkeydown="var key = event.keyCode; if(key==13) {event.stopImmediatePropagation()}">
+			<button class="boton alimentador-btnsavefilter">Guardar filtro</button>
+			<button class="boton alimentador-btnclearfilter">Limpiar filtro</button>
+			<button class="boton alimentador-btnaddcolumn">Añadir al listado</button>
+			<button class="boton alimentador-btnorderby">Ordenar lista</button>
+			<button class="boton alimentador-btnedit">Configurar</button>
+			<button class="boton alimentador-btndupicate">Duplicidades</button>
+			<button class="boton alimentador-btnlock">Lock / Unlock</button>
+			<button class="boton alimentador-btngoselectarea">Ir al registro</button>
+		</div>
+		<div id="content1" class="content">
+			<input class="inputText" id="alimentadorNuevaEntrada">
+			<!-- <br><br> -->
+			<button class="boton alimentador-btnaddtolist">Añadir entrada a la lista</button>
+		</div>
+		<div id="content2" class="content">
+			<label>Cambiar el nombre de:</label>
+			<select id="alimentadorListaEntradasCambiarNombre"></select>
+			<label>por el de:</label>
+			<input class="inputText" id="alimentadorNuevoNombre">
+			<!-- <br><br> -->
+			<button class="boton alimentador-btnrenamelist">Cambiar nombre de la entrada</button>
+			<!-- <br><br><br> -->
+			<input class="inputText jscolor" data-jscolor="{hash:true}" id="alimentadorColor">
+			<button class="boton alimentador-btnsavecolor" value="Guardar color">Guardar color</button>
+		</div>
+		<div id="content3" class="content">
+			<select id="alimentadorListaEntradasEliminar"></select>
+			<button class="boton alimentador-btnremovefromlist">Eliminar la entrada</button>
+		</div>
+		<div id="content4" class="content">
+			<select class="inputText" id="alimentadorVista" title="El valor de este campo debe estar incluido en esta vista." onkeydown="var key = event.keyCode; if(key==13) {event.stopImmediatePropagation()}" style=""></select>
+			<button class="boton" onclick="$(this).data('obj').setViewAsParam()">Añadir Vista a los parámetros</button>
+			<!--<input type="button" value="" style="width:10%">-->
+		</div>
+	</div>
+
+	<!-- XXX: > Recuadro alertas -->
+	<div id="divalertarecuadro" class="divalertarecuadro genericon">
+		<div class="divalertamensaje">Debe situarse en una persona.</div>
+	</div>
+
+	<!-- XXX: > Errores -->
+	<div id="diverror">
+		<h4 class="error-title">Error:</h4>
+		<div class="error-text" id="diverrortexto"></div>
+		<div class="error-params" id="diverrorparametros"></div>
+	</div>
+
+	<!-- XXX: > Tips -->
+	<div id="tipdiv" style="z-index:100;display:none;width:auto;height:auto;box-shadow:0px 2px 10px lightgray;background:#ffffff;margin:0px 0 0 0;position:absolute;right:0;top:35px;padding:10px 20px 20px 20px;border-radius:2px 2px 2px 2px;line-height:22px;border:1px solid #cccccc;color:black">
+		<div style="width:100%;text-align:right;height:auto;float:none;margin:0;padding:0">
+			<input type="button" title="Previous tip" value=" < " onclick="showtip('-1')" class="boton" style="width:28px;padding:5px 0 2px 4px;margin:0;">
+			<input type="button" title="Next tip" value=" > " onclick="showtip('+1')" class="boton" style="width:28px;padding:5px 0 2px 4px;margin:0;">
+			<input type="button" title="Cerrar" value=" x " onclick="DBH_help.cerrar()" class="boton" style="width:28px;padding:5px 0 2px 4px;margin:0;">
+		</div>
+		<div style="width:100%;text-align:right;height:auto;float:none;margin:0 0 10px 0;padding:0">
+			<div style="float:left;font-weight:bold" id="tiptitle"></div>
+		</div>
+		<div id="tiptext" style="width:100%;"></div>
+	</div>
+
+	<!-- XXX: > Unknown (by Lluís) -->
+
+	<div class="divMenuContextual inlinesearch-container" style="overflow-y:auto;overflow-x:hidden"></div>
+	<div id="calendario" style="width:auto;height:auto;border:0px solid red;position:absolute;z-index:20;display:none;left:30%;top:30%" class="divMenuContextual"></div>
+	<div id="ui-dialog" style="padding-top: 15px"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span></div>
+	<div id="divaux" style="display:none;width:500px;height:200px;background:white;position:absolute;float:none;top:100px;left:100px;"></div>
+	<div id="contextHelper" style="display:none;position:absolute;z-index:15;top:0px;left:0px;width:auto;height:auto;background-color:white;border:1px dashed #999999;cursor:default;padding:10px;margin:15px 0 0 0;border-radius:10px;color:#666666;box-shadow:3px 3px 10px gray">
+		asdasdfadfasdfsdf
+	</div>
+
+	<!-- XXX: >> TEMPLATES -->
+
+	<!-- XXX: > Menú principal-->
+	<div id="menuPrincipal"></div>
+
+	<!-- XXX: > Query Editor-->
+	<div class="dbh-query-editor-template dbh-template" style="display:none">
+		<div class="change-all-buttons toolbar">
+			<button class="reset" title="RESET&#13;Volver a la configuración individual de cada parámetro.">
+				<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+					 viewBox="0 0 30.143 30.143" style="enable-background:new 0 0 30.143 30.143;" xml:space="preserve">
+				<g>
+					<path style="fill:#030104;" d="M20.034,2.357v3.824c3.482,1.798,5.869,5.427,5.869,9.619c0,5.98-4.848,10.83-10.828,10.83
+						c-5.982,0-10.832-4.85-10.832-10.83c0-3.844,2.012-7.215,5.029-9.136V2.689C4.245,4.918,0.731,9.945,0.731,15.801
+						c0,7.921,6.42,14.342,14.34,14.342c7.924,0,14.342-6.421,14.342-14.342C29.412,9.624,25.501,4.379,20.034,2.357z"/>
+					<path style="fill:#030104;" d="M14.795,17.652c1.576,0,1.736-0.931,1.736-2.076V2.08c0-1.148-0.16-2.08-1.736-2.08
+						c-1.57,0-1.732,0.932-1.732,2.08v13.496C13.062,16.722,13.225,17.652,14.795,17.652z"/>
+				</g>
+			</button>
+			<button class="pinned boton boton-toolbar" title="RETENER&#13;Retener los parámetros.">
+				<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"	 viewBox="0 0 300 300" style="enable-background:new 0 0 300 300;" xml:space="preserve"><g>	<g>		<g>			<path d="M149.996,0C67.157,0,0.001,67.161,0.001,149.997S67.157,300,149.996,300s150.003-67.163,150.003-150.003				S232.835,0,149.996,0z M225.363,123.302l-36.686,36.686c-3.979,3.979-9.269,6.17-14.895,6.17c-5.625,0-10.916-2.192-14.895-6.168				l-1.437-1.437l-3.906,3.906l1.434,1.434c8.214,8.214,8.214,21.579,0,29.793l-36.681,36.686c-3.979,3.979-9.269,6.17-14.898,6.17				c-5.628,0-10.919-2.192-14.9-6.173L74.634,216.5c-8.214-8.209-8.214-21.573-0.003-29.79l36.689-36.684				c3.979-3.979,9.269-6.17,14.898-6.17s10.916,2.192,14.898,6.17l1.432,1.432l3.906-3.906l-1.432-1.432				c-8.214-8.211-8.214-21.576-0.005-29.79l36.689-36.686c3.981-3.981,9.272-6.173,14.898-6.173s10.916,2.192,14.898,6.17				l13.868,13.873C233.577,101.723,233.577,115.09,225.363,123.302z"/>			<path d="M142.539,173.459l-7.093,7.093l-11.002-10.999l7.093-7.093l-1.432-1.432c-1.04-1.037-2.422-1.611-3.89-1.611				c-1.471,0-2.853,0.573-3.893,1.611l-36.686,36.681c-2.145,2.147-2.145,5.638,0,7.783l13.87,13.873				c2.083,2.083,5.708,2.08,7.786,0.003l36.681-36.686c2.148-2.147,2.148-5.641,0-7.789L142.539,173.459z"/>			<path d="M200.493,90.643c-1.04-1.04-2.425-1.613-3.896-1.613c-1.471,0-2.856,0.573-3.896,1.616l-36.686,36.684				c-2.142,2.147-2.142,5.638,0.003,7.786l1.434,1.432l10.88-10.883l11.002,11.002l-10.88,10.883l1.434,1.434				c2.083,2.077,5.703,2.08,7.786-0.003l36.684-36.681c2.145-2.147,2.145-5.638,0-7.786L200.493,90.643z"/>		</g>	</g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
+			</button>
+			<button class="clearpars boton boton-toolbar" title="BORRAR&#13;Borrar todos los parámetros">
+				<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"	 viewBox="0 0 330.5 330.5" style="enable-background:new 0 0 330.5 330.5;" xml:space="preserve"><path d="M178.3,136.6l16.4,16.4l69.7-69.7c2.3-2.3,3.4-5.2,3.4-8.2c0-3-1.1-5.9-3.4-8.2c-4.5-4.5-11.8-4.5-16.4,0L178.3,136.6z	 M172.3,140.2l-0.7-0.7l-12.4,12.4l-7.7,7.7l20.4,20.4l8.3-8.3l11.8-11.8l-0.9-0.9l-1.2-1.2l-16.4-16.4L172.3,140.2z M66.8,197.2	c-0.1,0-0.2,0.1-0.3,0.1c-0.5,0.1-0.9,0.3-1.3,0.6l-0.2,0.1L65,198c-0.5,0.3-0.8,0.7-1.2,1.2c-0.3,0.5-0.6,1-0.8,1.6	c-0.5,1.7-0.3,3.7,1.3,4.9c3.8,3,7.7,6,11.6,8.9l0.7-0.3l1.7-0.7L80,213l14.1-5.4l20.6-7.9l-14.3,16.6l-8,9.2l-1.1,1.3l-1.1,1.3	l-1.1,1.3c0.8,0.3,1.6,0.4,2.5,0.2c0.5-0.1,1-0.3,1.6-0.5c0.1,0,0.1-0.1,0.2-0.1c0.6-0.3,1.1-0.5,1.7-0.7l3.3,3.3	c0,0.8-0.1,1.5-0.1,2.3c-0.1,0.7-0.1,1.5-0.2,2.2c-0.1,1.1-0.3,2.2-0.6,3.3c-0.6,2.5,0.8,5.7,3.5,6.2c4.4,0.9,8,2.4,11.1,4.5	c3.5,2.4,6.4,5.4,9.1,9.1c1.3,1.8,2.6,3.6,3.9,5.6c1,1.6,2.6,2.3,4.1,2.3c0.7,0,1.4-0.1,2-0.4c2.4-0.9,4.2-3.4,3.1-6.2l32.3-75.5	l-20.2-20.2L66.8,197.2z M165.2,330.5L165.2,330.5C74,330.5,0,256.5,0,165.2v0C0,74,74,0,165.2,0h0c91.3,0,165.2,74,165.2,165.2v0	C330.5,256.5,256.5,330.5,165.2,330.5z"/></svg>
+			</button>
+			<button class="activatepars boton boton-toolbar" title="ACTIVAR/DESACTIVAR&#13;Activar/Desactivar todos los parámetros" style="transform:rotate(-45deg)">
+				<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"	 viewBox="0 0 346.078 346.078" style="enable-background:new 0 0 346.078 346.078;" xml:space="preserve"><g>	<path  d="M173.039,346.075c-74.89,0-138.795-47.83-162.836-114.534l201.65,0.394l-36.141,36.141l9.082,9.082		l51.607-51.613l-52.508-52.508l-9.082,9.082l36.977,36.983l-205.63-0.406C2.172,204.142,0,188.842,0,173.042		C0,77.626,77.623,0.003,173.039,0.003c74.884,0,138.795,47.824,162.836,114.534l-200.642-0.388l36.141-36.141l-9.082-9.082		l-51.607,51.613l52.508,52.508l9.082-9.082l-36.977-36.983l204.622,0.406c3.986,14.559,6.158,29.858,6.158,45.664		C346.078,268.447,268.45,346.075,173.039,346.075z"/></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
+			</button>
+			<button class="options boton boton-switch boton-toolbar" title="OPCIONES AVANZADAS&#13;Permite el uso del operador NOT y paréntesis para agrupar las expresiones.">
+				<svg id="bc272435-c93b-4ff3-a8ce-583f1d6ac40d" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><title>exclusion3</title><path d="M256,128A128,128,0,1,1,128,0,128,128,0,0,1,256,128ZM128,173.45a55.54,55.54,0,1,0,0-90.9h0a55.54,55.54,0,1,0,0,90.9h0Z"/><path d="M104.39,128a55.32,55.32,0,0,0,16.22,39.22,46.26,46.26,0,1,1,0-78.42A55.29,55.29,0,0,0,104.39,128Z"/></svg>
+			</button>
+			<button class="active" title="Activar TODOS&#13;Todos los parámetros serán tenidos en cuenta en la búsqueda."></button>
+		</div>
+		<div class="template-loop-container">
+			<div class="template-loop" title="CLICK - Activar/Desactivar&#13;DOBLE CLICK - Eliminar&#13;ARRASTRAR - Cambiar posición">
+				<!--
+				<div class="not">
+					<button class="not boton" title="NOT">NOT</button>
+				</div>
+			-->
+				<div class="parentesis">
+					<span class="hide"></span>
+					<input title='( - (abrir paréntesis) para agrupar expresiones&#13;NOT - excluye la expresión a continuación'>
+				</div>
+				<div class="parameter">
+					<button class="pinned" title="RETENER&#13;Un parámetro retenido permanece al realizar nuevas búsquedas."></button>
+					<!--<button class="active" title="ACTIVAR&#13;Determina si este parámetro es tenido en cuenta en la búsqueda."></button>-->
+					<div class="label">nombre</div>
+					<div class="value">juan</div>
+				</div>
+				<div class="parentesis">
+					<span class="hide"></span>
+					<input title=') - (cerrar paréntesis) para agrupar expresiones'>
+				</div>
+				<div class="operator">
+					<button class="operator boton" style="margin-left:px;position:" title="AND / OR operator">AND</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- XXX: > Main Toolbar -->
+
+	<div class="toolbar-template" style="display:none">
+		<div class="toolbar-column">
+			<div class="label">Navegación</div>
+			<button class="boton boton-toolbar req-madre" id="navegarvinculada" perfiles="Matriz" title="REGISTROS PADRES&#13;Ver registros vinculados en el área madre." onclick="$('#iframeFormCuerpo').data('topform').navegar_vinculada(1)">
+			<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+				viewBox="0 0 256 256" style="enable-background:new 0 0 256 256;" xml:space="preserve">
+			<path d="M0,128C0,57.3,57.3,0,128,0s128,57.3,128,128s-57.3,128-128,128S0,198.7,0,128z M164.3,72.6H72.6v91.7l33.2-33.2l64.9,64.9
+				l25.3-25.3l-64.9-64.9L164.3,72.6z"/>
+			</svg>
+		</button>
+			<button class="boton boton-toolbar req-hija" id="navegarvinculadahija" style="float:left" perfiles="Matriz" title="REGISTROS HIJOS&#13;Ver registros vinculados en el área hija seleccionada." onclick="$('#iframeFormCuerpo').data('topform').navegar_vinculada(0)">
+			<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+				viewBox="0 0 256 256" style="enable-background:new 0 0 256 256;" xml:space="preserve">
+			<style type="text/css">
+				.st0{display:none;}
+			</style>
+			<polygon class="st0" points="165.9,172 138.7,172 138.7,144.8 111.4,144.8 111.4,117.6 84.2,117.6 84.2,90.4 57,90.4 57,172
+				57,199.2 165.9,199.2 "/>
+			<polygon class="st0" points="173,133.1 93,53.1 67.9,78.2 147.6,158.2 112.3,193.5 207.8,193.5 207.8,97.8 "/>
+			<path d="M256,128c0,70.7-57.3,128-128,128S0,198.7,0,128S57.3,0,128,0S256,57.3,256,128z M91.7,183.4h91.7V91.7l-33.2,33.2L85.3,60
+				L60,85.3l64.9,64.9L91.7,183.4z"/>
+			</svg>
+		</button>
+			<button class="boton boton-toolbar" id="" title="REGISTROS RELACIONADOS&#13;Ver elementos relacionados en el área seleccionada." style="" onclick="var opcion = $(this).closest('.botones_principales').find('.toolbar-select-multirec-navegacion').val();eval(opcion)">
+			<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+				viewBox="0 0 128 128" style="enable-background:new 0 0 128 128;" xml:space="preserve">
+			<path d="M0,64C0,28.7,28.7,0,64,0s64,28.7,64,64s-28.7,64-64,64S0,99.3,0,64z M94.8,33.4l-72.3,32l28.3,12l12,28.3L94.8,33.4z"/>
+			</svg>
+		</button>
+			<select class="inputTextTransparent boton-toolbar toolbar-select-multirec-navegacion">
+			<!--
+			<option value="$('#iframeFormCuerpo').data('topform').DBH('avi_pkvalue')">Acciones</option>
+			<option value="$('#iframeFormCuerpo').data('topform').DBH('cc_pkvalue')">Comentarios</option>
+			<option value="$('#iframeFormCuerpo').data('topform').DBH('doc_pkvalue')">Documentos</option>
+			<option value="$('#iframeFormCuerpo').data('topform').DBH('his_pkvalue')">Histórico</option>
+			<option value="$('#iframeFormCuerpo').data('topform').DBH('ial_pkvalue')">Com. enviadas</option>
+			<option value="$('#iframeFormCuerpo').data('topform').DBH('iac_pkvalue')">Com. custom</option>
+			-->
+		</select>
+			<button class="boton boton-toolbar req-register archivo-ir-registro" id="" title="REGISTRO RELACIONADO&#13;Ir al registro relacionado en el área correspondiente." style="" onclick="">
+			<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 128 128" style="enable-background:new 0 0 128 128;" xml:space="preserve">
+<path d="M64,0C28.7,0,0,28.7,0,64s28.7,64,64,64s64-28.7,64-64S99.3,0,64,0z M73.6,74.7l10.1,0c3.1,0,5.5-2.8,5.5-6.3l0-8.7
+	c0-1.7-0.6-3.3-1.6-4.5s-2.4-1.9-3.9-1.9l-10.1,0v-7.4c0-2.8,2-5,4.4-5h24.2c2.4,0,4.4,2.3,4.4,5v36.3c0,2.8-2,5-4.4,5H78
+	c-2.4,0-4.4-2.3-4.4-5V74.7z M54.4,53.3l-10.1,0c-3.1,0-5.5,2.8-5.5,6.3l0,8.7c0,1.7,0.6,3.3,1.6,4.5c1,1.2,2.4,1.9,3.9,1.9l10.1,0
+	v7.4c0,2.8-2,5-4.4,5H25.8c-2.4,0-4.4-2.3-4.4-5V45.9c0-2.8,2-5,4.4-5H50c2.4,0,4.4,2.3,4.4,5V53.3z M81.8,69.6H45.7
+	c-1.3,0-2.4-1.1-2.4-2.4v-6.4c0-1.3,1.1-2.4,2.4-2.4h36.1c1.3,0,2.4,1.1,2.4,2.4v6.4C84.2,68.5,83.1,69.6,81.8,69.6z"/>
+</svg>
+		</button>
+			<button class="boton boton-toolbar req-register busquedas-ejecutar" id="" title="CARGAR VISTA&#13;Reproducir esta vista en el área correspondiente." style="" onclick="vars.goArea()">
+				<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 54 54" style="enable-background:new 0 0 54 54;" xml:space="preserve">
+					<g>
+						<path
+							d="M27,0C12.1,0,0,12.1,0,27s12.1,27,27,27s27-12.1,27-27S41.9,0,27,0z M36.2,42c-4,0-7.2-3.1-7.4-7c0,0,0-0.1,0-0.1v-0.3V29
+						h-3.7v5.5v0.3c0,0,0,0.1,0,0.1c-0.2,3.9-3.4,7-7.4,7c-4.1,0-7.4-3.3-7.4-7.4c0-1.3,0.3-2.5,0.9-3.6l3.6-14.9c0.6-2.3,2.6-4,4.8-4.1
+						c3-0.1,5.4,2.2,5.4,5.2v2.6h3.7v-2.6c0-2.9,2.5-5.3,5.4-5.2c2.3,0.1,4.3,1.8,4.8,4.1L42.7,31c0.6,1.1,0.9,2.3,0.9,3.6
+						C43.6,38.7,40.3,42,36.2,42z"/>
+						<path
+							d="M17.8,40.1c-3,0-5.5-2.5-5.5-5.5c0-1,0.3-1.9,0.7-2.7c0.1-0.2,0.2-0.3,0.3-0.5c0,0,0.1-0.1,0.1-0.1
+						c0.3-0.4,0.6-0.7,0.9-0.9c0,0,0.1,0,0.1-0.1c0.2-0.1,0.3-0.2,0.5-0.3c0,0,0.1,0,0.1-0.1c0.4-0.2,0.8-0.4,1.2-0.5c0,0,0.1,0,0.1,0
+						c0.2,0,0.3-0.1,0.5-0.1c0.1,0,0.1,0,0.2,0c0.2,0,0.4,0,0.7,0c3,0,5.5,2.5,5.5,5.5c0,0,0,0.1,0,0.1l0,0.1c0,0,0,0,0,0
+						C23.1,37.7,20.7,40.1,17.8,40.1z"/>
+						<path
+							d="M36.2,40.1c-2.9,0-5.3-2.3-5.5-5.2c0,0,0,0,0,0c0,0,0-0.1,0-0.1c0,0,0-0.1,0-0.1c0-3,2.5-5.5,5.5-5.5c0.2,0,0.4,0,0.7,0
+						c0.1,0,0.1,0,0.2,0c0.2,0,0.4,0.1,0.5,0.1c0,0,0.1,0,0.1,0c0.4,0.1,0.9,0.3,1.2,0.5c0,0,0.1,0,0.1,0.1c0.2,0.1,0.3,0.2,0.5,0.3
+						c0,0,0.1,0,0.1,0.1c0.3,0.3,0.7,0.6,0.9,1c0,0,0.1,0.1,0.1,0.1c0.1,0.2,0.2,0.3,0.3,0.5c0.5,0.8,0.7,1.7,0.7,2.7
+						C41.7,37.6,39.3,40.1,36.2,40.1z"/>
+					</g>
+				</svg>
+			</button>
+		</div>
+		<div class="toolbar-column toolbar-group-series">
+			<div class="label">Series</div>
+			<!-- BOTONES SERIE -->
+			<button class="boton boton-toolbar" id="" title="EJECUTAR&#13;Ejecutar la acción elegida sobre la serie de registros seleccionados." style="" onclick="var opcion = $(this).closest('.botones_principales').find('.toolbar-select-multirec-edicion').val();eval(opcion)">
+			<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+				viewBox="0 0 256 256" style="enable-background:new 0 0 256 256;" xml:space="preserve">
+			<path d="M0,128C0,57.3,57.3,0,128,0s128,57.3,128,128s-57.3,128-128,128S0,198.7,0,128z M172.8,68.3c1.2-10.2-6.8-19.1-17.1-19.1
+				c-8.7,0-16.1,6.6-17.1,15.2c-0.5,4.6,0.8,9.1,3.6,12.7C151.6,88.9,171,83.6,172.8,68.3z M78.3,207.2c3.3-2.5,3.5-3.7,12.2-18.6
+				c0,0,0-0.1,0.1-0.1c0,0,0,0-0.1,0c4.5-7.7,10.5-18.2,19.1-32.7c0.7,0.4,14.2,6,19.9,9.7c-6.5,4-15.1,9.6-21.3,13.4
+				c-10,6-4.4,18.7,4.1,18c4.1-0.3,4.9-1.2,20.4-8.9c7.3-3.6,14.8-7.3,20.7-10.9c4.9-2.9,10.9-12.3,3.3-18.9L133.1,142
+				c5.9-11.3,11.6-21.7,17.4-31.8c19.8,5.7,40.1-0.7,55.2-21.7c5.7-7.9,1.2-15.2-5.1-15.2c-10.4,0-10.2,17.3-32.7,17.3
+				c-10.7,0-18.5-4.3-28.1-10C118,67.5,90,76.3,75.9,96.1c-8.5,11.8,4.5,22.6,12.8,11c7.8-10.9,17.6-15,29.1-12
+				c-5.2,9.1-52.1,97.7-52.8,99.3C59.9,204.8,71.5,212.3,78.3,207.2z"/>
+			</svg>
+		</button>
+			<select class="inputTextTransparent boton-toolbar toolbar-select-multirec-edicion">
+			<option class="fa fa-times" value="DBH.area().topform.saveform_serie(2)" title="Eliminar los registros seleccionados">Eliminar</option>
+			<option class="fa fa-plus" value="$('#iframeFormCuerpo').data('topform').saveform_serie(3)" title="Sobreescribir el contenido de los campos completados">Sobreescribir</option>
+			<option class="fa fa-share" value="$('#iframeFormCuerpo').data('topform').saveform_serie(1)" title="Añadir el contenido de los campos completados">Añadir</option>
+			<option class="fa fa-reply" value="$('#iframeFormCuerpo').data('topform').saveform_serie()" title="Retirar el contenido de los campos completados">Retirar</option>
+			<option class="fa fa-retweet" value="$('#iframeFormCuerpo').data('topform').saveform_serie(4)" title="Sustituir el contenido de los campos completados">Sustituir</option>
+			<option class="fa fa-scissors" value="$('#iframeFormCuerpo').data('topform').saveform_serie(5)" title="Recortar los espacios en blanco al principio y al final de los campos completados">Recortar</option>
+		</select>
+		</div>
+	</div>
+
+	<!-- XXX: > List Toolbar -->
+
+	<!-- <div class="dbh-template list-toolbar-template toolbar botonesform" style="display:none;width:100%;"> -->
+	<div class="dbh-template list-toolbar-template toolbar botonesform" style="display:none	;">
+		<!-- <div class="dbh-recordsinfo-container dbh-template" style="margin:0px 0 0 0 ;padding:5px 10px 5px 10px;right:0;background:#ececec;top:65px;float:right "></div> -->
+		<div class="dbh-recordsinfo-container dbh-template"></div>
+		<button type="button" title="REPETIR BÚSQUEDA&#13;Repetir la búsqueda establecida (retiene todos los parámetros)" class="boton boton-toolbar" id="buttonrepeatfilter" Value="" style="" onclick="DBH.area().topform.filter(1)">
+			<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+		viewBox="0 0 438.5 438.5" style="enable-background:new 0 0 438.5 438.5;" xml:space="preserve">
+			<path d="M346.7,97.1c-4.8-2-8.9-1.2-12.2,2.4l-22.7,22.5c-12.5-11.8-26.7-20.9-42.7-27.3c-16-6.5-32.6-9.7-49.7-9.7
+		c-18.2,0-35.5,3.6-52.1,10.7c-16.5,7.1-30.8,16.7-42.8,28.7c-12,12-21.6,26.3-28.7,42.8c-7.1,16.5-10.7,33.9-10.7,52.1
+		c0,18.2,3.6,35.5,10.7,52.1c7.1,16.5,16.7,30.8,28.7,42.8c12,12,26.3,21.5,42.8,28.7c16.5,7.1,33.9,10.7,52.1,10.7
+		c20,0,39.1-4.2,57.1-12.7c18.1-8.4,33.4-20.4,46.1-35.7c0.9-1.2,1.4-2.5,1.3-3.9c-0.1-1.5-0.6-2.6-1.7-3.6l-23.9-24.1
+		c-1.3-1-2.7-1.6-4.4-1.6c-1.9,0.2-3.2,0.9-4,2.1c-8.5,11.1-18.9,19.6-31.3,25.7c-12.3,6.1-25.5,9.1-39.3,9.1
+		c-12.1,0-23.7-2.4-34.7-7.1c-11-4.7-20.5-11.1-28.6-19.1c-8-8-14.4-17.6-19.1-28.6c-4.7-11-7.1-22.6-7.1-34.7
+		c0-12.1,2.4-23.7,7.1-34.7c4.7-11,11.1-20.5,19.1-28.6c8-8,17.6-14.4,28.6-19.1c11-4.7,22.6-7.1,34.7-7.1c23.4,0,43.7,8,61,23.9
+		l-24.1,24.1c-3.6,3.5-4.4,7.5-2.4,12.1c2,4.7,5.4,7,10.3,7h78.3c3,0,5.6-1.1,7.9-3.3c2.2-2.2,3.3-4.8,3.3-7.9v-78.3
+		C353.5,102.5,351.2,99.1,346.7,97.1z M438.5,219.3c0,121.1-98.2,219.3-219.3,219.3S0,340.4,0,219.3S98.2,0,219.3,0
+		S438.5,98.2,438.5,219.3z"/>
+			</svg>
+		</button>
+		<!--
+
+			<button type="button" title="Devolver los registros excluidos de la búsqueda actual" class="boton boton-toolbar" id="selectinvertida" Value="0" onclick="var si = $(this).hasClass('color-tomato');if(si){$(this).removeClass('color-tomato')}else{$(this).addClass('color-tomato')};this.blur();reFilter();event.stopPropagation()"><svg id="bc272435-c93b-4ff3-a8ce-583f1d6ac40d" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><title>exclusion3</title><path d="M256,128A128,128,0,1,1,128,0,128,128,0,0,1,256,128ZM128,173.45a55.54,55.54,0,1,0,0-90.9h0a55.54,55.54,0,1,0,0,90.9h0Z"/><path d="M104.39,128a55.32,55.32,0,0,0,16.22,39.22,46.26,46.26,0,1,1,0-78.42A55.29,55.29,0,0,0,104.39,128Z"/></svg></button>
+			-->
+		<!--
+			<button title="Fijar la búsqueda actual para trabajar sobre este conjunto de registros" class="boton boton-toolbar" style="font-weight:100" id="buttonmemoryfilter" Value="I" onclick="listado.memoryfilter()"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 300 300" style="enable-background:new 0 0 300 300;" xml:space="preserve"><g><g><g><path d="M149.996,0C67.157,0,0.001,67.161,0.001,149.997S67.157,300,149.996,300s150.003-67.163,150.003-150.003S232.835,0,149.996,0z M225.363,123.302l-36.686,36.686c-3.979,3.979-9.269,6.17-14.895,6.17c-5.625,0-10.916-2.192-14.895-6.168l-1.437-1.437l-3.906,3.906l1.434,1.434c8.214,8.214,8.214,21.579,0,29.793l-36.681,36.686c-3.979,3.979-9.269,6.17-14.898,6.17c-5.628,0-10.919-2.192-14.9-6.173L74.634,216.5c-8.214-8.209-8.214-21.573-0.003-29.79l36.689-36.684c3.979-3.979,9.269-6.17,14.898-6.17s10.916,2.192,14.898,6.17l1.432,1.432l3.906-3.906l-1.432-1.432c-8.214-8.211-8.214-21.576-0.005-29.79l36.689-36.686c3.981-3.981,9.272-6.173,14.898-6.173s10.916,2.192,14.898,6.17l13.868,13.873C233.577,101.723,233.577,115.09,225.363,123.302z"/><path d="M142.539,173.459l-7.093,7.093l-11.002-10.999l7.093-7.093l-1.432-1.432c-1.04-1.037-2.422-1.611-3.89-1.611c-1.471,0-2.853,0.573-3.893,1.611l-36.686,36.681c-2.145,2.147-2.145,5.638,0,7.783l13.87,13.873c2.083,2.083,5.708,2.08,7.786,0.003l36.681-36.686c2.148-2.147,2.148-5.641,0-7.789L142.539,173.459z"/><path d="M200.493,90.643c-1.04-1.04-2.425-1.613-3.896-1.613c-1.471,0-2.856,0.573-3.896,1.616l-36.686,36.684c-2.142,2.147-2.142,5.638,0.003,7.786l1.434,1.432l10.88-10.883l11.002,11.002l-10.88,10.883l1.434,1.434c2.083,2.077,5.703,2.08,7.786-0.003l36.684-36.681c2.145-2.147,2.145-5.638,0-7.786L200.493,90.643z"/></g></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg></button>
+			-->
+
+		<button type="button" title="EXCEL&#13;Sacar Excel con este listado" class="boton boton-toolbar toolbar-button-excel" id="buttonxls" Value="XLS" perfiles="Matriz" onclick="DBH.area().topform.createExcel()"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"><path d="M371.5,128h-67.6L256,198.5L208.1,128h-67.6l81.1,121.2L130.1,384h131.1v-45.8h-30.3l25.1-37.5l55.7,83.3h70.2l-91.5-134.8	L371.5,128z M512,256c0,141.4-114.6,256-256,256S0,397.4,0,256S114.6,0,256,0S512,114.6,512,256z"/></svg></button>
+
+		<button onclick="vars.crearInforme(2)" title="GUARDAR VISTA&#13;Solo se almacenan los parámetros activados.&#13;&#13;TIP: También se guarda la disposición de las columnas." class="saveview boton boton-toolbar toolbar-button-excel"><svg id="4a1bbdd2-08d9-49df-b510-cd491035a85b" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><title>save</title><path d="M180.52,149v33.92H76.75V149H56.81v43.9a10,10,0,0,0,10,10H190.47a10,10,0,0,0,10-10V149H180.52Zm-48.3-3.08c3.39-3.38,27.68-35.63,27.68-35.63s4.3-4.29-1.41-4.29H143.63V56.41s0.06-2.06-2.6-2.06H118.39c-3.69,0-3,2.45-3,2.45V107H99.25c-4.71,0-.37,4.1-0.37,4.1l28.55,34.5S129.78,148.37,132.22,145.92ZM128,256h0A128,128,0,0,1,0,128H0A128,128,0,0,1,128,0h0A128,128,0,0,1,256,128h0A128,128,0,0,1,128,256Z"/></svg></button>
+	</div>
+
+	<!-- XXX: > Form Toolbar -->
+
+	<div class="dbh-template form-toolbar-template toolbar botonesform" style="display:none">
+		<button class="boton boton-toolbar req-blank" id="buttonfilter" onclick="DBH.recordsearch=1;$('#iframeFormCuerpo').data('topform').filter()" title="BUSCAR&#13;Buscar coincidencias con los datos introducidos en el formulario."><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 44 44">  <g>    <circle cx="20" cy="20" r="7"/>    <path d="m22,0c-12.2,0-22,9.8-22,22s9.8,22 22,22 22-9.8 22-22-9.8-22-22-22zm12.7,33.3l-1.4,1.4c-0.4,0.4-1,0.4-1.4,0l-5.4-5.4c-0.2-0.2-0.4-0.2-0.6-0.1-1.7,1.1-3.7,1.7-5.9,1.7-6.1,0-11-4.9-11-11s4.9-11 11-11 11,4.9 11,11c0,2.2-0.6,4.2-1.7,5.9-0.1,0.2-0.1,0.5 0.1,0.6l5.4,5.4c0.3,0.5 0.3,1.1-0.1,1.5z"/>  </g></svg><!--<div class="fa fa-caret-down" style="font-size:12px;position:absolute;margin:20px 0px 0 -15px;color:#767676"></div>--></button>
+		<button class="boton boton-toolbar boton-switch-right" title="LIMPIAR&#13;Limpiar el formulario." id="buttonclear" onclick="DBH.area().topform.clear( 0,$(this).attr('clear-setdefaults') )"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"	 viewBox="0 0 330.5 330.5" style="enable-background:new 0 0 330.5 330.5;" xml:space="preserve"><path d="M178.3,136.6l16.4,16.4l69.7-69.7c2.3-2.3,3.4-5.2,3.4-8.2c0-3-1.1-5.9-3.4-8.2c-4.5-4.5-11.8-4.5-16.4,0L178.3,136.6z	 M172.3,140.2l-0.7-0.7l-12.4,12.4l-7.7,7.7l20.4,20.4l8.3-8.3l11.8-11.8l-0.9-0.9l-1.2-1.2l-16.4-16.4L172.3,140.2z M66.8,197.2	c-0.1,0-0.2,0.1-0.3,0.1c-0.5,0.1-0.9,0.3-1.3,0.6l-0.2,0.1L65,198c-0.5,0.3-0.8,0.7-1.2,1.2c-0.3,0.5-0.6,1-0.8,1.6	c-0.5,1.7-0.3,3.7,1.3,4.9c3.8,3,7.7,6,11.6,8.9l0.7-0.3l1.7-0.7L80,213l14.1-5.4l20.6-7.9l-14.3,16.6l-8,9.2l-1.1,1.3l-1.1,1.3	l-1.1,1.3c0.8,0.3,1.6,0.4,2.5,0.2c0.5-0.1,1-0.3,1.6-0.5c0.1,0,0.1-0.1,0.2-0.1c0.6-0.3,1.1-0.5,1.7-0.7l3.3,3.3	c0,0.8-0.1,1.5-0.1,2.3c-0.1,0.7-0.1,1.5-0.2,2.2c-0.1,1.1-0.3,2.2-0.6,3.3c-0.6,2.5,0.8,5.7,3.5,6.2c4.4,0.9,8,2.4,11.1,4.5	c3.5,2.4,6.4,5.4,9.1,9.1c1.3,1.8,2.6,3.6,3.9,5.6c1,1.6,2.6,2.3,4.1,2.3c0.7,0,1.4-0.1,2-0.4c2.4-0.9,4.2-3.4,3.1-6.2l32.3-75.5	l-20.2-20.2L66.8,197.2z M165.2,330.5L165.2,330.5C74,330.5,0,256.5,0,165.2v0C0,74,74,0,165.2,0h0c91.3,0,165.2,74,165.2,165.2v0	C330.5,256.5,256.5,330.5,165.2,330.5z"/></svg><!--<div class="fa fa-caret-down" style="font-size:12px;position:absolute;margin:20px 0px 0 -15px;color:#767676"></div>--></button>
+		<button class="boton boton-toolbar req-register toolbar-button-save" id="buttonsave" onclick="DBH.area().topform.save()" disabled title="GUARDAR&#13;Guardar el registro."><svg id="4a1bbdd2-08d9-49df-b510-cd491035a85b" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><title>save</title><path d="M180.52,149v33.92H76.75V149H56.81v43.9a10,10,0,0,0,10,10H190.47a10,10,0,0,0,10-10V149H180.52Zm-48.3-3.08c3.39-3.38,27.68-35.63,27.68-35.63s4.3-4.29-1.41-4.29H143.63V56.41s0.06-2.06-2.6-2.06H118.39c-3.69,0-3,2.45-3,2.45V107H99.25c-4.71,0-.37,4.1-0.37,4.1l28.55,34.5S129.78,148.37,132.22,145.92ZM128,256h0A128,128,0,0,1,0,128H0A128,128,0,0,1,128,0h0A128,128,0,0,1,256,128h0A128,128,0,0,1,128,256Z"/></svg></button>
+		<button class="boton boton-toolbar dbh-toolbar-button-add" id="buttoncreate" onclick="$('#iframeFormCuerpo').data('topform').save(1)" title="CREAR&#13;Crear un registro con los datos introducidos en el formulario."><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"	 viewBox="0 0 52 52" style="enable-background:new 0 0 52 52;" xml:space="preserve"><path d="M26,0C11.664,0,0,11.663,0,26s11.664,26,26,26s26-11.663,26-26S40.336,0,26,0z M38.5,28H28v11c0,1.104-0.896,2-2,2	s-2-0.896-2-2V28H13.5c-1.104,0-2-0.896-2-2s0.896-2,2-2H24V14c0-1.104,0.896-2,2-2s2,0.896,2,2v10h10.5c1.104,0,2,0.896,2,2	S39.604,28,38.5,28z"/><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg></button>
+		<button class="boton boton-toolbar req-register dbh-toolbar-button-delete" id="buttondelete" onclick="$('#iframeFormCuerpo').data('topform').erase()" disabled title="ELIMINAR&#13;Eliminar el registro seleccionado."><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"	 viewBox="0 0 52 52" style="enable-background:new 0 0 52 52;" xml:space="preserve"><path d="M26,0C11.664,0,0,11.663,0,26s11.664,26,26,26s26-11.663,26-26S40.336,0,26,0z M38.5,28h-25c-1.104,0-2-0.896-2-2	s0.896-2,2-2h25c1.104,0,2,0.896,2,2S39.604,28,38.5,28z"/><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg></button>
+		<button id="switch-redactor" onclick="var $eles = $('#iframeFormCuerpo .redactor').parent();if(!$(this).hasClass('boton-switch-checked')){$eles.show()}else{$eles.hide()}" style="" class="boton boton-switch boton-toolbar" title="REDACTOR DE CONSULTAS&#13;Ver / Ocultar redactor de consultas."><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"	 viewBox="0 0 56 56" style="enable-background:new 0 0 56 56;" xml:space="preserve"><path d="M28,0C12.561,0,0,12.561,0,28s12.561,28,28,28s28-12.561,28-28S43.439,0,28,0z M40,41H16c-1.104,0-2-0.896-2-2s0.896-2,2-2	h24c1.104,0,2,0.896,2,2S41.104,41,40,41z M40,30H16c-1.104,0-2-0.896-2-2s0.896-2,2-2h24c1.104,0,2,0.896,2,2S41.104,30,40,30z	 M40,19H16c-1.104,0-2-0.896-2-2s0.896-2,2-2h24c1.104,0,2,0.896,2,2S41.104,19,40,19z"/><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg></button>
+		<select id="" onchange="DBH.area().topform.multicolumns(this.value)" style="margin-left:10px;border-left:1px solid rgba(0, 0, 0, 0.2);padding-left:5px" class="boton-toolbar inputTextTransparent" title="Número de columnas">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+		</select>
+		<button class="boton boton-toolbar dbh-toolbar-button-add" id="" onclick="$('#iframeFormCuerpo').data('topform').print()" title="IMPRIMIR&#13;Imprime el formulario&#13;&#13;TIP: Sólo se incluyen las pestañas abiertas.&#13;&#13;TIP: Puede copiar la página resultante y pegarla en un email.">
+			<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+										viewBox="0 0 475.1 475.1" style="enable-background:new 0 0 475.1 475.1;" xml:space="preserve">
+									<path d="M237.5,0C106.4,0,0,106.4,0,237.5s106.3,237.5,237.5,237.5s237.5-106.3,237.5-237.5S368.7,0,237.5,0z M380,319.7
+										c0,1.5-0.5,2.8-1.6,3.9c-1.1,1.1-2.4,1.6-3.9,1.6h-38.4v27.4c0,4.6-1.6,8.4-4.8,11.6c-3.2,3.2-7.1,4.8-11.6,4.8H155.4
+										c-4.6,0-8.4-1.6-11.6-4.8c-3.2-3.2-4.8-7.1-4.8-11.6v-27.4h-38.4c-1.5,0-2.8-0.5-3.9-1.6c-1.1-1.1-1.6-2.4-1.6-3.9v-71.2
+										c0-9,3.2-16.8,9.7-23.2c6.5-6.5,14.2-9.7,23.2-9.7h11v-93.1c0-4.6,1.6-8.4,4.8-11.6c3.2-3.2,7.1-4.8,11.6-4.8h115.1
+										c4.6,0,9.6,1.1,15.1,3.4c5.5,2.3,9.8,5,13,8.2l26,26c3.2,3.2,5.9,7.5,8.2,13c2.3,5.5,3.4,10.5,3.4,15.1v43.8h11
+										c9,0,16.8,3.2,23.2,9.7c6.4,6.4,9.7,14.2,9.7,23.2V319.7z"/>
+									<rect x="160.8" y="303.3" width="153.4" height="43.8"/>
+									<path d="M314.3,237.5H160.8V128h109.6v27.4c0,4.6,1.6,8.4,4.8,11.6c3.2,3.2,7.1,4.8,11.6,4.8h27.4L314.3,237.5L314.3,237.5z"/>
+									<path d="M354.8,256.2c-2.2,2.2-4.7,3.3-7.7,3.3c-3,0-5.5-1.1-7.7-3.3c-2.2-2.2-3.3-4.7-3.3-7.7s1.1-5.5,3.3-7.7
+										c2.2-2.2,4.7-3.3,7.7-3.3c3,0,5.5,1.1,7.7,3.3c2.2,2.2,3.3,4.7,3.3,7.7C358.1,251.5,357,254,354.8,256.2z"/>
+									</svg>
+		</button>
+	</div>
+</body>
+
+</html>
