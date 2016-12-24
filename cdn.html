@@ -18,8 +18,8 @@
 		let DBHpath = $('#DBHpath').val()
 		console.log(DBHpath)
 		let calls = ''
-		calls += `<link rel="stylesheet" href="${DBHpath}css/main.css">`
 		calls += `<link rel="shortcut icon" href="${DBHpath}favicon.ico">`
+		calls += `<link rel="stylesheet" href="${DBHpath}css/main.css">`
 		calls += `<link rel="stylesheet" href="${DBHpath}css/dbh-nauj-tempstyles.css">`
 		calls += `<script type="text/javascript" src="${DBHpath}js/DBH.js"><\/script> `
 		$('head').append($(calls))
@@ -29,7 +29,9 @@
 				setTimeout(loadRest,20)
 				return false
 			}
-			calls = `<script type="text/javascript" src="${DBHpath}js/dbh-queryEditor.js"><\/script> `
+			console.log('a')
+			let calls = ''
+			calls += `<script type="text/javascript" src="${DBHpath}js/dbh-queryEditor.js"><\/script> `
 			calls += `<script type="text/javascript" src="${DBHpath}js/general.js"><\/script> `
 			calls += `<script type="text/javascript" src="${DBHpath}js/blockButton.js"><\/script> `
 			calls += `<script type="text/javascript" src="${DBHpath}js/inlineform.js"><\/script> `

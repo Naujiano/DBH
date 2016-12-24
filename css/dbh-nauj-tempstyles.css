@@ -28,8 +28,9 @@
 body, div, table, td, form {
 	//font-size:12px;
 }
+
 .divinlineform .inputText, .divinlineform .inputText-nowrite, .divinlineform label, .divinlineform button {
-	font-size:11px;
+	//font-size:11px;
 }
 .inline-search-table {
 	width: 100%;
@@ -60,4 +61,46 @@ body, div, table, td, form {
 .divinlineform .lineamodelo select.inputTextTransparent, .divinlineform .lineamodelo select.inputTextTransparent-nowrite {
 	//appearance : menulist;
 	-webkit-appearance : menulist;
+}
+span.ui-selectmenu-button,span.ui-selectmenu-button:hover,span.ui-selectmenu-button.ui-selectmenu-button-open,span.ui-selectmenu-button.ui-selectmenu-button-closed {
+    //background: none;
+    height: 24px;
+    max-width: none;
+    box-sizing: border-box;
+    padding: 3px 5px 3px 14px;
+    margin: 6px 3px 0px -16px;
+    border-radius: 0 12px 0 0;
+    border-color: rgba(0, 0, 0, 0.2);
+    border-width: 1px 1px 1px 0;
+    color: #666;
+    outline: none;
+    float: left;
+    transition: all 0.3s;
+}
+.inline-group-container {
+    /* content: "juan"; */
+    width: calc(100% + 20px);
+    text-align: center;
+    display: block;
+    /* position: absolute; */
+    padding: 5px;
+    margin-top: 0;
+    margin-left: -10px;
+    /* margin-bottom: 10px; */
+    background: #eee;
+    box-sizing: border-box;
+}
+.divlistado.grouped .divCampoForm.inline-group {
+	display:none;
+}
+.divlistado.grouped .lineamodelo {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	//margin-bottom: 0;
+}
+.divinlineform .lineamodelo.inline-group-first {
+	padding-top:15px;
+}
+.divlistado.grouped label {
+	display: none;
 }

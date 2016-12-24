@@ -9,8 +9,8 @@
 		DBHpath = "https://rawgit.com/Naujiano/DBH/" & DBHversion & "/"
 		DBHversion = left(DBHversion,7)
 	end if
-	session.codepage=65001
-	response.Charset="utf-8"
+	'session.codepage=65001
+	'response.Charset="utf-8"
 	server.scripttimeout=6000
 	session.timeout=60
 	Set getPage = Server.CreateObject("Microsoft.XMLHTTP" )

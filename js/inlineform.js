@@ -750,6 +750,28 @@ var inlineform2 = ( function ($,undefined) {
 			if ( $(registros).length == 0 ) { that.$divlistado.html('<div class="inlineform-vacio">Vacío</div>')} else {that.$divlistado.find('.inlineform-vacio').remove()}
 			if ( typeof callbackFnWhenEnd != 'undefined' ) callbackFnWhenEnd()
 			$(multistatebuttons_elements).each(function(){this.setcss();})
+			let $insertf = that.$divinsertform
+			//	console.log($insertf.find('inline-group').length)
+			, $inlineGroup = $insertf.find('.inline-group').eq(0)
+			, $inlineGroupDiv = $('<div class="inline-group-container">juan</div>')
+			, $rows = that.$divlistado.find ('.lineamodelo')
+			if ( $inlineGroup.length ) {
+				let keyFieldId = $inlineGroup.attr('id')
+				, precedentKey = false
+				$rows.each ( function () {
+					let $row = $(this)
+					, $keyField = $row.find ( `[id="${keyFieldId}"]` )
+					, isSelect = $keyField[0].tagName == 'SELECT'
+					, key = isSelect ? $keyField.find('option:selected').text() : $keyField.val()
+					, $divCampo = $keyField.closest('.divCampoForm')
+					$divCampo.addClass('inline-group')
+					if ( key != precedentKey ) {
+						$row.addClass('inline-group-first').before($inlineGroupDiv.clone().text(key))
+						precedentKey = key
+					}
+				})
+				that.$divlistado.addClass('grouped')//find('label[for]').hide()
+			}
 			mostrarTelon(0)
 		}
 	}

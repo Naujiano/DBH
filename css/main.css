@@ -106,7 +106,7 @@
   margin-right: 10px;
 }
 .layout-tree-toolbar-container:after {
-  content: 'Ã¡reas';
+  content: 'Áreas';
 }
 .layout-form-toolbar-container .toolbar:after {
   content: 'formulario';
@@ -1350,7 +1350,7 @@ button.pestanas.active {
   content: 'HERRAMIENTAS';
 }
 #treemenu .jstree-node[title="[VALORES]"]:before {
-  content: 'CONFIGURACIÃ“N';
+  content: 'CONFIGURACIÓN';
 }
 #treemenu .jstree-node {
   margin-left: 0px;
