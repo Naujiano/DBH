@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <style>body{display:none}</style>
 <%
-	DBHversion = "master"
-	DBHpath = "http://192.168.1.128/dbh/v0/"
-	DBHpath = "https://rawgit.com/Naujiano/DBH/" + DBHversion + "/v0/"
+	DBHversion = "Alpha"
+	if DBHversion = "Alpha" then
+		DBHpath = "http://192.168.1.128/dbh/"
+	else
+		DBHversion = "b92939cd36ec63de4b6d97aa4757a83418e6793d"
+		DBHpath = "https://rawgit.com/Naujiano/DBH/" & DBHversion & "/v0/"
+		DBHversion = left(DBHversion,7)
+	end if
 	session.codepage=65001
 	response.Charset="utf-8"
 	server.scripttimeout=6000
