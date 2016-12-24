@@ -5,8 +5,8 @@
 	if DBHversion = "Alpha" then
 		DBHpath = "http://192.168.1.128/dbh/"
 	else
-		DBHversion = "b92939cd36ec63de4b6d97aa4757a83418e6793d"
-		DBHpath = "https://rawgit.com/Naujiano/DBH/" & DBHversion & "/v0/"
+		DBHversion = "0e53b9ec2d5b21c5eb5b5bb4ec866fa6692ecd21"
+		DBHpath = "https://rawgit.com/Naujiano/DBH/" & DBHversion & "/"
 		DBHversion = left(DBHversion,7)
 	end if
 	session.codepage=65001

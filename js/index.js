@@ -1634,13 +1634,13 @@ function inlineSearch ($campo,sqlConfig) {
 			$body.append($fila)
 		})
 		$body.on ('mousedown','tr',function(event){
-			console.log($(this).attr('idvalue'))
-			console.log($(this).attr('valor'))
+			//console.log($(this).attr('idvalue'))
+			//console.log($(this).attr('valor'))
 
 				event.preventDefault();
 				//event.stopImmediatePropagation();
 				event.stopPropagation();
-				console.log('nnewww')
+				//console.log('nnewww')
 				//return false;
 
 			$campo.attr('idvalue',$(this).attr('idvalue')).val($(this).attr('valor'));
@@ -2268,7 +2268,9 @@ var vars = ( function () {
 								$field.hide()
 								$field.after($tempfield)
 								inlineSearch($tempfield,{$field: $field,field: $field.attr('select-text-field'), idfield:$field.attr('select-id-field'),table: $field.attr('select-table')})
-								$tempfield.val($field.text()).show().select().addClass('inputText')
+								let tempval = $field.find('option:selected').text()//?$field.text():''
+								console.log("tttttemppppval:"+tempval)
+								$tempfield.val(tempval).show().select().addClass('inputText')
 								//$tempfield.focus()
 								$tempfield.on('blur',function(){
 									var $field = $(this)
@@ -2284,7 +2286,7 @@ var vars = ( function () {
 									, opt = '<option value="'+idvalue+'" selected>'+txtvalue+'</option>'
 //									console.log(opt)
 									$originalfield.find('option').remove()
-									$originalfield.append(opt)//.val(idvalue)
+									$originalfield.append('<option/>').append(opt)//.val(idvalue)
 									$originalfield.trigger('blur')
 									//$originalfield.trigger('focus')
 									$originalfield.trigger('input')

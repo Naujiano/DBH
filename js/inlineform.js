@@ -354,7 +354,7 @@ var inlineform2 = ( function ($,undefined) {
 							//, sqlll = "SELECT " + idfield + "," + textfield + " as optionname FROM " + table + " WHERE " + idfield + " IN (" + ids + ")"
 							, sqlQueryObj = { idFieldName : idfield , fieldNames : `${idfield},${textfield}` , table : table }
 							//console.log(ids)
-							DBH.mapaSql ( id , sqlQueryObj ).addIds ( ...ids )
+							DBH.mapaSql ( id , sqlQueryObj ).clear().addIds ( ...ids )
 							/*
 							if ( ! DBH.mapas_sql.has( id ) ) {
 								new DBH.mapa_sql(id, sqlQueryObj )
@@ -462,7 +462,7 @@ var inlineform2 = ( function ($,undefined) {
 				$cloneta.addClass ( 'inputTextTransparent' )
 
 				if ( $cloneta.hasClass('inline-search') && $cloneta.prop('tagName')=="SELECT" )  {
-/****************************************************/
+/****************************************************
 					var idfield = $cloneta.attr('select-id-field')
 					, textfield = $cloneta.attr('select-text-field')
 					, table = $cloneta.attr('select-table')
@@ -472,20 +472,19 @@ var inlineform2 = ( function ($,undefined) {
 					//console.log(opt)
 					$cloneta.find('option').remove()
 					$cloneta.append(opt)
-/*******************************************/
-/*********** deshabilitado temporalmente hasta q controle el cache ***********
+*******************************************/
+/*********** deshabilitado temporalmente hasta q controle el cache ***********/
 
 					var id = $cloneta.attr('id')
 					, id = id.substring(id.indexOf('.')+1)
-					, $xml = that.iissMap.get(id)
-					, $line = $xml.find('line[id="'+valor.toString()+'"]')
-					, $field = $line.find('[fieldname="optionname"]')
-					, txt = $field.attr('fieldvalue')
+					//, $xml = that.iissMap.get(id)
+					, txt = DBH.mapaSql(id).mapa.get( valor )
+					//, txt = mapa_sql.get ( valor )
 					, opt = '<option value="'+valor+'" selected>'+txt+'</option>'
 					//console.log(opt)
 					$cloneta.find('option').remove()
-					$cloneta.append(opt)
-*****************************************************************************************/
+					$cloneta.append('<option/>').append(opt)
+/*****************************************************************************************/
 				}
 				if ( $cloneta.hasClass( 'no-insert' ) ) $cloneta[0].disabled = 1
 				$cloneta.trigger ( 'change' )

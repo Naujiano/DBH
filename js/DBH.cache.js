@@ -44,6 +44,8 @@
     }
     clear () {
       this.$table.find('tr').remove() 
+	  this.ids = [];
+	  return this;
     }
   }
   class tabla_sql extends tabla {

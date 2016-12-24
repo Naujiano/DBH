@@ -691,7 +691,7 @@ var toplevelform = function (objpar) {
 					, opt = '<option value="'+valor+'" selected>'+txtopt+'</option>'
 //					console.log(opt)
 					$campoform.find('option').remove()
-					$campoform.append(opt)
+					$campoform.append('<option/>').append(opt)
 				}
 				if($campoform.prop('tagName')=="TEXTAREA"){
 					setTextareaHeight($campoform[0])
