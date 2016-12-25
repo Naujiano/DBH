@@ -331,48 +331,27 @@ var inlineform2 = ( function ($,undefined) {
 		function addRecordsToListado(registros,slide){
 			
 			//if ( ! slide ) {
-				var $iiss = that.$lineamodelo.find('select.inline-search')
-				//that.iissMap = new Map()
-				//console.log(registros)
-				$iiss.each ( function () {
-					var $ta = $(this)
-					, id = $ta.attr('id')
-					id = id.substring(id.indexOf('.')+1)
-//					console.log(that.iissCache.ids.indexOf ( idfield ))
-					//if ( ! that.iissMap.has( id ) ) {
-					//if ( ! DBH.mapas_sql.has( id ) ) {
-						var ids = []
-						$(registros).each ( function (i,registro) {
-							ids.push ( $(this).find('[fieldname="'+id+'"]').text() )
-						});
-						//console.log(ids)
-						/********* deshabilitado hasta solucionar cache *********/
-						if ( ids.length > 0 ) {
-							var idfield = $ta.attr('select-id-field')
-							, textfield = $ta.attr('select-text-field')
-							, table = $ta.attr('select-table')
-							//, sqlll = "SELECT " + idfield + "," + textfield + " as optionname FROM " + table + " WHERE " + idfield + " IN (" + ids + ")"
-							, sqlQueryObj = { idFieldName : idfield , fieldNames : `${idfield},${textfield}` , table : table }
-							//console.log(ids)
-							DBH.mapaSql ( id , sqlQueryObj ).clear().addIds ( ...ids )
-							/*
-							if ( ! DBH.mapas_sql.has( id ) ) {
-								new DBH.mapa_sql(id, sqlQueryObj )
-							} else {
-								let mapa_sql = 
-							}
-							let mapasql = new DBH.mapa_sql(id, sqlQueryObj )
-							*/
-							//, $xml = DBH.ajax.toXml ( sqlll , trim(idfield) )
-							//that.iissMap.set ( id, $xml )
-							//console.log(sqlll)
-							console.log('Cached ' + id)
-						}
-						/************/
-						//console.log(that.iissCache.xml[that.iissCache.xml.length-1].html())
-					//}
+			var $iiss = that.$lineamodelo.find('select.inline-search')
+			//console.log(registros)
+			$iiss.each ( function () {
+				var $ta = $(this)
+				, id = $ta.attr('id')
+				id = id.substring(id.indexOf('.')+1)
+				//if ( ! DBH.mapas_sql.has( id ) ) {
+				var ids = []
+				$(registros).each ( function (i,registro) {
+					ids.push ( $(this).find('[fieldname="'+id+'"]').text() )
 				});
-			//}
+				//console.log(ids)
+				if ( ids.length > 0 ) {
+					var idfield = $ta.attr('select-id-field')
+					, textfield = $ta.attr('select-text-field')
+					, table = $ta.attr('select-table')
+					, sqlQueryObj = { idFieldName : idfield , fieldNames : `${idfield},${textfield}` , table : table }
+					//console.log(ids)
+					DBH.mapaSql ( id , sqlQueryObj ).clear().addIds ( ...ids )
+				}
+			});
 			
 			$(registros).each ( function (i,registro) {
 				that.addCloneLine($(this),slide)
@@ -445,7 +424,7 @@ var inlineform2 = ( function ($,undefined) {
 				$cloneta.data('noinsert',noinsert)
 				if( cloneta.tagName != 'DIV' ) {
 					//$cloneta.find ( 'option').removeAttr('selected').filter('[value="'+valor+'"]').attr ( 'selected','1' )
-					$cloneta.val(valor)
+					$cloneta.valor(valor)
 					//if ( $cloneta.hasClass('inlinelist') )  cloneta.objeto.loadLista(1)
 					//console.log( 'id:'+cloneta.id+' valor:'+valor)
 				} else {
@@ -460,32 +439,6 @@ var inlineform2 = ( function ($,undefined) {
 				$cloneta.prop ( 'valor' , valor )
 				//$cloneta.find ( 'option').removeClass('selected')
 				$cloneta.addClass ( 'inputTextTransparent' )
-
-				if ( $cloneta.hasClass('inline-search') && $cloneta.prop('tagName')=="SELECT" )  {
-/****************************************************
-					var idfield = $cloneta.attr('select-id-field')
-					, textfield = $cloneta.attr('select-text-field')
-					, table = $cloneta.attr('select-table')
-					, sqlll = "SELECT " + textfield + " FROM " + table + " WHERE " + idfield + " = " + valor
-					, txt = DBH.ajax.valor ( sqlll )
-					, opt = '<option value="'+valor+'" selected>'+txt+'</option>'
-					//console.log(opt)
-					$cloneta.find('option').remove()
-					$cloneta.append(opt)
-*******************************************/
-/*********** deshabilitado temporalmente hasta q controle el cache ***********/
-
-					var id = $cloneta.attr('id')
-					, id = id.substring(id.indexOf('.')+1)
-					//, $xml = that.iissMap.get(id)
-					, txt = DBH.mapaSql(id).mapa.get( valor )
-					//, txt = mapa_sql.get ( valor )
-					, opt = '<option value="'+valor+'" selected>'+txt+'</option>'
-					//console.log(opt)
-					$cloneta.find('option').remove()
-					$cloneta.append('<option/>').append(opt)
-/*****************************************************************************************/
-				}
 				if ( $cloneta.hasClass( 'no-insert' ) ) $cloneta[0].disabled = 1
 				$cloneta.trigger ( 'change' )
 				$cloneta.on ( 'blur' , function (e) {
@@ -496,6 +449,7 @@ var inlineform2 = ( function ($,undefined) {
 				});
 				//that.campos[that.campos.length] = ele.id
 			});
+			//$clone.find('.inline-search').valor(valor)
 			var $botones = $clone.find('.boton')
 			, divdocumentslist = $clone.find('.divdocumentslist')[0]
 			$botones.each ( function () {
@@ -774,7 +728,7 @@ var inlineform2 = ( function ($,undefined) {
 					}
 					$rowset = $rowset.add ( $row )
 					console.log( $rowset.length)
-					inlineGroupMap.set ( key , $rowset )
+					inlineGroupMap.set ( key == '' ? '------' : key , $rowset )
 					$divCampo.addClass('inline-group')
 					/*
 					if ( key != precedentKey ) {

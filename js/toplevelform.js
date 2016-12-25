@@ -677,11 +677,12 @@ var toplevelform = function (objpar) {
 			//var $campoform = $campoform.length == 0 ? $container.find ( '[id$=".' + campo + '"]' ).not('.inlineform *') : $campoform
 			if ( cmpsidscargados.indexOf (campo) == -1 ) {
 				//valor = valor.replace(/[\x00-\x1F\x7F-\x9F]/g, "");
-				$campoform.val ( valor )
+				$campoform.valor ( valor )
 				$campoform.prop ( 'oldValue', valor )
 				$campoform.data ( 'valor',valor )
 				cmpsidscargados.push ( campo )
 				//if ( $campoform.hasClass('inlinelist') )  $campoform[0].objeto.loadLista(1)
+					/*
 				if ( $campoform.hasClass('inline-search') && $campoform.prop('tagName')=="SELECT" )  {
 					var idfield = $campoform.attr('select-id-field')
 					, textfield = $campoform.attr('select-text-field')
@@ -693,6 +694,7 @@ var toplevelform = function (objpar) {
 					$campoform.find('option').remove()
 					$campoform.append('<option/>').append(opt)
 				}
+				*/
 				if($campoform.prop('tagName')=="TEXTAREA"){
 					setTextareaHeight($campoform[0])
 				}
