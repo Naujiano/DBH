@@ -110,7 +110,7 @@ function inlineSearch ($campo,sqlConfig) {
 		//if (inputVal.length<1 && !focus) {that.hide();return false}
 		that.$container.find('table').remove()
 		that.$container.append($table)
-		//console.log(selectInlineSearch)
+		console.log(selectInlineSearch)
 		if ( selectInlineSearch ) {
 			selectInlineSearch = selectInlineSearch.replace(/\[enteredtext\]/gi,inputVal)
 			selectInlineSearch = selectInlineSearch.substring ( selectInlineSearch.toLowerCase().indexOf ( 'select' ) + 6 )
@@ -119,6 +119,7 @@ function inlineSearch ($campo,sqlConfig) {
 		} else {
 			//return false
 			var sql = "SELECT top 30 " + sqlConfig.idfield + " as dbh_temp_idvalue," + sqlConfig.field + " as dbh_temp_valor FROM " + sqlConfig.table + " WHERE " + sqlConfig.field + " LIKE '%" + inputVal + "%' ORDER BY " + sqlConfig.field
+			console.log(sql)
 			$table.find('thead').remove()
 		}
 		let resultados = DBH.ajax.select (sql)
@@ -202,9 +203,14 @@ $.fn.extend({
 					var idfield = $cloneta.attr('select-id-field')
 					, textfield = $cloneta.attr('select-text-field')
 					, table = $cloneta.attr('select-table')
-					, sqlll = "SELECT " + textfield + " FROM " + table + " WHERE " + idfield + " = " + val
-					, txtopt = val ? DBH.ajax.valor ( sqlll ) : ''
-					, txt = txtopt
+					//, sqlll = "SELECT " + textfield + " FROM " + table + " WHERE " + idfield + " = " + val
+					//, txtopt = val ? DBH.ajax.valor ( sqlll ) : ''
+					//, txt = txtopt
+					, sqlQueryObj = { idFieldName : idfield , fieldNames : `${idfield},${textfield}` , table : table }
+					//console.log(sqlQueryObj)
+					//console.log(id+sqlQueryObj)
+					DBH.mapaSql ( id , sqlQueryObj ).addIds ( val )
+					txt = DBH.mapaSql(id).mapa.get(val)
 				}
 				let opt = '<option value="'+val+'" selected>'+(txt?txt:'')+'</option>'
 				//console.log(opt)

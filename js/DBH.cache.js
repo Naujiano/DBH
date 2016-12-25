@@ -63,8 +63,7 @@
     }
     addIds (...ids) {
       let presentIds = this.ids
-      console.log(presentIds)
-      console.log(ids)
+//      console.log(ids)
       ids.forEach ( ( id , i ) => ids[i] = id * 1 )
       let newIds = ids.filter ( x => presentIds.indexOf ( x ) == -1 )
       if ( ! newIds.length ) return false;
@@ -72,10 +71,11 @@
       let idFieldName = this.sqlQuery.sqlQueryObj.idFieldName.trim()
       , where = `${idFieldName} IN ( ${newIds} )`
       , selectSyntax = this.sqlQuery.where ( where ).selectSyntax()
-      console.log(selectSyntax)
+//      console.log(selectSyntax)
       let $rows = DBH.ajax.toRows ( selectSyntax , idFieldName )
       this.add$rows ( $rows )
-	  console.log(this.$table.wrap('<div/>').parent().html())
+      console.log(idFieldName+presentIds)
+//	  console.log(this.$table.wrap('<div/>').parent().html())
     }
 	/*
     query () {
