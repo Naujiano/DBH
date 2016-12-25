@@ -102,7 +102,7 @@ span.ui-selectmenu-button,span.ui-selectmenu-button:hover,span.ui-selectmenu-but
 .opened .inline-group-title {
 	color: #32AB9F;
 }
-.divlistado.grouped .divCampoForm.inline-group {
+.divlistado.grouped .lineamodelo:not(:hover):not(.edited) .divCampoForm.inline-group {
 	display:none;
 }
 .divlistado.grouped .lineamodelo {
@@ -113,6 +113,6 @@ span.ui-selectmenu-button,span.ui-selectmenu-button:hover,span.ui-selectmenu-but
 .divinlineform .lineamodelo.inline-group-first {
 	padding-top:15px;
 }
-.divlistado.grouped label {
+.divlistado.grouped .lineamodelo:not(:hover):not(.edited) label {
 	display: none;
 }

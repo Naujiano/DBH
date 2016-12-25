@@ -1519,7 +1519,7 @@ var toplevelform = function (objpar) {
 			, $label = $('<label/>').text(nombre)
 			$this.prepend ( $label )
 		})
-		$winbody.on('dblclick','campo',function(){$(this).hide()})
+		$winbody.on('dblclick','campo,registro>label',function(){$(this).hide()})
 		//setTimeout(function(){win.print()},0)
 		//$winbody.append('<link rel="stylesheet" type="text/css" href="theme.css">')
 	}

@@ -491,6 +491,8 @@ var inlineform2 = ( function ($,undefined) {
 				$cloneta.on ( 'blur' , function (e) {
 					//console.log(this)
 					that.guardar(this);
+				}).on ( 'focus', function (e) {
+					$(this).closest('.lineamodelo').addClass('edited')
 				});
 				//that.campos[that.campos.length] = ele.id
 			});
