@@ -9,8 +9,8 @@
 		DBHpath = "https://rawgit.com/Naujiano/DBH/" & DBHversion & "/"
 		DBHversion = left(DBHversion,7)
 	end if
-	session.codepage=65001
-	response.Charset="utf-8"
+	'session.codepage=65001
+	'response.Charset="utf-8"
 	server.scripttimeout=6000
 	session.timeout=60
 	Set getPage = Server.CreateObject("Microsoft.XMLHTTP" )
@@ -18,7 +18,7 @@
 	getPage.Send
 	response.write getPage.responseText
 %>
-<title>Ellis (Local)</title>
+<title>Transearch (Local)</title>
 
 <input type="hidden" id="apppath" value="<%=left(request.servervariables("PATH_INFO"), len(request.servervariables("PATH_INFO")) - 9 ) %>">
 <input type="hidden" id="DBHpath" value="<%=DBHpath%>">

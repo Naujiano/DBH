@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>HTML5 File Drag &amp; Drop API</title>
+<link rel="stylesheet" type="text/css" media="all" href="styles.css" />
+<script type='text/javascript' src='jquery-1.10.1.js'></script>
+<script type='text/javascript' src='index.js'></script>
+<script type='text/javascript' src='general.js'></script>
+</head>
+<body>
+<!--<div id="cruzcerrarventana" onclick="$('#divsubirdocs',parent.document).slideUp(500)">Cerrar</div>-->
+<input onclick="$('#divsubirdocs',parent.document).hide()" class="boton" value="x Cerrar" title="Cerrar esta ventana" style="width:55px;float:right;">
+<div style="clear:both"></div>
+<form id="upload" action="upload.asp" method="POST" enctype="multipart/form-data">
+
+<fieldset>
+<legend>Subir archivos</legend>
+
+<input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="10" />
+
+<div>
+	<label for="fileselect">Archivos para subir:</label>
+	<input type="file" id="fileselect" name="fileselect[]" multiple="multiple" />
+	<div style="clear:both;"></div>
+	<div id="filedrag" style="float:left;width:100%;z-index:1">Arrastre los archivos aquí</div>
+</div>
+
+<div id="submitbutton">
+	<button type="submit">Subir archivos</button>
+</div>
+
+</fieldset>
+
+</form>
+<div id="divscrollsubirdocs" style="box-sizing:border-box;height:100%;width:100%;overflow:auto;border:0px solid green;margin-top:-00px;padding:00px 0 0 0;z-index:0">
+<div id="progress"></div>
+
+<div id="messages">
+<p>Status</p>
+</div>
+</div>
+<script src="filedrag.js"></script>
+</body>
+</html>

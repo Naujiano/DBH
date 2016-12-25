@@ -753,23 +753,44 @@ var inlineform2 = ( function ($,undefined) {
 			let $insertf = that.$divinsertform
 			//	console.log($insertf.find('inline-group').length)
 			, $inlineGroup = $insertf.find('.inline-group').eq(0)
-			, $inlineGroupDiv = $('<div class="inline-group-container">juan</div>')
 			, $rows = that.$divlistado.find ('.lineamodelo')
+			, inlineGroupMap = new Map()
 			if ( $inlineGroup.length ) {
 				let keyFieldId = $inlineGroup.attr('id')
-				, precedentKey = false
+				//, precedentKey = false
 				$rows.each ( function () {
 					let $row = $(this)
 					, $keyField = $row.find ( `[id="${keyFieldId}"]` )
 					, isSelect = $keyField[0].tagName == 'SELECT'
 					, key = isSelect ? $keyField.find('option:selected').text() : $keyField.val()
 					, $divCampo = $keyField.closest('.divCampoForm')
+					, inlineGroupId = $keyField.find('option:selected').val()
+					, $rowset = inlineGroupMap.get ( key )
+					if ( ! $rowset ) {
+						$rowset = $()
+						console.log('init rowset'+key)
+					}
+					$rowset = $rowset.add ( $row )
+					console.log( $rowset.length)
+					inlineGroupMap.set ( key , $rowset )
 					$divCampo.addClass('inline-group')
+					/*
 					if ( key != precedentKey ) {
 						$row.addClass('inline-group-first').before($inlineGroupDiv.clone().text(key))
 						precedentKey = key
 					}
+					*/
 				})
+				for ( let [ key , $rowset ] of inlineGroupMap.entries() ) {
+					let $container = $('<div class="inline-group-container opened"></div>').attr ( 'keyFieldId' , keyFieldId ).attr ( 'key' , key )
+					, $title = $('<div class="inline-group-title"></div>').text(key).click ( function () {$(this).closest('.inline-group-container').toggleClass('opened').find('.inline-group-toggle-div').slideToggle()} )
+					, $toggleContainer = $('<div class="inline-group-toggle-div"/>')
+					$container.append ( $title )
+					$container.append ( $toggleContainer )
+					$toggleContainer.append ( $rowset.detach() )
+					that.$divlistado.append($container)
+					console.log(key+'**'+ $rowset.length)
+				}
 				that.$divlistado.addClass('grouped')//find('label[for]').hide()
 			}
 			mostrarTelon(0)

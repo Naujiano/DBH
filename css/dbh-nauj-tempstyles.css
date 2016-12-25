@@ -79,16 +79,28 @@ span.ui-selectmenu-button,span.ui-selectmenu-button:hover,span.ui-selectmenu-but
 }
 .inline-group-container {
     /* content: "juan"; */
+    width: 100%;
+    display: block;
+    /* position: absolute; */
+    box-sizing: border-box;
+}
+.inline-group-title {
+    /* content: "juan"; */
     width: calc(100% + 20px);
     text-align: center;
     display: block;
     /* position: absolute; */
     padding: 5px;
     margin-top: 0;
+	margin-bottom: 10px;
+	cursor: pointer;
     margin-left: -10px;
     /* margin-bottom: 10px; */
     background: #eee;
     box-sizing: border-box;
+}
+.opened .inline-group-title {
+	color: #32AB9F;
 }
 .divlistado.grouped .divCampoForm.inline-group {
 	display:none;
