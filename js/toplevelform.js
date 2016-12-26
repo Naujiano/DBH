@@ -1137,6 +1137,7 @@ var toplevelform = function (objpar) {
 		}
 		$container.find('.remove-on-clear').remove()
 		$container.find('option.hide').removeClass('hide').show()
+		$container.find('[data-available-ids]').removeAttr('data-available-ids')
 		$container.find('.inputText').not('[name="static"]').each(function(){
 			var $cp = $(this)
 			, val = setDefaults*1?$cp.attr("data_default_value"):''

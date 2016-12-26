@@ -1608,9 +1608,10 @@ var vars = ( function () {
 		$selects.find('option').addClass('hide')
 		$selects.find('option:first').removeClass('hide')
 		$(r).children('a1').each ( function () {
-			var $opt = $selects.find('option[value="' + $(this).text() + '"]')
+			var valor = $(this).text()
+			, $opt = $selects.find('option[value="' + valor + '"]')
 			$opt.removeClass('hide')
-			availableIds.push($opt.val())
+			availableIds.push(valor)
 		})
 //		console.log($selects.html())
 		//$selects.find('option.hide').remove()

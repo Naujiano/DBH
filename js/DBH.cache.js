@@ -1,6 +1,7 @@
 {
   class sqlQuery {
     constructor ( sqlQueryObj ) {
+	  if ( typeof sqlQueryObj == 'string' ) sqlQueryObj = this.autoparse ( sqlQueryObj )
       this.sqlQueryObj = sqlQueryObj
       //let { idFieldName , textFieldName , table , orderBy } = this.sqlQueryObj
     }
@@ -13,6 +14,20 @@
       this.sqlQueryObj.where = where
       return this
     }
+	autoparse ( sqlQueryString ) {
+		sqlQueryString = sqlQueryString.toLowerCase().trim()
+		let firstSpacePos = sqlQueryString.indexOf ( " " )
+		, firstComaPos = sqlQueryString.indexOf ( "," )
+		, fromPos = sqlQueryString.lastIndexOf ( " from " )
+		, wherePos = sqlQueryString.lastIndexOf ( " where " )
+		, orderbyPos = sqlQueryString.lastIndexOf ( " order by " )
+		, idFiledName = sqlQueryString.substr ( firstSpacePos , firstComaPos )
+		, fieldNames = sqlQueryString.substr ( firstComaPos + 1 , fromPos )
+		, table = sqlQueryString.substr ( fromPos + 6 , wherePos )
+		, where = sqlQueryString.substr ( wherePos + 7 , orderbyPos )
+		, orderby = sqlQueryString.substr ( orderbyPos + 10  )
+		return {idFiledName , fieldNames , table , where , orderby }
+	}
   }
   class tabla {
     constructor ( name , $tabla ) {

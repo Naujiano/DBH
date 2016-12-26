@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <style>body{display:none}</style>
 <%
-	DBHversion = "Alpha"
-	if DBHversion = "Alpha" then
+	DBHversion = request("v")
+	if DBHversion = "0" then
 		DBHpath = "http://192.168.1.128/dbh/"
 	else
 		if DBHversion = "" then

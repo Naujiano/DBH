@@ -107,7 +107,7 @@ function inlineSearch ($campo,sqlConfig) {
 		, $table = $('<table class="inline-search-table"><thead><tr/></thead><tbody/></table>')
 		, $header = $table.find('tr')
 		, $body = $table.find('tbody')
-		, availableIds = $field.attr('availableIds')
+		, availableIds = $field.attr('data-available-ids')
 		, whereAvailableIds = ''
 		if ( availableIds ) {
 			whereAvailableIds = " AND " + sqlConfig.idfield + " IN (" + availableIds + ") "
@@ -119,7 +119,9 @@ function inlineSearch ($campo,sqlConfig) {
 		if ( selectInlineSearch ) {
 			selectInlineSearch = selectInlineSearch.replace(/\[enteredtext\]/gi,inputVal)
 			selectInlineSearch = selectInlineSearch.substring ( selectInlineSearch.toLowerCase().indexOf ( 'select' ) + 6 )
-			var sql = `SELECT top 30 ${sqlConfig.idfield} as dbh_temp_idvalue, ${sqlConfig.field} as dbh_temp_valor, ${selectInlineSearch}`
+			var sql = `SELECT top 30 ${sqlConfig.idfield} as dbh_temp_idvalue, ${sqlConfig.field} as dbh_temp_valor, ${selectInlineSearch}`.toLowerCase().trim()
+			, splitOrderBy = sql.split ( ' order by ' )
+			, sql = splitOrderBy[0] + whereAvailableIds + " order by " + splitOrderBy[1]
 			console.log(sql)
 		} else {
 			//return false
