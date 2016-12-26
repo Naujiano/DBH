@@ -1602,6 +1602,7 @@ var vars = ( function () {
 	}
 	pub.filterSelectLists = function ( $selects, sql ) {
 		var r = sqlExec ( sql )
+		, availableIds = []
 //		console.log(sql)
 //		console.log(r)
 		$selects.find('option').addClass('hide')
@@ -1609,12 +1610,14 @@ var vars = ( function () {
 		$(r).children('a1').each ( function () {
 			var $opt = $selects.find('option[value="' + $(this).text() + '"]')
 			$opt.removeClass('hide')
+			availableIds.push($opt.val())
 		})
 //		console.log($selects.html())
 		//$selects.find('option.hide').remove()
 //		$selects.find('option').prop('checked',false)
 		$selects.find('option').css('display','')
 		$selects.find('option.hide').css('display','none')
+		$selects.attr('data-available-ids',availableIds)
 		/*
 		$selects.prop('selectedIndex','0')
 		$selects.each ( function (i) {

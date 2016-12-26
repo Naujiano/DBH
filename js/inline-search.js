@@ -107,6 +107,11 @@ function inlineSearch ($campo,sqlConfig) {
 		, $table = $('<table class="inline-search-table"><thead><tr/></thead><tbody/></table>')
 		, $header = $table.find('tr')
 		, $body = $table.find('tbody')
+		, availableIds = $field.attr('availableIds')
+		, whereAvailableIds = ''
+		if ( availableIds ) {
+			whereAvailableIds = " AND " + sqlConfig.idfield + " IN (" + availableIds + ") "
+		}
 		//if (inputVal.length<1 && !focus) {that.hide();return false}
 		that.$container.find('table').remove()
 		that.$container.append($table)
@@ -118,7 +123,7 @@ function inlineSearch ($campo,sqlConfig) {
 			console.log(sql)
 		} else {
 			//return false
-			var sql = "SELECT top 30 " + sqlConfig.idfield + " as dbh_temp_idvalue," + sqlConfig.field + " as dbh_temp_valor FROM " + sqlConfig.table + " WHERE " + sqlConfig.field + " LIKE '%" + inputVal + "%' ORDER BY " + sqlConfig.field
+			var sql = "SELECT top 30 " + sqlConfig.idfield + " as dbh_temp_idvalue," + sqlConfig.field + " as dbh_temp_valor FROM " + sqlConfig.table + " WHERE " + sqlConfig.field + " LIKE '%" + inputVal + "%'" + whereAvailableIds + " ORDER BY " + sqlConfig.field
 			console.log(sql)
 			$table.find('thead').remove()
 		}
