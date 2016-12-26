@@ -109,7 +109,8 @@ function inlineSearch ($campo,sqlConfig) {
 		, $body = $table.find('tbody')
 		, availableIds = $field.attr('data-available-ids')
 		, whereAvailableIds = ''
-		if ( availableIds ) {
+		debugger;
+		if ( availableIds || availableIds == "" ) {
 			whereAvailableIds = " AND " + sqlConfig.idfield + " IN (" + availableIds + ") "
 		}
 		//if (inputVal.length<1 && !focus) {that.hide();return false}
