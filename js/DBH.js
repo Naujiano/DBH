@@ -148,6 +148,7 @@ var DBH = ( function () {
 				, hound = DBH.hounds.get ('grupos')
 				hound.add ( json )
 				DBH.hounds.set ( 'grupos' , hound )
+				console.log('aa')
 			} else {
 				var sql = "SELECT li1_id,des,li1_color,grupo FROM dbh_listas WHERE grupo IN ( SELECT data_field_grupo FROM dbh_campos inner join dbh_areas on data_da_id = da_id WHERE data_activo = 1 and da_activa = 1 ) ORDER BY grupo,des"
 				DBH.$valoresXml = DBH.ajax.toXml ( sql, 'li1_id' )
@@ -162,14 +163,19 @@ var DBH = ( function () {
 					, deses = []
 					$lines.each ( function () {
 						let $line = $(this)
+						, li1_id = $line.attr('id')
+						, li1_color = $line.find('[fieldname="li1_color"]').attr('fieldvalue')
 						, des = $line.find('[fieldname="des"]').attr('fieldvalue')
-						deses.push(des)
+						, obj = {li1_id,li1_color,des}
+						deses.push(obj)
+						//deses.push(des)
 					})
 					//, json = DBH.xmlToJSON ( $xml2 )
 					let hound = new Bloodhound({
-						datumTokenizer: Bloodhound.tokenizers.whitespace,
+						//datumTokenizer: Bloodhound.tokenizers.whitespace,
+						datumTokenizer: Bloodhound.tokenizers.obj.whitespace('des'),
 						queryTokenizer: Bloodhound.tokenizers.whitespace
-						//,identify: function(obj) { return obj.li1_id; }
+						,identify: function(obj) { return obj.des; }
 						,local: deses
 					});
 					// hound.add ( JSON.stringify ( json )  )

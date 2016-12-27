@@ -1,7 +1,8 @@
-.bootstrap-tagsinput {
+.DBH .bootstrap-tagsinput {
 	width: 100%;
 	float:none;
 	box-sizing: border-box;
+//    padding: 2px 0 0 0;
 }
 .bootstrap-tagsinput .tag {
 	float:none;

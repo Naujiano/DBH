@@ -33,6 +33,7 @@ Dependent on: jQuery, bootstrap-tagsinput, typeahead (bundle with Bloodhound)
 			return this
 		}
 	})
+	DBH.stylesMap = new Map()
 	DBH.field = DBH_field_instantiate
 	function DBH_field_instantiate( $jquerySet ) {
 		if ( ! $jquerySet.length ) return undefined;
@@ -101,47 +102,65 @@ Dependent on: jQuery, bootstrap-tagsinput, typeahead (bundle with Bloodhound)
 		constructor ( $input , grupo ) {
 			super ( $input )
 			this.grupo = grupo
-			var hound = DBH.hounds.get('grupos:'+grupo)
-			//debugger;
-			if ( ! hound ) {
-				let data = DBH.hounds.get('grupos').get(grupo)
-				var hound = new Bloodhound({
-					datumTokenizer: Bloodhound.tokenizers.whitespace,
-					queryTokenizer: Bloodhound.tokenizers.whitespace
-					//,identify: function(obj) { return obj.des; }
-					,local: data
-				});
-				DBH.hounds.set('grupos:'+grupo,hound)
-			}
-			this.hound = hound
-			//debugger;
+			this.hound = DBH.hounds.get('grupos:'+grupo)
+			//debugger
 			$input.tagsinput({
 				//itemValue: 'li1_id',
 				//itemText: 'des',
+				tagClass: function(item) {
+					return ('custom-color-'+item);
+				},
 				typeaheadjs: [{
 					highlight: true
+					,minLength : 0
 					}
 					,{
-					source: hound
-					//,display:'des'
+					//source: this.hound
+			source: function nflTeamsWithDefaults(q, sync) {
+				if (q === '') {
+					sync($input.data( 'dbh-field-instance' ).hound.all()); // This is the only change needed to get 'ALL' items as the defaults
+				}
+				else {
+					$input.data( 'dbh-field-instance' ).hound.search(q, sync);
+				}
+			}
+					,display:'des'
 				}]
 				
 			});
+			$input.on('itemRemoved',	function (event) {
+				let isEdition = DBH.area().recid.length
+				if ( isEdition ) formCabecera.formModificado(1)
+			})
 			$input.on('itemAdded',	function (event) {
 				console.log(event.item)
 				let item = event.item
 				, $input = $(this)
 				, cached = $input.data( 'dbh-field-instance' ).hound.get(item).length
-				if ( ! cached ) {
+				, isEdition = DBH.area().recid.length
+				if ( isEdition ) formCabecera.formModificado(1)
+				if ( ! cached && isEdition ) {
 					let  sql = "SELECT id FROM DBH_LISTAS WHERE grupo = '" + grupo + "'"
 					, sql1 = "INSERT INTO DBH_LISTAS ( grupo, id, des ) ( SELECT '" + grupo + "', MAX(id)+1 AS a,'" + item + "' FROM DBH_LISTAS WHERE grupo = '" + grupo + "' )"
 					, sql2 = "INSERT INTO DBH_LISTAS ( grupo, id, des ) VALUES ( '" + grupo + "', 1 ,'" + item + "' )"
 					sql = sqlExecVal ( sql ) ? sql1 : sql2
 					sqlExecVal ( sql , 0 )
 					let sqlm = "SELECT MAX(li1_id) FROM DBH_LISTAS"
-					let a = sqlExecVal ( sqlm , 0 )
-					$input.data( 'dbh-field-instance' ).hound.add(item)
+					, li1_id = sqlExecVal ( sqlm , 0 )
+					, obj = {li1_id,des:item,grupo}
+					$input.data( 'dbh-field-instance' ).hound.add(obj)
+					//$input.data( 'dbh-field-instance' ).hound.add(item)
 				}
+				let itemObj = $input.data( 'dbh-field-instance' ).hound.get(item)[0]
+				, li1_id  = itemObj.li1_id
+				, color  = itemObj.li1_color
+				, $style = $("<style type='text/css'>.tag.custom-color-"+item+"{background:" + color  + "}</style>")
+				if( ! DBH.stylesMap.has ( item ) ) {
+					$style.appendTo("head")
+					DBH.stylesMap.set(item, $style)
+				}
+				//debugger
+				//if(color)$input.css({background:color})
 			})
 		}
 		val ( _val ) {

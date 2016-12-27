@@ -826,7 +826,28 @@ function $formatFilter($cmpsfiltro){
 			if(v!=""){
 				var fieldid = $field.attr('id')
 				, fieldval = $field.val()
-				if ( fieldid != "dbh_redactor_consultas" ) {
+				if ( $field.hasClass('tags-cloud') ) {
+					let tags = $field.val().split(',')
+					if ( tags.length ) {
+						let name = $field.attr('name')
+						tags.forEach ( tag => {
+							let sql = fieldid + " LIKE '%" + tag + "%'"
+							listadoWhere += sql + " AND "
+							listadoWhereText += name + " <b>[" + tag + "]</b><br>"
+							var whereobj = {
+								id : fieldid
+								, name : name
+								, sql : sql
+								, value : tag
+								, parameters : 'active'
+								, leftexp : ''
+								, rightexp : ''
+							}
+							wherearr.push(whereobj)
+							
+						})
+					}
+				} else if ( fieldid != "dbh_redactor_consultas" ) {
 					//console.log($(this).attr('id'))
 					var cmp = this
 					var variablesFiltro=filterStringMatch(cmp,this)
@@ -1748,7 +1769,7 @@ var vars = ( function () {
 		//console.log('ping')
 		if ( loc.intervalpinger != 'undefined' ) clearTimeout ( loc.intervalpinger )
 		if ( document.getElementById('divpinger') != null ) document.getElementById('divpinger').innerHTML = 'Last ping: ' + new Date().toString().slice(16,24)
-		loc.intervalpinger = setTimeout(function(){pub.pinger ()},6000)
+		loc.intervalpinger = setTimeout(function(){pub.pinger ()},60000)
 	}
 	pub.pinger = function () {
 		/*

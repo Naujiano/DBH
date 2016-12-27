@@ -290,7 +290,7 @@ var alimentadorAutomatico = ( function () {
 //		console.log('v'+v)
 		$('#alimentadorFiltro').val(v?v:'')
 		$('#alimentadorColor').val(bgcolor?bgcolor:'').css({'background-color':bgcolor})//.trigger('keydown').trigger('keypress').trigger('keyup')
-		var alimentable = $(caller).attr('grupo') || $(caller).hasClass('db-edit')
+		var alimentable = ( $(caller).attr('grupo') && ! $(caller).is('.tags-cloud')  ) || $(caller).hasClass('db-edit')
 		var insideinlineform = $(caller).closest('.inlineform').length > 0
 		if ( insideinlineform ) {
 			$('.alimentador-btnlock').hide()
