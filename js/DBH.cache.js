@@ -59,7 +59,6 @@
     }
     clear () {
       this.$table.find('tr').remove() 
-	  this.ids = [];
 	  return this;
     }
   }
@@ -92,6 +91,11 @@
       console.log(idFieldName+presentIds)
 //	  console.log(this.$table.wrap('<div/>').parent().html())
     }
+	clear () {
+		this.ids = [];
+		super.clear();
+		return this;
+	}
 	/*
     query () {
       let idFieldName = this.sqlQuery.sqlQueryObj.idFieldName.trim()
@@ -171,6 +175,6 @@
 		}
 		return instance
 	}
+	DBH.hounds = new Map ()
 }
-//localStorage.clear();
-console.log('culoja loaded!')
+

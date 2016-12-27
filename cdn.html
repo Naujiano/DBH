@@ -1,3 +1,5 @@
+<!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/genericons/3.1/genericons.css">
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
@@ -9,6 +11,9 @@
 <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.6.0/mousetrap.min.js'></script>
 <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/jstree.min.js'></script>
 <script type="text/javascript" src="http://dbh.naujcloud.com/jquery-simple-datetimepicker-master/jquery.simple-dtpicker.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
 <script type="text/javascript" src="customCode/customCode.js"></script> 
 
 
@@ -19,6 +24,9 @@
 		console.log(DBHpath)
 		let calls = ''
 		calls += `<link rel="shortcut icon" href="${DBHpath}favicon.ico">`
+		//calls += `<link rel="stylesheet" href="${DBHpath}css/bootstrap.min.css">`
+		calls += `<link rel="stylesheet" href="${DBHpath}css/typeahead.css">`
+		calls += `<link rel="stylesheet" href="${DBHpath}css/tagsinput.css">`
 		calls += `<link rel="stylesheet" href="${DBHpath}css/main.css">`
 		calls += `<link rel="stylesheet" href="${DBHpath}css/dbh-nauj-tempstyles.css">`
 		calls += `<script type="text/javascript" src="${DBHpath}js/DBH.js"><\/script> `
@@ -44,6 +52,7 @@
 			calls += `<script type="text/javascript" src="${DBHpath}js/listadoCuerpo.js"><\/script> `
 			calls += `<script type="text/javascript" src="${DBHpath}js/myAjax.js"><\/script> `
 			calls += `<script type="text/javascript" src="${DBHpath}js/DBH.cache.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/DBH-field.js"><\/script> `
 			$('head').append($(calls))
 			DBH.start()
 		}

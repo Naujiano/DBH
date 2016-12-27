@@ -137,16 +137,45 @@ var DBH = ( function () {
 	this.load = function () {
 		var that = this
 		this.loadValores = function (grupo) {
-			var t3 = performance.now();
+			var t3 = performance. now();
 			if ( grupo ) {
 				var sql = "SELECT li1_id,des,li1_color,grupo FROM dbh_listas WHERE grupo ='"+grupo+"' ORDER BY des"
 				, $grupoXml = DBH.ajax.toXml ( sql, 'li1_id' )
 				, $xml = DBH.$valoresXml.find('[fieldname="grupo"][fieldvalue="'+grupo+'"]').parent()
 				$xml.remove()
 				DBH.$valoresXml = DBH.$valoresXml.add($grupoXml)
+				let json = DBH.xmlToJSON ( DBH.$valoresXml )
+				, hound = DBH.hounds.get ('grupos')
+				hound.add ( json )
+				DBH.hounds.set ( 'grupos' , hound )
 			} else {
 				var sql = "SELECT li1_id,des,li1_color,grupo FROM dbh_listas WHERE grupo IN ( SELECT data_field_grupo FROM dbh_campos inner join dbh_areas on data_da_id = da_id WHERE data_activo = 1 and da_activa = 1 ) ORDER BY grupo,des"
 				DBH.$valoresXml = DBH.ajax.toXml ( sql, 'li1_id' )
+				let $xml = DBH.$valoresXml.find('[fieldname="grupo"]')
+				, gruposSet = new Set()
+				$xml.each ( function () {
+					let grupo = $(this).attr('fieldvalue')
+					gruposSet.add(grupo)
+				})
+				for (let key of gruposSet.values()) {
+					let $lines =  DBH.$valoresXml.find('[fieldname="grupo"][fieldvalue="'+key+'"]').parent()
+					, deses = []
+					$lines.each ( function () {
+						let $line = $(this)
+						, des = $line.find('[fieldname="des"]').attr('fieldvalue')
+						deses.push(des)
+					})
+					//, json = DBH.xmlToJSON ( $xml2 )
+					let hound = new Bloodhound({
+						datumTokenizer: Bloodhound.tokenizers.whitespace,
+						queryTokenizer: Bloodhound.tokenizers.whitespace
+						//,identify: function(obj) { return obj.li1_id; }
+						,local: deses
+					});
+					// hound.add ( JSON.stringify ( json )  )
+					//debugger;
+					DBH.hounds.set ( 'grupos:' + key , hound )
+				}
 				DBH.telon.texto.append ('Valores')
 			}
 			var t4 = performance.now();DBH.consola( "loadXmlValores: " + (t4 - t3) + " milliseconds.")
@@ -327,7 +356,7 @@ var DBH = ( function () {
 		this.toXml = function (sql,pkname) {
 			var oldXml = that.selectToXml(sql)
 			, $oldXml = $(oldXml)
-			, $newXml = $('<lines/>')
+			, $newXml = $('<lines/>').attr('data-idFieldName',pkname)
 			$oldXml.find('registro').each ( function () {
 				var $rec = $(this)
 				, $fields = $rec.children().not('[fieldname="'+pkname+'"]')
@@ -361,6 +390,23 @@ var DBH = ( function () {
 				$newXml.append($tr)
 			})
 			return $newXml.find('tr')
+		}
+		this.xmlToJSON = function ($oldXml) {
+			let lines = []
+			$oldXml.find('line').each ( function () {
+				var $rec = $(this)
+				, $fields = $rec.children()
+				, li1_id = $rec.attr('id')
+				, obj = {li1_id }
+				$fields.each ( function () {
+					var $field = $(this)
+					, propertyName = $field.attr('fieldname')
+					, propertyValue = $field.text()
+					obj[propertyName] = propertyValue
+				})
+				lines.push(obj)
+			})
+			return lines
 		}
 		this.xmlToObject = function (xml,withlinefeeds){
 			var records = []

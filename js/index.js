@@ -1989,7 +1989,7 @@ var vars = ( function () {
 			, data_customfield_sql_select = $this.find('[fieldname="data_customfield_sql_select"]').text().toLowerCase()
 			, da_ids_areasafectantes = $this.find('[fieldname="da_ids_areasafectantes"]').text().toLowerCase()
 			, da_ids_areasafectantes = da_ids_areasafectantes ? da_ids_areasafectantes.substring(0,da_ids_areasafectantes.length-1).replace(/ /gi,'').split(',') : da_ids_areasafectantes
-			, eslista = data_sql_loadlista || data_field_grupo || data_select_options
+			, eslista = data_sql_loadlista || ( data_field_grupo && ! $('<fake/>').addClass(clases).hasClass('tags-cloud') ) || data_select_options
 			, estopform = caller.sqlSelectListado ? 1:0
 			, $fieldfromdb = eslista ? $('<select/>') : $('<textarea/>')
 			$fieldfromdb.addClass(clases)
@@ -2127,6 +2127,7 @@ var vars = ( function () {
 					$container2.append( $wrapper )
 				}
 			}
+			DBH.field($fieldfromdb);
 		})
 
 					//$container2.append( $containervirtual )

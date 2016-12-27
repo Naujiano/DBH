@@ -678,6 +678,7 @@ var toplevelform = function (objpar) {
 			if ( cmpsidscargados.indexOf (campo) == -1 ) {
 				//valor = valor.replace(/[\x00-\x1F\x7F-\x9F]/g, "");
 				$campoform.valor ( valor )
+				//$campoform.dbhField().val ( valor )
 				$campoform.prop ( 'oldValue', valor )
 				$campoform.data ( 'valor',valor )
 				cmpsidscargados.push ( campo )
@@ -1141,7 +1142,8 @@ var toplevelform = function (objpar) {
 		$container.find('.inputText').not('[name="static"]').each(function(){
 			var $cp = $(this)
 			, val = setDefaults*1?$cp.attr("data_default_value"):''
-			$cp.val(val).removeData('data-filter-conditions');
+			//if ( $cp.hasClass('inline-search') ) debugger;
+			$cp.valor(val).removeData('data-filter-conditions');
 			this.readOnly=0
 			if ($cp.prop('tagName')!='SELECT') setTextareaHeight($cp[0])//$cp.css('height','')
 		})

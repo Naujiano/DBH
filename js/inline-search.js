@@ -194,38 +194,3 @@ function inlineSearch ($campo,sqlConfig) {
 	$(document).on ( 'scrolled' , that.position )
 	//$campo.on ( 'blur' , function(){that.hide()} )
 }
-$.fn.extend({
-	valor: function (val) {
-		let $jquerySet = this
-		$jquerySet.each ( function () {
-			let $cloneta = $(this)
-			, isInlineSearch = $cloneta.hasClass ( 'inline-search' )
-			if ( isInlineSearch ) {
-				var id = $cloneta.attr('id')
-				, id = id.substring(id.indexOf('.')+1)
-				, isInlineForm = $cloneta.closest('.lineamodelo').length
-				if ( isInlineForm ) {
-					var txt = DBH.mapaSql(id).mapa.get( val )
-				} else {
-					var idfield = $cloneta.attr('select-id-field')
-					, textfield = $cloneta.attr('select-text-field')
-					, table = $cloneta.attr('select-table')
-					//, sqlll = "SELECT " + textfield + " FROM " + table + " WHERE " + idfield + " = " + val
-					//, txtopt = val ? DBH.ajax.valor ( sqlll ) : ''
-					//, txt = txtopt
-					, sqlQueryObj = { idFieldName : idfield , fieldNames : `${idfield},${textfield}` , table : table }
-					//console.log(sqlQueryObj)
-					//console.log(id+sqlQueryObj)
-					DBH.mapaSql ( id , sqlQueryObj ).addIds ( val )
-					txt = DBH.mapaSql(id).mapa.get(val)
-				}
-				let opt = '<option value="'+val+'" selected>'+(txt?txt:'')+'</option>'
-				//console.log(opt)
-				$cloneta.find('option').remove()
-				$cloneta.append('<option/>').append(opt)
-			} else {
-				$cloneta.val(val)
-			}
-		})
-	}
-})

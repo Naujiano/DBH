@@ -1,0 +1,15 @@
+.bootstrap-tagsinput {
+	width: 100%;
+	float:none;
+	box-sizing: border-box;
+}
+.bootstrap-tagsinput .tag {
+	float:none;
+	margin-right: 2px;
+	color: white;
+	background: #5BC0DE;
+	padding: 2px 4px;
+	border-radius: 3px;
+	font-size: 9px;
+	/* font-weight: bold; */
+}
