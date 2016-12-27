@@ -54,7 +54,7 @@ Dependent on: jQuery, bootstrap-tagsinput, typeahead (bundle with Bloodhound)
 		constructor ( $input ) {
 			$input.addClass ( '_dbh-field' )
 			this.$input = $input
-			let existsIntance = $input.data( 'dbh-field-instance' )
+			//let existsIntance = $input.data( 'dbh-field-instance' )
 			$input.data( 'dbh-field-instance' , this )
 		}
 		val (_val ) {
@@ -63,7 +63,8 @@ Dependent on: jQuery, bootstrap-tagsinput, typeahead (bundle with Bloodhound)
 				return _val
 			} else {
 				this.$input.val( _val )
-				//return this.$input
+				//debugger
+				console.log(this.$input.attr( 'id' )+ "**"+_val)
 			}
 		}
 	}
@@ -103,7 +104,7 @@ Dependent on: jQuery, bootstrap-tagsinput, typeahead (bundle with Bloodhound)
 			super ( $input )
 			this.grupo = grupo
 			this.hound = DBH.hounds.get('grupos:'+grupo)
-			//debugger
+			debugger
 			$input.tagsinput({
 				//itemValue: 'li1_id',
 				//itemText: 'des',

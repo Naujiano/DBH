@@ -422,6 +422,7 @@ var inlineform2 = ( function ($,undefined) {
 				, valor = $registro.find('[fieldname="'+fieldname+'"]').text()
 				, noinsert = that.$lineamodelo.find('[id="'+this.id+'"]').data('noinsert')
 				$cloneta.data('noinsert',noinsert)
+				DBH.field($cloneta);
 				if( cloneta.tagName != 'DIV' ) {
 					//$cloneta.find ( 'option').removeAttr('selected').filter('[value="'+valor+'"]').attr ( 'selected','1' )
 					$cloneta.valor(valor)

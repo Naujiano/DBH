@@ -92,6 +92,7 @@ var DBH = ( function () {
 				//DBH.load()
 				//$('body').prepend('<input id="loaded_usu_id" type="hidden" value="'+usu_id+'">')
 			}
+			console.log(customjs)
 			$('body').show()
 		}
 		function inittimer() {

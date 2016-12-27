@@ -47,11 +47,12 @@
 			calls += `<script type="text/javascript" src="${DBHpath}js/multistatebutton.js"><\/script> `
 			calls += `<script type="text/javascript" src="${DBHpath}js/docs.js"><\/script> `
 			calls += `<script type="text/javascript" src="${DBHpath}js/alimentador.js"><\/script> `
-			calls += `<script type="text/javascript" src="${DBHpath}js/inline-search.js"><\/script> `
 			calls += `<script type="text/javascript" src="${DBHpath}js/index.js"><\/script> `
 			calls += `<script type="text/javascript" src="${DBHpath}js/listadoCuerpo.js"><\/script> `
 			calls += `<script type="text/javascript" src="${DBHpath}js/myAjax.js"><\/script> `
-			calls += `<script type="text/javascript" src="${DBHpath}js/DBH.cache.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/DBH-inline-search.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/DBH-search.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/DBH-cache.js"><\/script> `
 			calls += `<script type="text/javascript" src="${DBHpath}js/DBH-field.js"><\/script> `
 			$('head').append($(calls))
 			DBH.start()
