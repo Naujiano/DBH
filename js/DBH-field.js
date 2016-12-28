@@ -64,7 +64,7 @@ Dependent on: jQuery, bootstrap-tagsinput, typeahead (bundle with Bloodhound)
 			} else {
 				this.$input.val( _val )
 				//debugger
-				console.log(this.$input.attr( 'id' )+ "**"+_val)
+				//console.log(this.$input.attr( 'id' )+ "**"+_val)
 			}
 		}
 	}
