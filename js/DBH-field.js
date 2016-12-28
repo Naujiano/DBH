@@ -5,7 +5,7 @@ Dependent on: jQuery, bootstrap-tagsinput, typeahead (bundle with Bloodhound)
 {	
 
 	var taginput_original = $.fn.tagsinput
-	console.log(taginput_original)
+	//console.log(taginput_original)
 	$.fn.tagsinput = function ( ...argumentos ) {
 		if ( argumentos[0] == 'reload' ) {
 			let valArray = this.val().split(',')
@@ -104,7 +104,18 @@ Dependent on: jQuery, bootstrap-tagsinput, typeahead (bundle with Bloodhound)
 			super ( $input )
 			this.grupo = grupo
 			this.hound = DBH.hounds.get('grupos:'+grupo)
-			debugger
+			if ( ! this.hound ) {
+				let hound = new Bloodhound({
+					//datumTokenizer: Bloodhound.tokenizers.whitespace,
+					datumTokenizer: Bloodhound.tokenizers.obj.whitespace('des'),
+					queryTokenizer: Bloodhound.tokenizers.whitespace
+					//,identify: function(obj) { return obj.des; }
+					,local: []
+				});
+				this.hound = hound
+				DBH.hounds.set('grupos:'+grupo, hound)
+			}
+			//debugger
 			$input.tagsinput({
 				//itemValue: 'li1_id',
 				//itemText: 'des',
@@ -117,14 +128,14 @@ Dependent on: jQuery, bootstrap-tagsinput, typeahead (bundle with Bloodhound)
 					}
 					,{
 					//source: this.hound
-			source: function nflTeamsWithDefaults(q, sync) {
-				if (q === '') {
-					sync($input.data( 'dbh-field-instance' ).hound.all()); // This is the only change needed to get 'ALL' items as the defaults
-				}
-				else {
-					$input.data( 'dbh-field-instance' ).hound.search(q, sync);
-				}
-			}
+					source: function nflTeamsWithDefaults(q, sync) {
+						if (q === '') {
+							sync($input.data( 'dbh-field-instance' ).hound.all()); // This is the only change needed to get 'ALL' items as the defaults
+						}
+						else {
+							$input.data( 'dbh-field-instance' ).hound.search(q, sync);
+						}
+					}
 					,display:'des'
 				}]
 				

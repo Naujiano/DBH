@@ -1,5 +1,6 @@
 <!--#include file="dbConnOpen.asp"-->
 <%
+	dbConnZavala.CommandTimeout = 300
 	session.codepage = 65001
 	response.charset = "utf-8"
 	set rs=server.createobject("adodb.recordset")
