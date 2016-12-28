@@ -176,7 +176,7 @@ var DBH = ( function () {
 						//datumTokenizer: Bloodhound.tokenizers.whitespace,
 						datumTokenizer: Bloodhound.tokenizers.obj.whitespace('des'),
 						queryTokenizer: Bloodhound.tokenizers.whitespace
-						,identify: function(obj) { return obj.des; }
+						//,identify: function(obj) { return obj.des; }
 						,local: deses
 					});
 					// hound.add ( JSON.stringify ( json )  )

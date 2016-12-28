@@ -347,7 +347,7 @@ var inlineform2 = ( function ($,undefined) {
 					var idfield = $ta.attr('select-id-field')
 					, textfield = $ta.attr('select-text-field')
 					, table = $ta.attr('select-table')
-					, sqlQueryObj = { idFieldName : idfield , fieldNames : `${idfield},${textfield}` , table : table }
+					, sqlQueryObj = { idfield : idfield , fields : `${idfield},${textfield}` , table : table }
 					//console.log(ids)
 					DBH.mapaSql ( id , sqlQueryObj ).clear().addIds ( ...ids )
 				}

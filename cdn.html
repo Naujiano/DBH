@@ -21,7 +21,7 @@
 	$(document).ready(function(){
 		//return false
 		let DBHpath = $('#DBHpath').val()
-		console.log(DBHpath)
+		//console.log(DBHpath)
 		let calls = ''
 		calls += `<link rel="shortcut icon" href="${DBHpath}favicon.ico">`
 		//calls += `<link rel="stylesheet" href="${DBHpath}css/bootstrap.min.css">`
@@ -37,9 +37,9 @@
 				setTimeout(loadRest,20)
 				return false
 			}
-			console.log('a')
+			//console.log('a')
 			let calls = ''
-			calls += `<script type="text/javascript" src="${DBHpath}js/dbh-queryEditor.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/DBH-query-editor.js"><\/script> `
 			calls += `<script type="text/javascript" src="${DBHpath}js/general.js"><\/script> `
 			calls += `<script type="text/javascript" src="${DBHpath}js/blockButton.js"><\/script> `
 			calls += `<script type="text/javascript" src="${DBHpath}js/inlineform.js"><\/script> `
@@ -51,7 +51,8 @@
 			calls += `<script type="text/javascript" src="${DBHpath}js/listadoCuerpo.js"><\/script> `
 			calls += `<script type="text/javascript" src="${DBHpath}js/myAjax.js"><\/script> `
 			calls += `<script type="text/javascript" src="${DBHpath}js/DBH-inline-search.js"><\/script> `
-			calls += `<script type="text/javascript" src="${DBHpath}js/DBH-search.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/DBH-filter-parameters.js"><\/script> `
+			calls += `<script type="text/javascript" src="${DBHpath}js/DBH-query.js"><\/script> `
 			calls += `<script type="text/javascript" src="${DBHpath}js/DBH-cache.js"><\/script> `
 			calls += `<script type="text/javascript" src="${DBHpath}js/DBH-field.js"><\/script> `
 			$('head').append($(calls))

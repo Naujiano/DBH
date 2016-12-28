@@ -1,34 +1,4 @@
 {
-  class sqlQuery {
-    constructor ( sqlQueryObj ) {
-	  if ( typeof sqlQueryObj == 'string' ) sqlQueryObj = this.autoparse ( sqlQueryObj )
-      this.sqlQueryObj = sqlQueryObj
-      //let { idFieldName , textFieldName , table , orderBy } = this.sqlQueryObj
-    }
-    selectSyntax () {
-      let { idFieldName , fieldNames , table , where , orderBy } = this.sqlQueryObj
-      , selectSyntax = `SELECT ${fieldNames} FROM ${table} ${ where ? 'WHERE ' + where : '' } ${ orderBy ? 'ORDER BY ' + orderBy : '' }`
-      return(selectSyntax);
-    }
-    where ( where ) {
-      this.sqlQueryObj.where = where
-      return this
-    }
-	autoparse ( sqlQueryString ) {
-		sqlQueryString = sqlQueryString.toLowerCase().trim()
-		let firstSpacePos = sqlQueryString.indexOf ( " " )
-		, firstComaPos = sqlQueryString.indexOf ( "," )
-		, fromPos = sqlQueryString.lastIndexOf ( " from " )
-		, wherePos = sqlQueryString.lastIndexOf ( " where " )
-		, orderbyPos = sqlQueryString.lastIndexOf ( " order by " )
-		, idFiledName = sqlQueryString.substr ( firstSpacePos , firstComaPos )
-		, fieldNames = sqlQueryString.substr ( firstComaPos + 1 , fromPos )
-		, table = sqlQueryString.substr ( fromPos + 6 , wherePos )
-		, where = sqlQueryString.substr ( wherePos + 7 , orderbyPos )
-		, orderby = sqlQueryString.substr ( orderbyPos + 10  )
-		return {idFiledName , fieldNames , table , where , orderby }
-	}
-  }
   class tabla {
     constructor ( name , $tabla ) {
       this.name = name
@@ -65,10 +35,10 @@
   class tabla_sql extends tabla {
     constructor ( name , sqlQueryObj , $tabla ) {
       super ( name , $tabla )
-      this.sqlQuery = new sqlQuery ( sqlQueryObj )
+      this.sqlQuery = DBH.query ( sqlQueryObj )
 	  this.$table
-		.attr('data-idfieldname',sqlQueryObj.idFieldName)
-		.attr('data-fieldnames',sqlQueryObj.fieldNames)
+		.attr('data-idfieldname',sqlQueryObj.idfield)
+		.attr('data-fieldnames',sqlQueryObj.fields)
 		.attr('data-table',sqlQueryObj.table)
 		.attr('data-where',sqlQueryObj.where)
 		.attr('data-orderby',sqlQueryObj.orderby)
@@ -82,11 +52,12 @@
       let newIds = ids.filter ( x => presentIds.indexOf ( x ) == -1 )
       if ( ! newIds.length ) return false;
       this.ids.push(...newIds)
-      let idFieldName = this.sqlQuery.sqlQueryObj.idFieldName.trim()
+      let idFieldName = this.sqlQuery.idfield.trim()
       , where = `${idFieldName} IN ( ${newIds} )`
-      , selectSyntax = this.sqlQuery.where ( where ).selectSyntax()
+      //, selectSyntax = this.sqlQuery.reset ( where ).selectSyntax()
+      , $rows = this.sqlQuery.getRows( where )
 //      console.log(selectSyntax)
-      let $rows = DBH.ajax.toRows ( selectSyntax , idFieldName )
+      //let $rows = DBH.ajax.toRows ( selectSyntax , idFieldName )
       this.add$rows ( $rows )
       console.log(idFieldName+presentIds)
 //	  console.log(this.$table.wrap('<div/>').parent().html())
@@ -123,12 +94,12 @@
 			let cache = localStorage[`mapa_sql.$table:${name}`]
 			if ( ! cache ) return false;
 			let $table_cache = $(cache)
-			, idFieldName = $table_cache.attr('idfieldname')
-			, fieldNames = $table_cache.attr('fieldnames')
+			, idfield = $table_cache.attr('idfieldname')
+			, fields = $table_cache.attr('fieldnames')
 			, table = $table_cache.attr('table')
 			, where = $table_cache.attr('where')
-			, orderBy = $table_cache.attr('orderby')
-			, sqlQueryObj = { idFieldName , fieldNames , table , where , orderBy }
+			, orderby = $table_cache.attr('orderby')
+			, sqlQueryObj = { idfield , fields , table , where , orderby }
 			console.log('from cache')
 			return $table_cache;
 		}
