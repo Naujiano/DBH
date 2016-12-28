@@ -17,19 +17,7 @@ var alimentadorAutomatico = ( function () {
 			.on ( 'click' , '.alimentador-btnremovefromlist' , function(){$(this).data('obj').remove()} )
 			.on ( 'click' , '.alimentador-btnsavecolor' , function(){$(this).data('obj').savecolor()} )
 			.on ( 'change' , '#alimentadorListaEntradasCambiarNombre' , function(){$(this).data('obj').listElementChanged(this)} )
-			/*
-		$($('#alimentador button')[1]).click(function(){$(this).data('obj').guardarfiltro()});
-		$($('#alimentador button')[2]).click(function(){$(this).data('obj').limpiarfiltro()});
-		$($('#alimentador button')[3]).click(function(){$(this).data('obj').addcolumn()});
-		$($('#alimentador button')[4]).click(function(){$(this).data('obj').orderbythis()});
-		$($('#alimentador button')[5]).click(function(){$(this).data('obj').edit()});
-		$($('#alimentador button')[6]).click(function(){$(this).data('obj').duplicates()});
-		$($('#alimentador button')[7]).click(function(){$(this).data('obj').lock()});
-		$($('#alimentador button')[8]).click(function(){$(this).data('obj').goselectarea()});
-		$($('#alimentador button')[9]).click(function(){$(this).data('obj').add()});
-		$($('#alimentador button')[10]).click(function(){$(this).data('obj').rename()});
-		$($('#alimentador button')[11]).click(function(){$(this).data('obj').remove()});
-		*/
+
 		$($('#alimentador .lengueta')[0]).click(function(){$(this).data('obj').mostrar(0)});
 		$($('#alimentador .lengueta')[1]).click(function(){$(this).data('obj').mostrar(1)});
 		$($('#alimentador .lengueta')[2]).click(function(){$(this).data('obj').mostrar(2)});

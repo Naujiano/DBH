@@ -35,7 +35,7 @@
   class tabla_sql extends tabla {
     constructor ( name , sqlQueryObj , $tabla ) {
       super ( name , $tabla )
-      this.sqlQuery = DBH.query ( sqlQueryObj )
+      this.sqlQuery = dbhQuery ( sqlQueryObj )
 	  this.$table
 		.attr('data-idfieldname',sqlQueryObj.idfield)
 		.attr('data-fieldnames',sqlQueryObj.fields)

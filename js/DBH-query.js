@@ -1,10 +1,11 @@
+var dbhQuery
 {
 	String.prototype.escape_sql = function() {
 		return this.replace(/\'/g,"''");
 	}
 	class query {
-		constructor ( sqlQueryObj ) {
-			let { idfield , fields , assigns , select , table , where = '' , orderby = '' , httphandler = DBH.query.defaultHttpHandler } = sqlQueryObj
+		constructor ( settings ) {
+			let { idfield , fields , assigns , select , table , where = '' , orderby = '' , httphandler = query.defaultHttpHandler } = settings
 			if ( ! table ){ console.log( 'Class query: table parameter has not been provided.' ); return false;	}
 			this.idfield = idfield ? idfield.trim() : idfield
 			this.fields = fields
@@ -14,8 +15,10 @@
 			this.assigns = assigns
 			this.select = select
 			this.httphandler = httphandler
+			this.url = 'selectXML_new.asp'
+			this.dataType = 'xml'
 			//this.httphandler = httphandler ? httphandler : sqlExecVal
-			//this.sqlQueryObj = sqlQueryObj
+			//this.settings = settings
 		}
 		execute ( httphandler , ...argumentos ) {
 			//return this.executeSyntax()
@@ -28,10 +31,33 @@
 			this.http_response = respuesta;
 			return respuesta;
 		}
+		request ( successFn ) {
+			let data = "sql=" + encodeURIComponent(this.executeSyntax())
+			$.ajax({ type: "POST",   
+				url: this.url,   
+				async: true,
+				dataType: this.dataType,
+				data: data,
+				success : successFn,
+				error: function ( jqXHR, textStatus, errorThrown)
+				{
+					//console.log("textStatus: "+textStatus)
+					//console.log("param: "+param)
+					console.log(errorThrown)
+					//alerta ( "Error de SQL. ")
+					/*
+					$.post ( urll, param ,function( data ) {
+						//console.log( data );
+						//respuesta = "error"
+					})
+					*/
+				}
+			}); 
+		}
 	}
 	class query_insert extends query {
-		constructor ( sqlQueryObj ) {
-			super ( sqlQueryObj )
+		constructor ( settings ) {
+			super ( settings )
 			//let notValid = ( ! super.fields.length )
 			//if ( notValid ) { console.log( 'Class query_insert: wrong provided parameters.' ); return false; }
 		}
@@ -49,13 +75,13 @@
 			let insertSyntax = `INSERT INTO ${this.table} ( ${this.insert.fields} ) VALUES ( ${this.insert.values} ) SELECT MAX(${this.idfield}) FROM ${this.table}`
 			return insertSyntax
 		}
-		static init ( sqlQueryObj ){
-			return new query_insert ( sqlQueryObj )
+		static init ( settings ){
+			return new query_insert ( settings )
 		}
 	}
 	class query_update extends query {
-		constructor ( sqlQueryObj ) {
-			super ( sqlQueryObj )
+		constructor ( settings ) {
+			super ( settings )
 		}
 		executeSyntax () {
 			this.update = []
@@ -68,25 +94,25 @@
 			let insertSyntax = `UPDATE ${this.table} SET ${this.update} WHERE ${this.where}`
 			return insertSyntax
 		}
-		static init ( sqlQueryObj ){
-			return new query_update ( sqlQueryObj )
+		static init ( settings ){
+			return new query_update ( settings )
 		}
 	}
 	class query_insert_select extends query_update {
-		constructor ( sqlQueryObj ) {
-			super ( sqlQueryObj )
+		constructor ( settings ) {
+			super ( settings )
 		}
 		executeSyntax () {
 			let insertSyntax = `INSERT INTO ${this.table} ( ${this.fields} ) ( ${this.select.selectSyntax()} )`
 			return insertSyntax
 		}
-		static init ( sqlQueryObj ){
-			return new query_insert_select ( sqlQueryObj )
+		static init ( settings ){
+			return new query_insert_select ( settings )
 		}
 	}
 	class query_select extends query {
-		constructor ( sqlQueryObj ) {
-			super ( sqlQueryObj )
+		constructor ( settings ) {
+			super ( settings )
 		}
 		executeSyntax () {
 			let executeSyntax = `SELECT ${this.fields} FROM ${this.table} ${ this.where ? 'WHERE ' + this.where : '' } ${ this.orderby ? 'ORDER BY ' + this.orderby : '' }`
@@ -110,8 +136,8 @@
 			, orderby = sqlQueryString.substr ( orderbyPos + 10  )
 			return {idfield , fields , table , where , orderby }
 		}
-		static init ( sqlQueryObj ){
-			return new query_select ( sqlQueryObj )
+		static init ( settings ){
+			return new query_select ( settings )
 		}
 	}
 	
@@ -124,12 +150,12 @@
 		return $rows
 	}
 	
-	DBH.query = function ( sqlQueryObj ) {
-		let type = sqlQueryObj.type
-		if ( !type || type == 'select' ) return query_select.init ( sqlQueryObj )
-		if ( type == 'insert' ) return query_insert.init ( sqlQueryObj )
-		if ( type == 'update' ) return query_update.init ( sqlQueryObj )
-		if ( type == 'insert_select' ) return query_insert_select.init ( sqlQueryObj )
+	dbhQuery = function ( settings ) {
+		let type = settings.type
+		if ( !type || type == 'select' ) return query_select.init ( settings )
+		if ( type == 'insert' ) return query_insert.init ( settings )
+		if ( type == 'update' ) return query_update.init ( settings )
+		if ( type == 'insert_select' ) return query_insert_select.init ( settings )
 	};
 }
 /*
@@ -141,7 +167,7 @@ let eee = DBH.query({
   //, httphandler: DBH.ajax.select
 }).execute();
 */
-DBH.query.defaultHttpHandler = DBH.ajax.select
+dbhQuery.defaultHttpHandler = DBH.ajax.select
 /*
 let eee = DBH.query({
   table: 'persona'
@@ -158,11 +184,12 @@ let eee = DBH.query({
 */
 
 /*
-let eee = DBH.query({
-	fields : 'top 2 nombre,apellidos' 
+dbhQuery({
+	fields : 'top 2 nombre,apellido1' 
 	, table: 'personas' 
-	, where : 'codpersona = 50214' 
-}).execute();
-
-console.log(eee)
+	//, where : 'codpersona = 50214' 
+}).request(function(xml){
+	console.log($(xml).find('xml').html())
+	//console.log($(xml).find('xml').html())
+});
 */

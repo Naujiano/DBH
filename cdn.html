@@ -17,14 +17,15 @@
 <script type="text/javascript" src="customCode/customCode.js"></script> 
 
 
+
+
 <script>
-	$(document).ready(function(){
+	//$(document).ready(function(){
 		//return false
 		let DBHpath = $('#DBHpath').val()
 		//console.log(DBHpath)
 		let calls = ''
 		calls += `<link rel="shortcut icon" href="${DBHpath}favicon.ico">`
-		//calls += `<link rel="stylesheet" href="${DBHpath}css/bootstrap.min.css">`
 		calls += `<link rel="stylesheet" href="${DBHpath}css/typeahead.css">`
 		calls += `<link rel="stylesheet" href="${DBHpath}css/tagsinput.css">`
 		calls += `<link rel="stylesheet" href="${DBHpath}css/main.css">`
@@ -37,7 +38,6 @@
 				setTimeout(loadRest,20)
 				return false
 			}
-			//console.log('a')
 			let calls = ''
 			calls += `<script type="text/javascript" src="${DBHpath}js/DBH-query-editor.js"><\/script> `
 			calls += `<script type="text/javascript" src="${DBHpath}js/general.js"><\/script> `
@@ -58,5 +58,5 @@
 			$('head').append($(calls))
 			DBH.start()
 		}
-	})
+	//})
 </script>

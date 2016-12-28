@@ -1,3 +1,69 @@
+function preinit(){
+	$('[id="tablaEncabezado"]').on ( 'click' , '.celdaCampoEncabezado', function () { 
+		var $this = $(this);
+		if ($this.hasClass('clicked')){
+			$('#iframeFormCuerpo').data('topform').removecolumn($this.attr('orden'));
+			clearTimeout ( timer )
+			return false;
+		}else{
+			$this.addClass('clicked');
+			var that = this
+			, index = $('.celdaCampoEncabezado:visible').index(this) * 1 + 1
+			timer  = setTimeout(function() {  $this.removeClass('clicked');ordenar(index) },500);
+		}
+	})
+	$('#tablaEncabezado').on ( 'dblclick' , 'td.celdaCampoEncabezado:visible:first', function () { 
+		listado.checkid('all')
+	})
+	var $body = $('body')
+	$body.on('click','.boton-switch',function() {
+		var $btn = $(this)
+		if(!$btn.hasClass('boton-switch-checked')){
+			$btn.addClass('boton-switch-checked')
+		}else{
+			$btn.removeClass('boton-switch-checked')
+		}
+	})
+	$(window).resize(function(){onresizef()})
+	$(window).bind('beforeunload',function(){
+		return 'Si continua perderá su configuración.'
+	})
+	
+	$('#treemenu').on('contextmenu','li[role="treeitem"]', function(event){contextmenutree(event,this);return false;})
+	$(document)
+		.on('blur','.dbh_fecha_color:not(#avisosgeneral)',function(){DBH.date().setcolor($(this))})
+		.on('contextmenu','.boton-switch-right', function(event){var $btn=$(this),checked=$btn.hasClass('color-blue');if(checked){$btn.removeClass('color-blue')} else {$btn.addClass('color-blue')};event.stopImmediatePropagation();event.stopPropagation();return false; } )
+		.on('focus','[id="dbh_redactor_consultas"]',function(){var $this = $(this); $this.removeAttr('dbh-query-description').removeAttr('dbh-query-da_id')})
+		.on('focus','select.dbh_valores_color',function(){ $(this).css({'background-color': 'transparent' }) })
+		.on('blur','select.dbh_valores_color',function(){ DBH.valueLists( $(this) ).setColor() })
+		.on('change','select.dbh_valores_color',function(){ $(this).blur() })
+		.on ( 'click', 'label[for]', function (event) { 
+			event.preventDefault();
+			event.stopPropagation();event.stopImmediatePropagation(); 
+			var inpid = $(this).attr('for')
+			, $inp = $(this).closest('.divCampoForm').find('[id="'+inpid+'"]')
+			//console.log($inp.length)
+			alimentadorAutomatico.abrir($inp[0])
+		} )
+		.on ( 'area:filter:before' , function (event,topform) {
+			$('.layout-list-container').show();
+			ajustarAnchoForm();
+			$('#btntogglelistado').addClass('boton-switch-checked')
+			//console.log(a+'*'+topform.listadoWhereText+'*')
+		})
+	DBH.avisos.setbutton(1)
+	function contextmenutree (event,btn) {
+		if ( ! confirm ( '¿Configurar este área?' ) ) return false
+
+		var $btn = $(btn)
+		, rec_id = $btn.attr('da_id')
+		, da_id = DBH.area('[AREAS]').id
+		DBH.gorecord(da_id,rec_id)
+		
+		event.stopImmediatePropagation(); 
+		event.stopPropagation();
+	}
+}
 var DBH = ( function () {
 	var that = this
 	this.start = function () {
@@ -29,130 +95,82 @@ var DBH = ( function () {
 		$('.grupodf #usuario').val(localStorage['usuario'])
 		$('.grupodf #contrasena').val(localStorage['contrasena'])
 		$('.grupodf #recordarcontra')[0].checked=localStorage['recordarcontra']
-		//$head.append( '<title>' + template_title + '</title>' )
-		//$head.append( '<link rel="shortcut icon" href="' + DBHroot + 'favicon.ico" />' )
 		if ( !urlparams.log ) $('.layout-log-container').hide()
-		/*
-		//$head.append( '<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">' )
-		if ( ! urlparams.min ) {
-			console.log('not min')//,{title:'Load Mode'})
-			$head.append( '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">' )
-			$head.append( '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/genericons/3.1/genericons.css">' )
-			$head.append( '<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">' )
-			$head.append( '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">' )
-			$.getScript('http://code.jquery.com/ui/1.12.1/jquery-ui.min.js')
-			$.getScript('https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js')
-			$.getScript('https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.6.0/mousetrap.min.js')
-			$.getScript('https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/jstree.min.js')
-			var csspath = ['css/main.css','css/dbh-nauj-tempstyles.css']
-			var cssroot = ['jquery-simple-datetimepicker-master/jquery.simple-dtpicker.css']
-			var jsspath = ["js/dbh-queryEditor.js","js/general.js","js/blockButton.js","js/inlineform.js","js/toplevelform.js","js/multistatebutton.js","js/docs.js","js/alimentador.js","js/index.js","js/listadoCuerpo.js","js/myAjax.js","js/DBH.cache.js"]
-			var jssroot = ["jquery-simple-datetimepicker-master/jquery.simple-dtpicker.js"]
-			$(csspath).each(function(){
-				$head.append('<link rel="stylesheet" href="' + dbhpath+'/'+this + '" type="text/css" />');
-			})
-			$(cssroot).each(function(){
-				$head.append('<link rel="stylesheet" href="' + DBHroot+'/'+this + '" type="text/css" />');
-			})
-			//LOAD SCRIPTS
-			$(jsspath).each(function(){
-				$.getScript(dbhpath+this)
-			})
-			$(jssroot).each(function(){
-				$.getScript(DBHroot+this)
-			})
+		if(!DBH.islogged || isNaN(sessionStorage["usu_id"]) ){
+			var agent = window.navigator.userAgent.toLowerCase()
+			, ischrome = ( agent.indexOf('chrome') != -1 || agent.indexOf('applewebkit') != -1 )
+			, isfirefox = agent.indexOf('firefox') != -1
+			if ( !ischrome && !isfirefox ) {
+				$('#browsersalert button').hide()
+			}
+			if ( !ischrome ) { 
+				$('#browsersalert').show() 
+			}
+			DBH.telon.$container.hide()
+			$('#divacceso').show();
+			//console.log(agent)
 		} else {
-			$.getScript(DBHroot+'js/LIBRARIES.min.js')
-			$.getScript(dbhpath+'js/DBH.min.js')
-			$head.append( '<link rel="stylesheet" href="'+dbhpath+'css/DBH.min.css">' )
-			$head.append( '<link rel="stylesheet" href="'+dbhpath+'css/03-dbh-nauj-tempstyles.css">' )
-			$head.append( '<link rel="stylesheet" href="'+DBHroot+'css/LIBRARIES.min.css">' )
+			DBH.sessionid = usu_id + '_' + sessionStorage["sessionid"]
+			localStorage["interface_usu_id"] = usu_id
+			DBH.load().all()
+			$body.append(`<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">`)
+			$body.append(`<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/genericons/3.1/genericons.css">`)
+			$body.append(`<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">`)
+			$body.append(`<link rel="stylesheet" href="http://dbh.naujcloud.com/jquery-simple-datetimepicker-master/jquery.simple-dtpicker.css">`)
+			$body.append(`<link rel="stylesheet" href="${dbhpath}css/typeahead.css">`)
+			$body.append(`<link rel="stylesheet" href="${dbhpath}css/tagsinput.css">`)
 		}
-		*/
-		//CHECK IF LOGGUED
-		//console.log(sessionStorage["usu_id"])
-		function checkLogin() {
-			if(!DBH.islogged || isNaN(sessionStorage["usu_id"]) ){
-				var agent = window.navigator.userAgent.toLowerCase()
-				, ischrome = ( agent.indexOf('chrome') != -1 || agent.indexOf('applewebkit') != -1 )
-				, isfirefox = agent.indexOf('firefox') != -1
-				if ( !ischrome && !isfirefox ) {
-					$('#browsersalert button').hide()
-				}
-				if ( !ischrome ) { 
-					$('#browsersalert').show() 
-				}
-				DBH.telon.$container.hide()
-				$('#divacceso').show();
-				//console.log(agent)
-			} else {
-				DBH.sessionid = usu_id + '_' + sessionStorage["sessionid"]
-				localStorage["interface_usu_id"] = usu_id
-				setTimeout (DBH.load().all(),0) 
-				//DBH.load()
-				//$('body').prepend('<input id="loaded_usu_id" type="hidden" value="'+usu_id+'">')
-			}
-			console.log(customjs)
-			$('body').show()
-		}
-		function inittimer() {
-			var pagloaded = ( ( typeof showtip != 'undefined' ) && ( typeof scrollDivision != 'undefined' ) && ( typeof preinit != 'undefined' ) && ( typeof ajaxExecuter != 'undefined' ) && ( typeof sqlExec != 'undefined' ) && $.ui && $.jstree  )
-			if (pagloaded) { 			
-				clearInterval(initinterval)
-				var t1 = performance.now();
-				DBH.consola( "Load Scripts: " + (t1 - t0) + " milliseconds.");
-				DBH.telon.texto.append ('Scrips' );setTimeout (checkLogin,0) 
-			}
-		}
-		var t0 = performance.now();
-		initinterval = setInterval(function(){inittimer()},200)		
+		console.log(customjs)
+
+		$body.addClass('DBH').show()
 		
 	};
-	this.telon = {
-		$container: $initCover = $('.init-cover')
-		, $textContainer: $initCover = $('.init-cover').find('div')
-		, areaLoad: function () {
-			DBH.telon.show()
-			DBH.telon.texto.append('Generando el Área...')
-		}
-		, show: function () {
-			DBH.telon.texto.clear()
-			DBH.telon.$container.show()
-		}
-		, hide: function () {
-			DBH.telon.$container.css({'background':'rgba(41,44,58,0.8)'}).fadeOut()//.find('img').hide()
-		}
-		, texto: {
-			append: function (txt) {
-				var $initCover = DBH.telon.$textContainer
-				//, secs = Math.round(milisegundos / 100) / 10
-				//txt += ' (' + secs + ' seg)'
-				$initCover.append('<br>'+txt)
-			}
-			, clear: function () {
-				DBH.telon.$textContainer.html('')
-			}
-		}
-		
-	}
 	this.load = function () {
-		var that = this
-		this.loadValores = function (grupo) {
-			var t3 = performance. now();
-			if ( grupo ) {
-				var sql = "SELECT li1_id,des,li1_color,grupo FROM dbh_listas WHERE grupo ='"+grupo+"' ORDER BY des"
-				, $grupoXml = DBH.ajax.toXml ( sql, 'li1_id' )
-				, $xml = DBH.$valoresXml.find('[fieldname="grupo"][fieldvalue="'+grupo+'"]').parent()
-				$xml.remove()
-				DBH.$valoresXml = DBH.$valoresXml.add($grupoXml)
-				let json = DBH.xmlToJSON ( DBH.$valoresXml )
-				, hound = DBH.hounds.get ('grupos')
-				hound.add ( json )
-				DBH.hounds.set ( 'grupos' , hound )
-				console.log('aa')
-			} else {
-				var sql = "SELECT li1_id,des,li1_color,grupo FROM dbh_listas WHERE grupo IN ( SELECT data_field_grupo FROM dbh_campos inner join dbh_areas on data_da_id = da_id WHERE data_activo = 1 and da_activa = 1 ) ORDER BY grupo,des"
-				DBH.$valoresXml = DBH.ajax.toXml ( sql, 'li1_id' )
+		this.all = function () {
+			let fields = "*"
+			, table = "DBH_AREAS"
+			, where = "da_activa = 1"
+			, orderby = "da_nivel desc,da_orderindex"
+
+			DBH_help = new parent.blockButton( document.getElementById('buttonhelp') , document.getElementById('tipdiv') )
+			showtip('rnd')
+			$('#alertaaviso').on('click','button',function(){
+				DBH.avisos.setbutton()
+			})
+			$('.botonesform').find(sessionStorage["usu_perfil"]).hide() //OCULTO BOTONES SEGÚN PERFIL
+			vars.pinger()
+			DBH.loaded = true
+			preinit()
+			DBH.telon.hide()
+
+			/****** ASYNC LOADS ********/
+			
+			dbhQuery({ fields , table , where , orderby }).request(function(xml){
+				let data = DBH.ajax.xmlToObject(xml)
+				DBH.areasSqlArr = data
+				DBH.tree.load();
+				$('#treeresizable').width($('#treeresizable').outerWidth())
+				//DBH.tree.setWidth();
+				var treewidth = $('.layout-tree-container').width()
+				if ( treewidth < 170 ) treewidth = 170
+				$('.layout-tree-container').css({width:treewidth})
+				console.log('loaded tree')
+			})
+			loadValores()
+			loadXmlCampos()
+		}
+		function loadValores (grupo) {
+			let fields = "li1_id,des,li1_color,grupo"
+			, table = "dbh_listas"
+			, where = "grupo IN ( SELECT data_field_grupo FROM dbh_campos inner join dbh_areas on data_da_id = da_id WHERE data_activo = 1 and da_activa = 1 )"
+			, orderby = "grupo,des"
+			
+			dbhQuery({ fields , table , where , orderby }).request(function(xml){
+				//console.log('loaded valores')
+				//return
+				let data = xml.getElementsByTagName("xml")[0].childNodes
+				, toXmled = DBH.ajax.toXml ( '', 'li1_id', data )
+				DBH.$valoresXml = toXmled
 				let $xml = DBH.$valoresXml.find('[fieldname="grupo"]')
 				, gruposSet = new Set()
 				$xml.each ( function () {
@@ -183,75 +201,64 @@ var DBH = ( function () {
 					//debugger;
 					DBH.hounds.set ( 'grupos:' + key , hound )
 				}
-				DBH.telon.texto.append ('Valores')
-			}
-			var t4 = performance.now();DBH.consola( "loadXmlValores: " + (t4 - t3) + " milliseconds.")
+				console.log('loaded valores')
+			});
 		}
-		this.all = function () {
-			that.loadValores()
-			setTimeout ( that.loadXmlCampos, 0 )
-			setTimeout ( loadAreasArr, 0 )
-		}
-		function loadEnd () {
-			vars.pinger()
-			DBH.loaded = true
-			DBH.telon.hide()
-		}
-		function loadTree() {
-			//DBH.loadTopPestanas()
-			preinit()
-			DBH_help = new parent.blockButton( document.getElementById('buttonhelp') , document.getElementById('tipdiv') )
-			showtip('rnd')
-			var t3 = performance.now();
-			DBH.tree.load();
-			var t4 = performance.now();DBH.consola( "loadTree: " + (t4 - t3) + " milliseconds.")
-			$('#alertaaviso').on('click','button',function(){
-				DBH.avisos.setbutton()
-			})
-			$('#treeresizable').width($('#treeresizable').outerWidth())
-			//DBH.tree.setWidth();
-			var treewidth = $('.layout-tree-container').width()
-			if ( treewidth < 170 ) treewidth = 170
-			$('.layout-tree-container').css({width:treewidth})
-			$('.botonesform').find(sessionStorage["usu_perfil"]).hide() //OCULTO BOTONES SEGÚN PERFIL
-			DBH.telon.texto.append ('Árbol')
-			setTimeout ( loadEnd, 0 )
-		}
-		function loadAreasArr () {
-			var t3 = performance.now()
-			, sqls = 'SELECT * FROM DBH_AREAS WHERE da_activa = 1 ORDER BY da_nivel desc,da_orderindex'
-			DBH.areasSqlArr = that.ajax.select(sqls)
-			var t4 = performance.now();DBH.consola( "loadAreasArr: " + (t4 - t3) + " milliseconds.")
-			DBH.telon.texto.append ('Areas')
-			setTimeout ( loadTree, 0 )
-		}
-		this.loadXmlCampos = function () {
-			var t3 = performance.now();
-			var sql = "SELECT " +
-				"case when ((select da_tabla from DBH_AREAS where da_id = data_da_id) = left(data_field_id,charindex('.',data_field_id)-1)) then '0' else '1' end as noinsert" +
-				",(select da_descripcion from DBH_AREAS where da_id = (select da_areamadre from DBH_AREAS where da_id = data_da_id)) as areamadre_name" +
-				",IS_NULLABLE as is_nullable" +
-				",(select cast(das_da_id as varchar) + ','  from DBH_CAMPOS_AREASAFECTANTES WHERE das_data_id = data_id FOR XML PATH ('') ) as da_ids_areasafectantes" +
-				", DBH_CAMPOS.* " +
-				"FROM DBH_CAMPOS inner join DBH_AREAS on data_da_id = da_id inner join INFORMATION_SCHEMA.COLUMNS " +
-				"on TABLE_NAME = left(data_field_id,charindex('.',data_field_id)-1) " +
-				"and COLUMN_NAME = replace(data_field_id,left(data_field_id,charindex('.',data_field_id)),'') " +
-				"WHERE data_activo = 1 ANd da_activa = 1" +
-				"ORDER BY 1 desc,data_orderindex" ;
-			//console.log(encodeURIComponent(sql))
-			DBH.$camposXml = $(sqlExec ( sql ))
-			//, $camposXml = $(DBH.camposXml)
-			//console.log($camposXml.find('registro').length)
-			DBH.$camposXml.each ( function () {
-				var $registro = $(this)
-				, da_id = $registro.find ( '[fieldname="data_da_id"]' ).text()
-				$registro.attr('da_id',da_id)
-			})
-			var t4 = performance.now();DBH.consola( "loadXmlCampos: " + (t4 - t3) + " milliseconds.")
-			DBH.telon.texto.append ('Campos')
-			
+		function loadXmlCampos () {
+			let 
+				fields = "" +
+					"case when ((select da_tabla from DBH_AREAS where da_id = data_da_id) = left(data_field_id,charindex('.',data_field_id)-1)) then '0' else '1' end as noinsert" +
+					",(select da_descripcion from DBH_AREAS where da_id = (select da_areamadre from DBH_AREAS where da_id = data_da_id)) as areamadre_name" +
+					",IS_NULLABLE as is_nullable" +
+					",(select cast(das_da_id as varchar) + ','  from DBH_CAMPOS_AREASAFECTANTES WHERE das_data_id = data_id FOR XML PATH ('') ) as da_ids_areasafectantes" +
+					", DBH_CAMPOS.* "
+				, table = "" +
+					"DBH_CAMPOS inner join DBH_AREAS on data_da_id = da_id inner join INFORMATION_SCHEMA.COLUMNS " +
+					"on TABLE_NAME = left(data_field_id,charindex('.',data_field_id)-1) " +
+					"and COLUMN_NAME = replace(data_field_id,left(data_field_id,charindex('.',data_field_id)),'') "
+				, where = "data_activo = 1 ANd da_activa = 1"
+				, orderby = "1 desc,data_orderindex"
+				
+			dbhQuery({ fields , table , where , orderby }).request(function(xml){
+				let data = xml.getElementsByTagName("xml")[0].childNodes
+				DBH.$camposXml = $(data)
+				DBH.$camposXml.each ( function () {
+					var $registro = $(this)
+					, da_id = $registro.find ( '[fieldname="data_da_id"]' ).text()
+					$registro.attr('da_id',da_id)
+				})
+				console.log('loaded campos')
+				//console.log($(xml).find('xml').html())
+			});
 		}
 		return this
+	}
+	this.telon = {
+		$container: $initCover = $('.init-cover')
+		, $textContainer: $initCover = $('.init-cover').find('div')
+		, areaLoad: function () {
+			DBH.telon.show()
+			DBH.telon.texto.append('Generando el Área...')
+		}
+		, show: function () {
+			DBH.telon.texto.clear()
+			DBH.telon.$container.show()
+		}
+		, hide: function () {
+			DBH.telon.$container.css({'background':'rgba(41,44,58,0.8)'}).fadeOut()//.find('img').hide()
+		}
+		, texto: {
+			append: function (txt) {
+				var $initCover = DBH.telon.$textContainer
+				//, secs = Math.round(milisegundos / 100) / 10
+				//txt += ' (' + secs + ' seg)'
+				$initCover.append('<br>'+txt)
+			}
+			, clear: function () {
+				DBH.telon.$textContainer.html('')
+			}
+		}
+		
 	}
 	this.logout = function () {
 		sessionStorage.clear()
@@ -360,8 +367,8 @@ var DBH = ( function () {
 			//console.log(res)
 			return r
 		}
-		this.toXml = function (sql,pkname) {
-			var oldXml = that.selectToXml(sql)
+		this.toXml = function (sql,pkname,oldXml) {
+			var oldXml = oldXml ? oldXml : that.selectToXml(sql)
 			, $oldXml = $(oldXml)
 			, $newXml = $('<lines/>').attr('data-idFieldName',pkname)
 			$oldXml.find('registro').each ( function () {
