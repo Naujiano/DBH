@@ -120,7 +120,8 @@ var DBH = ( function () {
 			$body.append(`<link rel="stylesheet" href="${dbhpath}css/typeahead.css">`)
 			$body.append(`<link rel="stylesheet" href="${dbhpath}css/tagsinput.css">`)
 		}
-		console.log(customjs)
+		//console.log(customjs)
+		console.log(dbhpath)
 
 		$body.addClass('DBH').show()
 		

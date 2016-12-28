@@ -6,7 +6,7 @@
 		DBHpath = "http://192.168.1.128/dbh/"
 	else
 		if DBHversion = "" then
-			DBHversion = "master"
+			DBHversion = "cae322cf0f70f4fd29d0b08aab8c236dec23cbfe"
 		end if
 		DBHpath = "https://rawgit.com/Naujiano/DBH/" & DBHversion & "/"
 		DBHversion = left(DBHversion,7)
