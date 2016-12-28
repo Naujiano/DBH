@@ -1590,3 +1590,4 @@ Array.prototype.removeAS = function ( ) {
 		})
 		return this;
 	}
+$(DBH.start)
