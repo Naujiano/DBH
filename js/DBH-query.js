@@ -4,7 +4,7 @@
 	}
 	class query {
 		constructor ( sqlQueryObj ) {
-			let { idfield , fields , assigns , select , table , where = '' , orderby = '' , httphandler } = sqlQueryObj
+			let { idfield , fields , assigns , select , table , where = '' , orderby = '' , httphandler = DBH.query.defaultHttpHandler } = sqlQueryObj
 			if ( ! table ){ console.log( 'Class query: table parameter has not been provided.' ); return false;	}
 			this.idfield = idfield ? idfield.trim() : idfield
 			this.fields = fields
@@ -13,12 +13,19 @@
 			this.orderby = orderby.trim()
 			this.assigns = assigns
 			this.select = select
-			this.httphandler = httphandler ? httphandler : sqlExecVal
+			this.httphandler = httphandler
+			//this.httphandler = httphandler ? httphandler : sqlExecVal
 			//this.sqlQueryObj = sqlQueryObj
 		}
-		execute ( ...argumentos ) {
-			return this.executeSyntax()
-			let respuesta = this.httphandler ( this.executeSyntax() , ...argumentos )
+		execute ( httphandler , ...argumentos ) {
+			//return this.executeSyntax()
+			let handler = httphandler ? httphandler : this.httphandler
+			if ( ! handler ) {
+				console.log ( 'Class query: httphandler has not been specified.' );
+				return false;
+			}
+			let respuesta = handler ( this.executeSyntax() , ...argumentos )
+			this.http_response = respuesta;
 			return respuesta;
 		}
 	}
@@ -43,9 +50,7 @@
 			return insertSyntax
 		}
 		static init ( sqlQueryObj ){
-			let that = new query_insert ( sqlQueryObj )
-			
-			return that.execute();
+			return new query_insert ( sqlQueryObj )
 		}
 	}
 	class query_update extends query {
@@ -64,8 +69,7 @@
 			return insertSyntax
 		}
 		static init ( sqlQueryObj ){
-			let that = new query_update ( sqlQueryObj )
-			return that.execute();
+			return new query_update ( sqlQueryObj )
 		}
 	}
 	class query_insert_select extends query_update {
@@ -77,31 +81,20 @@
 			return insertSyntax
 		}
 		static init ( sqlQueryObj ){
-			let that = new query_insert_select ( sqlQueryObj )
-			return that.execute();
+			return new query_insert_select ( sqlQueryObj )
 		}
 	}
 	class query_select extends query {
 		constructor ( sqlQueryObj ) {
 			super ( sqlQueryObj )
 		}
-		selectSyntax () {
-			let selectSyntax = `SELECT ${this.fields} FROM ${this.table} ${ this.where ? 'WHERE ' + this.where : '' } ${ this.orderby ? 'ORDER BY ' + this.orderby : '' }`
-			return(selectSyntax);
+		executeSyntax () {
+			let executeSyntax = `SELECT ${this.fields} FROM ${this.table} ${ this.where ? 'WHERE ' + this.where : '' } ${ this.orderby ? 'ORDER BY ' + this.orderby : '' }`
+			return(executeSyntax);
 		}
 		reset ( where ) {
-			if ( ! where ) this.where = where.trim()
+			if ( where ) this.where = where.trim()
 			return this;
-		}
-		getRows ( where ) {
-			this.reset ( where )
-			let $rows = DBH.ajax.toRows ( this.selectSyntax() , this.idfield )
-			return $rows
-		}
-		getJSON ( where ) {
-			this.reset ( where )
-			let json = DBH.ajax.select ( this.selectSyntax() )
-			return $rows
 		}
 		autoparse ( sqlQueryString ) {
 			sqlQueryString = sqlQueryString.toLowerCase().trim()
@@ -121,40 +114,55 @@
 			return new query_select ( sqlQueryObj )
 		}
 	}
+	
+	query_select.prototype.getJSON = function ( where ) {
+		let json = this.reset ( where ).execute (DBH.ajax.select)
+		return json
+	}
+	query_select.prototype.getRows = function ( where ) {
+		let $rows = this.reset ( where ).execute (DBH.ajax.toRows)
+		return $rows
+	}
+	
 	DBH.query = function ( sqlQueryObj ) {
-		let instance = query_select.init ( sqlQueryObj )
-		return instance
-	};
-	DBH.insert = function ( sqlQueryObj ) {
-		let instance = query_insert.init ( sqlQueryObj )
-		return instance
-	};
-	DBH.update = function ( sqlQueryObj ) {
-		let instance = query_update.init ( sqlQueryObj )
-		return instance
-	};
-	DBH.insert_select = function ( sqlQueryObj ) {
-		let instance = query_insert_select.init ( sqlQueryObj )
-		return instance
+		let type = sqlQueryObj.type
+		if ( !type || type == 'select' ) return query_select.init ( sqlQueryObj )
+		if ( type == 'insert' ) return query_insert.init ( sqlQueryObj )
+		if ( type == 'update' ) return query_update.init ( sqlQueryObj )
+		if ( type == 'insert_select' ) return query_insert_select.init ( sqlQueryObj )
 	};
 }
-
+/*
 let eee = DBH.query({
   table: 'personas'
   , idfield: 'codpersona'
-  , fields : ['nombre','apellidos']
-  , where : 'codpersona = 3'
-  , httphandler: DBH.ajax.toRows
-})
-let ddd = DBH.insert_select({
-  table: 'personas'
+  , fields : 'top 2 nombre,apellidos'
+  //, where : 'codpersona = 3'
+  //, httphandler: DBH.ajax.select
+}).execute();
+*/
+DBH.query.defaultHttpHandler = DBH.ajax.select
+/*
+let eee = DBH.query({
+  table: 'persona'
   , idfield: 'codpersona'
   , assigns: {
     nombre: 'juan',
     apellidos: 'martinez'
   }
   , fields : ['nombre','apellidos']
-  , where : 'codpersona = 3'
-  , select: eee
-})
-console.log(ddd)
+  , where : 'codpersona = 50214'
+  //, httphandler: DBH.ajax.select
+  //, type: 'insert'
+ }).execute();
+*/
+
+/*
+let eee = DBH.query({
+	fields : 'top 2 nombre,apellidos' 
+	, table: 'personas' 
+	, where : 'codpersona = 50214' 
+}).execute();
+
+console.log(eee)
+*/
