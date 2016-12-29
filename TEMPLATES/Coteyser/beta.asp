@@ -58,7 +58,7 @@
 <script type="text/javascript" src="<%=DBHpath%>js/general.js"></script>
 <script type="text/javascript" src="<%=DBHpath%>js/myAjax.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/init-caches.js"></script>
-<script async type="text/javascript" src="<%=DBHpath%>js/listadoCuerpo.js"></script>
+<script  type="text/javascript" src="<%=DBHpath%>js/listadoCuerpo.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/DBH-query-editor.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/inlineform.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/toplevelform.js"></script>
