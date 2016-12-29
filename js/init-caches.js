@@ -23,8 +23,8 @@
                 width: treewidth
             })
             console.log('loaded tree')
+            $(document).trigger('tree-load')
         })
-        $(document).trigger('tree-load')
     }();
 
     let  = function loadFormData () {
