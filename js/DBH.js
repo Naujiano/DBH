@@ -854,7 +854,8 @@ var DBH = ( function () {
 		DBH.gorecord(areaid,recid)
 	}
 	this.gorecord = function (areaid,recid,timer) {
-		if ( ! DBH.cache_areas_state() ) { setTimeout(function(){DBH.gorecord(areaid,recid)},10) ; return }
+		if(  !$('.formCuerpo[da_id="'+areaid+'"]').length ) { DBH.telon.areaLoad() }
+		if ( ! DBH.cache_areas_state() ) { setTimeout(function(){DBH.gorecord(areaid,recid)},100) ; return }
 		var areahabilitada = $('#treemenu li[da_id="'+areaid+'"]').length
 		if(!areahabilitada){alert('Su usuario no tiene permiso para acceder a este área.');return false}
 		var sqls = "SELECT * FROM DBH_AREAS WHERE da_id = " + areaid
