@@ -1,5 +1,54 @@
 {
 
+    let  = function loadFormData () {
+        let fields = "case when (COL_LENGTH(da_pktabla,'dbh_perfiles_admitidos_xreg') is null ) then '0' else '1' end as tiene_columna_dbh_perfiles_excluidos, (select a.da_id from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_id_madre,(select a.da_tabla from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_pktabla_madre,(select a.da_pkfield from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_pkfield_madre,(select a.da_descripcion from DBH_AREAS as a where a.da_id = b.da_areamadre ) as namemadre,(select cast(da_id as char) + ',' from DBH_AREAS as a where b.da_id = a.da_areamadre AND a.da_nivel = 1 AND a.da_activa=1 FOR XML PATH ('') ) as da_ids_hijas, (select cast(da_id as char) + ',' from DBH_AREAS as a where (b.da_id = a.da_areamadre OR b.da_id = a.da_areamadrastra) AND a.da_nivel = 2 AND a.da_areamadrastra is not null FOR XML PATH ('') ) as da_ids_relacionantes, (select cast(da_descripcion as char) + ',' from DBH_AREAS as a where (b.da_id = a.da_areamadre OR b.da_id = a.da_areamadrastra) AND a.da_nivel = 2 AND a.da_areamadrastra is not null FOR XML PATH ('') ) as da_nombres_relacionantes,(select cast(da_descripcion as char) + ',' from DBH_AREAS as a where b.da_id = a.da_areamadre AND a.da_nivel = 1 AND a.da_activa=1 FOR XML PATH ('') ) as da_nombre_hijas,*",
+            table = "DBH_AREAS as b",
+            where = "( da_areamadre is null or da_nivel = 1 ) and da_activa = 1",
+            orderby = "da_id,da_orderindex",
+            idfield = "da_id",
+            cache = "loadform-data";
+        dbhQuery({
+            idfield,
+            fields,
+            table,
+            where,
+            orderby,
+            cache
+        }).request(function(xml) {
+            console.log('loaded loadformData.')
+            /*
+            let query = dbhQuery ( "loadform-data" )
+            , subset = query.filter ( '9' )
+            console.log(subset)
+            */
+            $(document).trigger('areas-load')
+        });
+    }();
+
+    let  = function inlineFormData () {
+        let fields = "case when (COL_LENGTH(da_pktabla,'dbh_perfiles_admitidos_xreg') is null ) then '0' else '1' end as tiene_columna_dbh_perfiles_excluidos,(select a.da_pkfield from DBH_AREAS as a where a.da_id = b.da_areamadre ) as pkmadre,(select a.da_perfiles from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_perfiles_madre,*",
+            table = "DBH_AREAS as b",
+            where = "da_nivel = 2 and da_activa = 1 and (select da_activa from DBH_AREAS where da_id=b.da_areamadre ) = '1'",
+            orderby = "da_orderindex",
+            idfield = "da_areamadre",
+            cache = "inlineform-data";
+        dbhQuery({
+            idfield,
+            fields,
+            table,
+            where,
+            orderby,
+            cache
+        }).request(function(xml) {
+            console.log('loaded inlineformData.')
+            /*
+            let query = dbhQuery ( "loadform-data" )
+            , subset = query.filter ( '9' )
+            console.log(subset)
+            */
+        });
+    }();
+
     let tree = function() {
         let fields = "*",
             table = "DBH_AREAS",
@@ -115,53 +164,5 @@
         });
     }();
 
-    let  = function loadFormData () {
-        let fields = "case when (COL_LENGTH(da_pktabla,'dbh_perfiles_admitidos_xreg') is null ) then '0' else '1' end as tiene_columna_dbh_perfiles_excluidos, (select a.da_id from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_id_madre,(select a.da_tabla from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_pktabla_madre,(select a.da_pkfield from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_pkfield_madre,(select a.da_descripcion from DBH_AREAS as a where a.da_id = b.da_areamadre ) as namemadre,(select cast(da_id as char) + ',' from DBH_AREAS as a where b.da_id = a.da_areamadre AND a.da_nivel = 1 AND a.da_activa=1 FOR XML PATH ('') ) as da_ids_hijas, (select cast(da_id as char) + ',' from DBH_AREAS as a where (b.da_id = a.da_areamadre OR b.da_id = a.da_areamadrastra) AND a.da_nivel = 2 AND a.da_areamadrastra is not null FOR XML PATH ('') ) as da_ids_relacionantes, (select cast(da_descripcion as char) + ',' from DBH_AREAS as a where (b.da_id = a.da_areamadre OR b.da_id = a.da_areamadrastra) AND a.da_nivel = 2 AND a.da_areamadrastra is not null FOR XML PATH ('') ) as da_nombres_relacionantes,(select cast(da_descripcion as char) + ',' from DBH_AREAS as a where b.da_id = a.da_areamadre AND a.da_nivel = 1 AND a.da_activa=1 FOR XML PATH ('') ) as da_nombre_hijas,*",
-            table = "DBH_AREAS as b",
-            where = "( da_areamadre is null or da_nivel = 1 ) and da_activa = 1",
-            orderby = "da_id,da_orderindex",
-            idfield = "da_id",
-            cache = "loadform-data";
-        dbhQuery({
-            idfield,
-            fields,
-            table,
-            where,
-            orderby,
-            cache
-        }).request(function(xml) {
-            console.log('loaded loadformData.')
-            /*
-            let query = dbhQuery ( "loadform-data" )
-            , subset = query.filter ( '9' )
-            console.log(subset)
-            */
-            $(document).trigger('areas-load')
-        });
-    }();
-
-    let  = function inlineFormData () {
-        let fields = "case when (COL_LENGTH(da_pktabla,'dbh_perfiles_admitidos_xreg') is null ) then '0' else '1' end as tiene_columna_dbh_perfiles_excluidos,(select a.da_pkfield from DBH_AREAS as a where a.da_id = b.da_areamadre ) as pkmadre,(select a.da_perfiles from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_perfiles_madre,*",
-            table = "DBH_AREAS as b",
-            where = "da_nivel = 2 and da_activa = 1 and (select da_activa from DBH_AREAS where da_id=b.da_areamadre ) = '1'",
-            orderby = "da_orderindex",
-            idfield = "da_areamadre",
-            cache = "inlineform-data";
-        dbhQuery({
-            idfield,
-            fields,
-            table,
-            where,
-            orderby,
-            cache
-        }).request(function(xml) {
-            console.log('loaded inlineformData.')
-            /*
-            let query = dbhQuery ( "loadform-data" )
-            , subset = query.filter ( '9' )
-            console.log(subset)
-            */
-        });
-    }();
 
 }
