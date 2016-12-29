@@ -165,9 +165,9 @@
                 // hound.add ( JSON.stringify ( json )  )
                 //debugger;
                 DBH.hounds.set('grupos:' + key, hound)
-                cacheMap.set ( 'valores' , true )
-                console.log('loaded valores')
             }
+            cacheMap.set ( 'valores' , true )
+            console.log('loaded valores')
         });
     }();
 

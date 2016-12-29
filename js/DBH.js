@@ -863,7 +863,7 @@ var DBH = ( function () {
 		//debugger
 		if ( !res ) { alerta ( 'DBH.area.gorecord(): ' + da_id + ' no es un id de área válido.' ); return false }
 		//alert('a')
-
+/*
 		if(!timer && !$('.formCuerpo[da_id="'+areaid+'"]').length ) {
 			DBH.telon.areaLoad()
 			//DBH.telon.texto.append('Generando el Área...')
@@ -871,7 +871,7 @@ var DBH = ( function () {
 			setTimeout (function(){DBH.gorecord(areaid,recid,1)},50)
 			return false
 		}
-
+*/
 		var record = res[0]
 		, da_nivel = record.da_nivel
 		, da_id = record.da_id
