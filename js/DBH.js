@@ -140,6 +140,32 @@ var DBH = ( function () {
 	this.load = function () {
 		this.all = function () {
 
+			let tree = function() {
+	        let fields = "*",
+	            table = "DBH_AREAS",
+	            where = "da_activa = 1",
+	            orderby = "da_nivel desc,da_orderindex"
+	        dbhQuery({
+	            fields,
+	            table,
+	            where,
+	            orderby
+	        }).request(function(xml) {
+	            let data = DBH.ajax.xmlToObject(xml)
+	            DBH.areasSqlArr = data
+	            DBH.tree.load();
+	            $('#treeresizable').width($('#treeresizable').outerWidth())
+	                //DBH.tree.setWidth();
+	            var treewidth = $('.layout-tree-container').width()
+	            if (treewidth < 170)
+	                treewidth = 170
+	            $('.layout-tree-container').css({
+	                width: treewidth
+	            })
+	            console.log('loaded tree')
+	        })
+	    }();
+
 			DBH_help = new parent.blockButton( document.getElementById('buttonhelp') , document.getElementById('tipdiv') )
 			showtip('rnd')
 			$('#alertaaviso').on('click','button',function(){
