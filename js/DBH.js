@@ -856,14 +856,13 @@ var DBH = ( function () {
 	this.gorecord = function (areaid,recid,timer) {
 		var areahabilitada = $('#treemenu li[da_id="'+areaid+'"]').length
 		if(!areahabilitada){alert('Su usuario no tiene permiso para acceder a este área.');return false}
-
-				if(!timer && !$('.formCuerpo[da_id="'+areaid+'"]').length ) {
+		if(!timer && !$('.formCuerpo[da_id="'+areaid+'"]').length ) {
 					DBH.telon.areaLoad()
 					//DBH.telon.texto.append('Generando el Área...')
 					//$('#divteloninit').show()
 					setTimeout (function(){DBH.gorecord(areaid,recid,1)},0)
 					return false
-				}
+		}
 		if ( ! DBH.cache_areas_state() ) { setTimeout(function(){DBH.gorecord(areaid,recid,timer)},100) ; return }
 		var sqls = "SELECT * FROM DBH_AREAS WHERE da_id = " + areaid
 		//, res2 = DBH.ajax.select ( sqls )
