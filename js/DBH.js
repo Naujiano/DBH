@@ -854,25 +854,20 @@ var DBH = ( function () {
 		DBH.gorecord(areaid,recid)
 	}
 	this.gorecord = function (areaid,recid,timer) {
-		if(  !$('.formCuerpo[da_id="'+areaid+'"]').length ) { DBH.telon.areaLoad() }
-		if ( ! DBH.cache_areas_state() ) { setTimeout(function(){DBH.gorecord(areaid,recid)},100) ; return }
 		var areahabilitada = $('#treemenu li[da_id="'+areaid+'"]').length
 		if(!areahabilitada){alert('Su usuario no tiene permiso para acceder a este área.');return false}
+
+				if(!timer && !$('.formCuerpo[da_id="'+areaid+'"]').length ) {
+					DBH.telon.areaLoad()
+					//DBH.telon.texto.append('Generando el Área...')
+					//$('#divteloninit').show()
+					setTimeout (function(){DBH.gorecord(areaid,recid,1)},0)
+					return false
+				}
+		if ( ! DBH.cache_areas_state() ) { setTimeout(function(){DBH.gorecord(areaid,recid,timer)},100) ; return }
 		var sqls = "SELECT * FROM DBH_AREAS WHERE da_id = " + areaid
 		//, res2 = DBH.ajax.select ( sqls )
 		, res = dbhQuery ( 'loadform-data').json(areaid)
-		//debugger
-		//if ( !res ) { alerta ( 'DBH.area.gorecord(): ' + da_id + ' no es un id de área válido.' ); return false }
-		//alert('a')
-/*
-		if(!timer && !$('.formCuerpo[da_id="'+areaid+'"]').length ) {
-			DBH.telon.areaLoad()
-			//DBH.telon.texto.append('Generando el Área...')
-			//$('#divteloninit').show()
-			setTimeout (function(){DBH.gorecord(areaid,recid,1)},50)
-			return false
-		}
-*/
 		var record = res[0]
 		, da_nivel = record.da_nivel
 		, da_id = record.da_id
