@@ -7,7 +7,7 @@ var inlineform2 = ( function ($,undefined) {
 	//alert('inlineform')
 	var cls = function ( tablapkfkArr, camposlistado, $fkformfield, $divinlineform, doc, idusuario, callbackFnWhenAddClone, callbackFnWhenAddNew, orderBy, callbackFnWhenEnd, callbackFnBeforeAddNew, files, readOnly, blockButton, $topcontainer, da_id, customview, da_areamadre, fkname, da_fkfield_areamadre, da_areamadrastra ) {
 		inlineform2_elements.push(this)
-		
+
 		var that = this
 		that.inlineformIndex = inlineform2_elements.length - 1
 		that.doc = document
@@ -158,7 +158,7 @@ var inlineform2 = ( function ($,undefined) {
 		$botonavisos.addClass('boton miniboton miniboton-inlineform boton-avisos fa fa-bell-o').css({'font-size':'10px'})
 		$botoncomentarios.addClass('boton miniboton miniboton-inlineform boton-comentarios fa fa-commenting-o').css({'font-size':'10px',padding:'2px 0 0 3px'})
 		$wrapper.append ( $botoneliminar )
-		$wrapper.css({opacity:1}).append ( 
+		$wrapper.css({opacity:1}).append (
 			$('<div style="width:16px;height:16px;overflow:hidden;border:0px solid #ddd;z-index:;background::;position:absolute;margin-top:18px;"><div class="boton miniboton miniboton-inlineform" style="padding:0" title=""><div style="margin:-1px 0 0 3px">+</div></div></div>' ).append ( $botonavisos ).append ( $botoncomentarios ).append ( $botonfiles ).append ( $botonhistorico )
 			.on ( 'mouseover' , function () {
 			var $this = $(this)
@@ -329,7 +329,7 @@ var inlineform2 = ( function ($,undefined) {
 			});
 		}
 		function addRecordsToListado(registros,slide){
-			
+
 			//if ( ! slide ) {
 			var $iiss = that.$lineamodelo.find('select.inline-search')
 			//console.log(registros)
@@ -352,7 +352,7 @@ var inlineform2 = ( function ($,undefined) {
 					DBH.mapaSql ( id , sqlQueryObj ).clear().addIds ( ...ids )
 				}
 			});
-			
+
 			$(registros).each ( function (i,registro) {
 				that.addCloneLine($(this),slide)
 			});
@@ -369,9 +369,9 @@ var inlineform2 = ( function ($,undefined) {
 
 			var avisossql = "from dbh_avisos where " + customview + "." + that.pktablefieldname + " = avi_pkvalue and avi_da_id = " + da_id + " AND avi_accion= 1"
 			var avisocampos = "(select min(avi_fecha) " + avisossql + ") as avisosfechamin,(select max(avi_fecha) " + avisossql + ") as avisosfechamax,(select count(avi_id) " + avisossql + ") as avisoscount"
-			var sql = "SELECT " + that.camposlistado + "," + that.pktablefieldname + ", " + tienedocsfield + "," + avisocampos + " FROM " + customview + " LEFT JOIN DBH_avisos ON " + customview + "." + that.pktablefieldname + " = avi_pkvalue and avi_da_id = " + da_id 
+			var sql = "SELECT " + that.camposlistado + "," + that.pktablefieldname + ", " + tienedocsfield + "," + avisocampos + " FROM " + customview + " LEFT JOIN DBH_avisos ON " + customview + "." + that.pktablefieldname + " = avi_pkvalue and avi_da_id = " + da_id
 			*/
-			
+
 			var da_fkfield_areamadre = $divinlineform.attr('da_fkfield_areamadre')
 			, sql = "SELECT " + that.camposlistado + "," + that.pktablefieldname + ", " + tienedocsfield + " FROM " + customview
 			, formatFilterListadoWhere = filter ? formatFilter.listadoWhere : '1=1'
@@ -508,7 +508,7 @@ var inlineform2 = ( function ($,undefined) {
 					, id = id.substring(id.indexOf('.'))
 					, id = that.tabla + id
 					valores += "," + valor
-					campos += "," + id 
+					campos += "," + id
 				});
 				*/
 				var sql = "set dateformat dmy INSERT INTO " + that.tabla + " (" + that.fktablefieldname + "," + campos + ") (SELECT " + $topcontainer.attr('pkname') + "," + valores + " FROM " + $topcontainer.attr('pktabla') + " WHERE " + $topcontainer.attr('pkname') + " IN (" + checkedids + "))"

@@ -116,3 +116,10 @@ span.ui-selectmenu-button,span.ui-selectmenu-button:hover,span.ui-selectmenu-but
 .divlistado.grouped .lineamodelo:not(.edited) label {
 	display: none;
 }
+
+#herramientas_container {
+	background: #69BEB5;
+}
+#herramientas_container li:hover {
+	background: #32AB9F;
+}

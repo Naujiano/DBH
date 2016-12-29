@@ -1457,24 +1457,15 @@ var vars = ( function () {
 			$ol.prepend($alerta.addClass(clase).addClass('blink_me'))
 			$container.scrollTop(0)
 			$container.height ( $alerta.outerHeight() + 2 )
+			let that = this
+			if ( that.blankTimer ) clearTimeout ( that.blankTimer )
+			this.blankTimer = setInterval ( function () {
+				let $alertaBlank = $alerta.clone()
+				$alertaBlank.find('code').html('&nbsp;')
+				$ol.prepend ( $alertaBlank )
+				clearTimeout ( that.blankTimer )
+			} , 5000 )
 		}
-		/*
-		pub.open = function (t,defcon) {
-			//var ww = $(window).width() / 2 - $('.divalertarecuadro').width() / 2
-			if(t!='')$('.divalertamensaje').html(t);
-			$('.divalertarecuadro').removeClass('red green')
-			if(defcon=='1' || defcon == 'green' ){$('.divalertarecuadro').addClass('green')}
-			if(defcon=='2' || defcon == 'red'){$('.divalertarecuadro').addClass('red')}
-			//$('.divalertarecuadro').css( { left: ww  } )
-			$('.divalertarecuadro').slideDown(600);
-			if ( typeof timeralerta != 'undefined' ) clearTimeout ( timeralerta )
-			timeralerta = setTimeout ( function () { $('.divalertarecuadro').slideUp(1000) }, 4000 )
-
-		}
-		pub.close = function () {
-			$('.divalertarecuadro').slideUp(1000);
-		}
-		*/
 		return pub;
 	} () );
 	pub.colorFecha = function ( f, a, b, istext ) {
