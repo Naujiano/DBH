@@ -38,6 +38,7 @@
     }();
 
     let  = function loadFormData () {
+        cacheMap.set ( 'areas' , false )
         let fields = "case when (COL_LENGTH(da_pktabla,'dbh_perfiles_admitidos_xreg') is null ) then '0' else '1' end as tiene_columna_dbh_perfiles_excluidos, (select a.da_id from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_id_madre,(select a.da_tabla from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_pktabla_madre,(select a.da_pkfield from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_pkfield_madre,(select a.da_descripcion from DBH_AREAS as a where a.da_id = b.da_areamadre ) as namemadre,(select cast(da_id as char) + ',' from DBH_AREAS as a where b.da_id = a.da_areamadre AND a.da_nivel = 1 AND a.da_activa=1 FOR XML PATH ('') ) as da_ids_hijas, (select cast(da_id as char) + ',' from DBH_AREAS as a where (b.da_id = a.da_areamadre OR b.da_id = a.da_areamadrastra) AND a.da_nivel = 2 AND a.da_areamadrastra is not null FOR XML PATH ('') ) as da_ids_relacionantes, (select cast(da_descripcion as char) + ',' from DBH_AREAS as a where (b.da_id = a.da_areamadre OR b.da_id = a.da_areamadrastra) AND a.da_nivel = 2 AND a.da_areamadrastra is not null FOR XML PATH ('') ) as da_nombres_relacionantes,(select cast(da_descripcion as char) + ',' from DBH_AREAS as a where b.da_id = a.da_areamadre AND a.da_nivel = 1 AND a.da_activa=1 FOR XML PATH ('') ) as da_nombre_hijas,*",
             table = "DBH_AREAS as b",
             where = "( da_areamadre is null or da_nivel = 1 ) and da_activa = 1",
@@ -53,16 +54,13 @@
             cache
         }).request(function(xml) {
             console.log('loaded loadformData.')
-            /*
-            let query = dbhQuery ( "loadform-data" )
-            , subset = query.filter ( '9' )
-            console.log(subset)
-            */
+            cacheMap.set ( 'areas' , true )
             $(document).trigger('areas-load')
         });
     }();
 
     let campos = function() {
+        cacheMap.set ( 'campos' , false )
         let fields = "" +
             "case when ((select da_tabla from DBH_AREAS where da_id = data_da_id) = left(data_field_id,charindex('.',data_field_id)-1)) then '0' else '1' end as noinsert" +
             ",(select da_descripcion from DBH_AREAS where da_id = (select da_areamadre from DBH_AREAS where da_id = data_da_id)) as areamadre_name" +
@@ -90,11 +88,12 @@
                 $registro.attr('da_id', da_id)
             })
             console.log('loaded campos')
-                //console.log($(xml).find('xml').html())
+            cacheMap.set ( 'campos' , true )
         });
     }();
 
     let  = function inlineFormData () {
+        cacheMap.set ( 'inlineform' , false )
         let fields = "case when (COL_LENGTH(da_pktabla,'dbh_perfiles_admitidos_xreg') is null ) then '0' else '1' end as tiene_columna_dbh_perfiles_excluidos,(select a.da_pkfield from DBH_AREAS as a where a.da_id = b.da_areamadre ) as pkmadre,(select a.da_perfiles from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_perfiles_madre,*",
             table = "DBH_AREAS as b",
             where = "da_nivel = 2 and da_activa = 1 and (select da_activa from DBH_AREAS where da_id=b.da_areamadre ) = '1'",
@@ -110,15 +109,12 @@
             cache
         }).request(function(xml) {
             console.log('loaded inlineformData.')
-            /*
-            let query = dbhQuery ( "loadform-data" )
-            , subset = query.filter ( '9' )
-            console.log(subset)
-            */
+            cacheMap.set ( 'inlineform' , true )
         });
     }();
 
     let valores = function() {
+        cacheMap.set ( 'valores' , false )
         let fields = "li1_id,des,li1_color,grupo",
             table = "dbh_listas",
             where = "grupo IN ( SELECT data_field_grupo FROM dbh_campos inner join dbh_areas on data_da_id = da_id WHERE data_activo = 1 and da_activa = 1 )",
@@ -169,6 +165,7 @@
                 // hound.add ( JSON.stringify ( json )  )
                 //debugger;
                 DBH.hounds.set('grupos:' + key, hound)
+                cacheMap.set ( 'valores' , true )
             }
             console.log('loaded valores')
         });
