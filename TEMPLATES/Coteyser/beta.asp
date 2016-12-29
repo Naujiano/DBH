@@ -6,7 +6,7 @@
 		DBHpath = "http://192.168.1.128/dbh/"
 	else
 		if DBHversion = "" then
-			DBHversion = "9bc19600f356bad2aed8443e302b1d6d21494f5b"
+			DBHversion = "c4db12101ec5db05e0b4835eb0bc0e4aed93256c"
 		end if
 		DBHpath = "https://rawgit.com/Naujiano/DBH/" & DBHversion & "/"
 		DBHversion = left(DBHversion,7)
@@ -38,10 +38,10 @@
 <script type='text/javascript' src='http://code.jquery.com/ui/1.12.1/jquery-ui.min.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
 <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/jstree.min.js'></script>
-<script type="text/javascript" src="customCode/customCode.js"></script> 
+<script type="text/javascript" src="customCode/customCode.js"></script>
 <script async type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.6.0/mousetrap.min.js'></script>
 <script async type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js'></script>
-<script async type="text/javascript" src="http://dbh.naujcloud.com/jquery-simple-datetimepicker-master/jquery.simple-dtpicker.js"></script> 
+<script async type="text/javascript" src="http://dbh.naujcloud.com/jquery-simple-datetimepicker-master/jquery.simple-dtpicker.js"></script>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
 
@@ -55,7 +55,7 @@
 <script async type="text/javascript" src="<%=DBHpath%>js/init-caches.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/listadoCuerpo.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/myAjax.js"></script>
-<script async type="text/javascript" src="<%=DBHpath%>js/DBH-query-editor.js"></script> 
+<script async type="text/javascript" src="<%=DBHpath%>js/DBH-query-editor.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/inlineform.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/toplevelform.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/multistatebutton.js"></script>

@@ -1359,11 +1359,13 @@ var toplevelform = function (objpar) {
 
 	}
 	this.loadInfoCreacion = function (pkvalue) {
+		return
 		$('#divCabeceraEtiqueta')[0].title=""
 		var listadoView=pktabla
 		//var sql = "SELECT (select usu_nombre from DBH_USUARIOS as b where b.usu_id="+listadoView+".iduc) as nombreuc,(select usu_nombre from DBH_USUARIOS as b where b.usu_id="+listadoView+".idum) as nombreum,fechauc,fechaum FROM "+listadoView+" WHERE " + pkname + "="+pkvalue
 		var joinhistorico = " LEFT JOIN dbh_historico ON his_da_id = " + da_id + " AND his_pkvalue = " + pkname + " AND his_id IN (select max(his_id) from dbh_historico group by his_da_id,his_pkvalue)"
-		if(listadoView=='dbh_historico')joinhistorico=""
+		//if(listadoView=='dbh_historico')
+		joinhistorico=""
 		var sql = "SELECT (select usu_nombre from DBH_USUARIOS as b where b.usu_id=his_usu_id) as nombreusu,dbh_historico.his_fecha FROM "+listadoView+joinhistorico+" WHERE " + pkname + "="+pkvalue
 		//console.log(sql)
 		var infoCreacionArr=sqlExec(sql,0)
