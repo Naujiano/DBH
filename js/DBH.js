@@ -1,5 +1,5 @@
 function preinit(){
-	window.onmousedown=documentClick
+	//window.onmousedown=documentClick
 	$('[id="tablaEncabezado"]').on ( 'click' , '.celdaCampoEncabezado', function () {
 		var $this = $(this);
 		if ($this.hasClass('clicked')){
@@ -861,7 +861,7 @@ var DBH = ( function () {
 		//, res2 = DBH.ajax.select ( sqls )
 		, res = dbhQuery ( 'loadform-data').json(areaid)
 		//debugger
-		if ( !res ) { alerta ( 'DBH.area.gorecord(): ' + da_id + ' no es un id de área válido.' ); return false }
+		//if ( !res ) { alerta ( 'DBH.area.gorecord(): ' + da_id + ' no es un id de área válido.' ); return false }
 		//alert('a')
 /*
 		if(!timer && !$('.formCuerpo[da_id="'+areaid+'"]').length ) {
