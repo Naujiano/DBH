@@ -28,7 +28,7 @@
       this.$table.append ( $rows )
     }
     clear () {
-      this.$table.find('tr').remove() 
+      this.$table.find('tr').remove()
 	  return this;
     }
   }
@@ -52,6 +52,7 @@
       let newIds = ids.filter ( x => presentIds.indexOf ( x ) == -1 )
       if ( ! newIds.length ) return false;
       this.ids.push(...newIds)
+      //debugger
       let idFieldName = this.sqlQuery.idfield.trim()
       , where = `${idFieldName} IN ( ${newIds} )`
       //, selectSyntax = this.sqlQuery.reset ( where ).selectSyntax()
@@ -112,7 +113,7 @@
       let mapa = new Map()
       , $table = this.$table
       $table.find('tr').each(function(){
-        let $tr = $(this) 
+        let $tr = $(this)
         , $tds = $tr.find('td')
         , idValue = $tds.eq(0).text()
         , textValue = $tds.eq(1).text()
@@ -130,7 +131,7 @@
     }
   }
     let mapas_sql = new Map()
-	
+
    // DBH.sqlQuery = sqlQuery
     //DBH.mapa_sql = mapa_sql
 
@@ -148,4 +149,3 @@
 	}
 	DBH.hounds = new Map ()
 }
-

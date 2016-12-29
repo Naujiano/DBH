@@ -6,7 +6,7 @@
 		DBHpath = "http://192.168.1.128/dbh/"
 	else
 		if DBHversion = "" then
-			DBHversion = "cae322cf0f70f4fd29d0b08aab8c236dec23cbfe"
+			DBHversion = "9bc19600f356bad2aed8443e302b1d6d21494f5b"
 		end if
 		DBHpath = "https://rawgit.com/Naujiano/DBH/" & DBHversion & "/"
 		DBHversion = left(DBHversion,7)
@@ -51,9 +51,10 @@
 <script type="text/javascript" src="<%=DBHpath%>js/blockButton.js"></script>
 <script type="text/javascript" src="<%=DBHpath%>js/index.js"></script>
 <script type="text/javascript" src="<%=DBHpath%>js/general.js"></script>
+
+<script async type="text/javascript" src="<%=DBHpath%>js/init-caches.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/listadoCuerpo.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/myAjax.js"></script>
-
 <script async type="text/javascript" src="<%=DBHpath%>js/DBH-query-editor.js"></script> 
 <script async type="text/javascript" src="<%=DBHpath%>js/inlineform.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/toplevelform.js"></script>

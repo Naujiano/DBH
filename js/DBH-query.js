@@ -3,9 +3,10 @@ var dbhQuery
 	String.prototype.escape_sql = function() {
 		return this.replace(/\'/g,"''");
 	}
+	let cacheMap = new Map()
 	class query {
 		constructor ( settings ) {
-			let { idfield , fields , assigns , select , table , where = '' , orderby = '' , httphandler = query.defaultHttpHandler } = settings
+			let { idfield , fields , assigns , select , table , where = '' , orderby = '' , httphandler = query.defaultHttpHandler , cache } = settings
 			if ( ! table ){ console.log( 'Class query: table parameter has not been provided.' ); return false;	}
 			this.idfield = idfield ? idfield.trim() : idfield
 			this.fields = fields
@@ -15,8 +16,10 @@ var dbhQuery
 			this.assigns = assigns
 			this.select = select
 			this.httphandler = httphandler
+			this.cacheName = cache
 			this.url = 'selectXML_new.asp'
-			this.dataType = 'xml'
+			this.dataType = 'xml';
+			if ( cache ) cacheMap.set ( cache , this );
 			//this.httphandler = httphandler ? httphandler : sqlExecVal
 			//this.settings = settings
 		}
@@ -33,12 +36,16 @@ var dbhQuery
 		}
 		request ( successFn ) {
 			let data = "sql=" + encodeURIComponent(this.executeSyntax())
-			$.ajax({ type: "POST",   
-				url: this.url,   
+			, that = this;
+			$.ajax({ type: "POST",
+				url: this.url,
 				async: true,
 				dataType: this.dataType,
 				data: data,
-				success : successFn,
+				success : function ( xml ) {
+					that.cache ( xml );
+					successFn ( xml );
+				},
 				error: function ( jqXHR, textStatus, errorThrown)
 				{
 					//console.log("textStatus: "+textStatus)
@@ -52,7 +59,42 @@ var dbhQuery
 					})
 					*/
 				}
-			}); 
+			});
+		}
+		cache (xml) {
+				if ( !xml ) return this.hound
+				this.http_response = xml
+				let $rows = $(xml).find('xml').children()
+				, that = this
+				if ( this.idfield ) {
+					$rows.each ( function () {
+						let $row = $(this)
+						, $idNode = $row.find(`[fieldname="${that.idfield}"]`)
+						, id = $idNode.text()
+						$idNode.parent().attr('sqlQuery-id',id)
+					})
+				}
+				this.hound = $rows
+		}
+		filter ( id ) {
+			//return false
+			//let idsArr = ids.split ( ',' )
+			let hound = this.cache()
+			, $rows = hound.filter(`[sqlQuery-id="${id}"]`)
+			return $rows
+		}
+		json ( id ) {
+			//return false
+			let  xmldoc = this.http_response
+			, rows = DBH.ajax.xmlToObject ( xmldoc )
+			, filteredRows = []
+			for ( let i = 0 ; i < rows.length ; i ++ ) {
+				let row = rows[i]
+				, rowid = row[this.idfield]
+				, included = id == rowid
+				if ( included ) filteredRows.push ( row )
+			}
+			return filteredRows
 		}
 	}
 	class query_insert extends query {
@@ -140,7 +182,7 @@ var dbhQuery
 			return new query_select ( settings )
 		}
 	}
-	
+
 	query_select.prototype.getJSON = function ( where ) {
 		let json = this.reset ( where ).execute (DBH.ajax.select)
 		return json
@@ -149,8 +191,10 @@ var dbhQuery
 		let $rows = this.reset ( where ).execute (DBH.ajax.toRows)
 		return $rows
 	}
-	
+
 	dbhQuery = function ( settings ) {
+		if ( typeof settings == 'string' )
+			return cacheMap.get(settings)
 		let type = settings.type
 		if ( !type || type == 'select' ) return query_select.init ( settings )
 		if ( type == 'insert' ) return query_insert.init ( settings )
@@ -184,12 +228,16 @@ let eee = DBH.query({
 */
 
 /*
-dbhQuery({
-	fields : 'top 2 nombre,apellido1' 
-	, table: 'personas' 
-	//, where : 'codpersona = 50214' 
-}).request(function(xml){
+let a = dbhQuery({
+	fields : 'top 2 codpersona,nombre,apellido1'
+	, table: 'personas'
+	, cache: "sss-oi"
+	, idfield : "codpersona"
+	//, where : 'codpersona = 50214'
+})
+a.request(function(xml){
 	console.log($(xml).find('xml').html())
+	console.log(dbhQuery('sss-oi').filter('4893,4894'))
 	//console.log($(xml).find('xml').html())
 });
 */

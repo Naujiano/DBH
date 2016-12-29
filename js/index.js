@@ -1,19 +1,9 @@
-function init_crossdoc (win) {
-	win.onmousedown=documentClick
-	//ocultarCamposPerfiles(win.document,$('#usu_perfil').val())
-}
-/*
-function setSessionId () {
-	$.get( 'realsessionid.asp', '', function( data ) {
-//		console.log(data)
-		$('#sessionid').val(data)
-	});
-}
-*/
 function loadTopForms(da_id){
 	var sqltxt = "SELECT case when (COL_LENGTH(da_pktabla,'dbh_perfiles_admitidos_xreg') is null ) then '0' else '1' end as tiene_columna_dbh_perfiles_excluidos, (select a.da_id from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_id_madre,(select a.da_tabla from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_pktabla_madre,(select a.da_pkfield from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_pkfield_madre,(select a.da_descripcion from DBH_AREAS as a where a.da_id = b.da_areamadre ) as namemadre,(select cast(da_id as char) + ',' from DBH_AREAS as a where b.da_id = a.da_areamadre AND a.da_nivel = 1 AND a.da_activa=1 FOR XML PATH ('') ) as da_ids_hijas, (select cast(da_id as char) + ',' from DBH_AREAS as a where (b.da_id = a.da_areamadre OR b.da_id = a.da_areamadrastra) AND a.da_nivel = 2 AND a.da_areamadrastra is not null FOR XML PATH ('') ) as da_ids_relacionantes, (select cast(da_descripcion as char) + ',' from DBH_AREAS as a where (b.da_id = a.da_areamadre OR b.da_id = a.da_areamadrastra) AND a.da_nivel = 2 AND a.da_areamadrastra is not null FOR XML PATH ('') ) as da_nombres_relacionantes,(select cast(da_descripcion as char) + ',' from DBH_AREAS as a where b.da_id = a.da_areamadre AND a.da_nivel = 1 AND a.da_activa=1 FOR XML PATH ('') ) as da_nombre_hijas,* FROM DBH_AREAS as b WHERE ( da_areamadre is null or da_nivel = 1 ) and da_activa = 1 AND da_id = "+da_id+" order by da_orderindex"
-	, r = parent.sqlExec ( sqltxt )
-	, config_usu_perfil = sessionStorage["usu_perfil"]//$(document).data('')
+	//, r = parent.sqlExec ( sqltxt )
+	, r = dbhQuery ( 'loadform-data' ).filter(da_id)
+
+	var config_usu_perfil = sessionStorage["usu_perfil"]//$(document).data('')
 	//, topform
 		var t0 = performance.now();
 
@@ -88,8 +78,9 @@ function loadTopForms(da_id){
   DBH.consola( "topform " + da_id + " Time: " + (t1 - t0) + " milliseconds.")
 
 
-	var sqlll = "SELECT case when (COL_LENGTH(da_pktabla,'dbh_perfiles_admitidos_xreg') is null ) then '0' else '1' end as tiene_columna_dbh_perfiles_excluidos,(select a.da_pkfield from DBH_AREAS as a where a.da_id = b.da_areamadre ) as pkmadre,(select a.da_perfiles from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_perfiles_madre,* FROM DBH_AREAS as b WHERE da_nivel = 2 and da_activa = 1 and (select da_activa from DBH_AREAS where da_id=b.da_areamadre ) = '1' AND da_areamadre = "+da_id+" order by da_orderindex"
-	r = parent.sqlExec ( sqlll )
+	//var sqlll = "SELECT case when (COL_LENGTH(da_pktabla,'dbh_perfiles_admitidos_xreg') is null ) then '0' else '1' end as tiene_columna_dbh_perfiles_excluidos,(select a.da_pkfield from DBH_AREAS as a where a.da_id = b.da_areamadre ) as pkmadre,(select a.da_perfiles from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_perfiles_madre,* FROM DBH_AREAS as b WHERE da_nivel = 2 and da_activa = 1 and (select da_activa from DBH_AREAS where da_id=b.da_areamadre ) = '1' AND da_areamadre = "+da_id+" order by da_orderindex"
+	//r = parent.sqlExec ( sqlll )
+	r = dbhQuery ( 'inlineform-data' ).filter(da_id)
 	$(r).each ( function () {
 		var da_tabla = $(this).find('[fieldname="da_tabla"]').text().toLowerCase()
 		, da_pktabla = $(this).find('[fieldname="da_pktabla"]').text().toLowerCase()
@@ -141,7 +132,7 @@ function loadTopForms(da_id){
 				})
 			//}
 			//var seguimientoinlineform = undefined
-			
+
 		}
 	})
 	//function end() {
@@ -158,12 +149,6 @@ function loadTopForms(da_id){
 	//end()
 }
 function init(){
-	//dropDownMenusArr=new Array()
-	//topformnumber = toplevelform_elements.length
-	init_crossdoc(window);
-	//scrollingDivision=false
-	//var divisionOffsetLeft=600
-	//if(divisionOffsetLeft!=""){scrollDivision(divisionOffsetLeft)}
 	parent.ajustarAnchoForm()
 	vars.init()
 }
@@ -310,13 +295,13 @@ function switchiframes_real (areanumber,listadoWhere,listadoWhereText,$container
 	}
 	switchiframes_real.stopReset = 0
 	$('#alimentador').trigger('vistas:list:changed')
-	ajustarAnchoForm(1) 
+	ajustarAnchoForm(1)
 	if ( ! iframe.find('.multicolumn-column').length ) iframe.data('topform').multicolumns(1)
 	$('#tableCuerpos').css('visibility','visible')
 	iframe.data('topform').sortableColumns()
 	$(document).trigger('area:on:navigate')
 	var t1 = performance.now();DBH.consola( "switchIframes: " + (t1 - t0) + " milliseconds.")
-	
+
 }
 function invalidarCampo(campo){
 	//campo.oldbgcolor=campo.style.backgroundColor
@@ -501,7 +486,7 @@ function loadLista(lista,sql,valueFieldName,textFieldName,db,dataFieldName){
 
 	}
 	*/
-	
+
 	sql = sqlarr[0] + dbh_perfiles_excluidos_condicion + order_condition
 	var regs=sqlExec(sql,0,db)
 	if ( regs == null ) return false
@@ -826,7 +811,7 @@ function programarSelects($container,sonlistas){
 		grupos_cargados.push ( grupo )
 	})
 	*/
-	
+
 //	console.log($listas_loadlista.length)
 	$listas_loadlista.each(function(){
 		var $lista = $(this)
@@ -843,7 +828,7 @@ function programarSelects($container,sonlistas){
 		var r = ajaxExecuter('selectSelectOptions.asp','sql='+encodeURIComponent(selects_listas))
 		//console.log(r)
 		*/
-		
+
 	if ( ! DBH.$grupListsOptions ) DBH.$grupListsOptions = $()
 	$listas.each(function(){
 		var $lista = $(this)
@@ -927,6 +912,7 @@ function programarSelectsVinculadas($container){
 	})
 }
 function programarCampos(campos,container,tabla,param){
+	return
 	if (campos.length == 0)return
 	var doc=document
 	, listadoView=tabla
@@ -935,20 +921,15 @@ function programarCampos(campos,container,tabla,param){
 	if(registros==null)return
 	var camposArr=registros[0].childNodes
 	, $container = $(container)
-	, $labels = $()
+	//, $labels = $()
 	for(var i=0;i<campos.length;i++){
 		var campo = $container.find('[id="'+ campos[i] + '"]')[0]
 		, $campo = $(campo)
 		if ( ! campo || campo == null ) { alerta ( "Error programarCampos" ); console.log ( 'campo: ' + campos[i] ) }
 		if ( !param ) {
-		$campo.on('input',function(){
-			formCabecera.formModificado(1)
-		})
 		}
 		var tipo=camposArr[i].getAttribute("tipo")
 		, size=camposArr[i].getAttribute("size")
-		, defaultval = $campo.attr('data_default_value')
-		, defaultvalsql = $campo.attr('data_default_value_sql')
 		$campo.data('tipo',tipo)
 		$campo.attr('data-size',size)
 //	console.log($campo)
@@ -961,25 +942,10 @@ function programarCampos(campos,container,tabla,param){
 		} else {
 			var data_type = "text"
 		}
-		if(defaultval){
-			$campo.off ('focus')
-			$campo.on('focus',function(){
-				var $c = $(this)
-				if($c.val() == '' || ! $c.val() ) {$c.val($c.attr('data_default_value'));setTextareaHeight(this)}
-			})
-		}
-		if(defaultvalsql){
-			$campo.off ('focus')
-			$campo.on('focus',function(){
-				var $c = $(this)
-				, val = sqlExecVal($c.attr('data_default_value_sql'))
-				if($c.val() == '' || ! $c.val() ) $c.val(val)
-			})
-		}
 		$campo.addClass('data-type-' + data_type )
 		$campo.addClass('data-dbtype-' + tipo )
 		$container.find( 'label[for="'+ campos[i] + '"]' ).data('tipo',tipo)
-		$labels = $labels.add ( $container.find( 'label[for="'+ campos[i] + '"]' ) )
+		//$labels = $labels.add ( $container.find( 'label[for="'+ campos[i] + '"]' ) )
 	}
 }
 function programarLabels($labels){
@@ -1387,7 +1353,7 @@ var vars = ( function () {
 				$dialogContainer.attr('pkvalue', pkvalue)
 			if ( typeof pkvalue == 'function' )
 				$dialogContainer.data('callback', pkvalue)
-			
+
 			//if(callback)callback()
 		}
 		dialog.dialog("close")
@@ -1572,7 +1538,7 @@ var vars = ( function () {
 			//if ( rec && !$container.is(':visible') ) {
 				DBH.aviso(rec.avi_id).alertar()
 			//}
-			
+
 		}
 
 		pub.ping()
@@ -1654,7 +1620,7 @@ var vars = ( function () {
 				setTimeout ( function(){pub.goArea(da_id)}, 100 )
 			}
 			return false;
-		} 
+		}
 		if ( firstLoad ) {
 			switchiframes_real($pestana)
 		}
@@ -2050,7 +2016,7 @@ var vars = ( function () {
 			console.log( dir )
 			if( typeof Handsontable == 'undefined' ) {
 				if ( ! pub.scriptLoading ) {$.getScript(dir);pub.scriptLoading = 1}
-				
+
 				setTimeout(pub.init,50)
 				return false
 			}

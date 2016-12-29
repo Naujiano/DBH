@@ -2,7 +2,7 @@
 Dependent on: jQuery, bootstrap-tagsinput, typeahead (bundle with Bloodhound)
 **********/
 
-{	
+{
 
 	var taginput_original = $.fn.tagsinput
 	//console.log(taginput_original)
@@ -19,7 +19,7 @@ Dependent on: jQuery, bootstrap-tagsinput, typeahead (bundle with Bloodhound)
 			//return this.taginput_original ( option )
 		}
 	}
-	
+
 	$.fn.extend({
 		valor: function (val) {
 			console.assert ( this.length , 'dbhField: passed an empty jQuerySet.')
@@ -87,14 +87,14 @@ Dependent on: jQuery, bootstrap-tagsinput, typeahead (bundle with Bloodhound)
 						var idfield = $input.attr('select-id-field')
 						, textfield = $input.attr('select-text-field')
 						, table = $input.attr('select-table')
-						, sqlQueryObj = { idFieldName : idfield , fieldNames : `${idfield},${textfield}` , table : table }
+						, sqlQueryObj = { idfield : idfield , fields : `${idfield},${textfield}` , table : table }
 						DBH.mapaSql ( id , sqlQueryObj ).addIds ( _val )
 						txt = DBH.mapaSql(id).mapa.get(_val)
 					}
 					var opt = '<option value="'+_val+'" selected>'+(txt?txt:'')+'</option>'
 				}
 				$input.find('option').remove()
-				$input.append('<option/>').append(opt)	
+				$input.append('<option/>').append(opt)
 				//super.val ( _val )
 			}
 		}
@@ -138,7 +138,7 @@ Dependent on: jQuery, bootstrap-tagsinput, typeahead (bundle with Bloodhound)
 					}
 					,display:'des'
 				}]
-				
+
 			});
 			$input.on('itemRemoved',	function (event) {
 				let isEdition = DBH.area().recid.length

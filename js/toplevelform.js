@@ -49,7 +49,7 @@ var toplevelform = function (objpar) {
 			$col.append($div)
 			if(i>0)colactual++;
 			colactual = colactual > ( nocols - 1 ) ? 0 : colactual;
-			
+
 		})
 		if ( nocols > 2 ) {
 			$cols.addClass('fields-width-controlled')
@@ -84,10 +84,10 @@ var toplevelform = function (objpar) {
 					//var $div = $this.detach()
 					//$col.prepend ( $div )
 					//return true;
-					
+
 				}
 			}
-			
+
 		});
 		//that.$container.find('div').css({'width':'50%'}).append($divs);
 	}
@@ -131,7 +131,7 @@ var toplevelform = function (objpar) {
 		that.$buttonbar = $buttonbar
 		var btb = $('#divnavegacionpestanas')
 		btb.append(that.$buttonbar)
-		
+
 	}
 	this.sortableColumns = function () {
 		var  $s = $( '[id="tablaEncabezado"] [id="trCeldasEncabezados"]' )
@@ -184,7 +184,7 @@ var toplevelform = function (objpar) {
 	,da_pkfield_madre = da_pkfield_madre.substring(da_pkfield_madre.indexOf("."))
 	,da_pkfield_madre = da_pktabla_madre + da_pkfield_madre
 	,tabla = da_areamadre ? "(" + customview + " INNER JOIN " + da_pktabla_madre + " ON " + customview + "." + vinculada_fkname + "=" + da_pkfield_madre + ")" : tabla
-	//,tabla = tabla + " LEFT JOIN dbh_historico ON his_da_id = " + da_id + " AND his_pkvalue = " + customview + "." + pkname + " AND his_id IN (select max(his_id) from dbh_historico group by his_da_id,his_pkvalue)" 
+	//,tabla = tabla + " LEFT JOIN dbh_historico ON his_da_id = " + da_id + " AND his_pkvalue = " + customview + "." + pkname + " AND his_id IN (select max(his_id) from dbh_historico group by his_da_id,his_pkvalue)"
 	,selectListado = objpar.selectListado
 	,etiquetasListado = objpar.etiquetasListado
 	,orderindexListado = objpar.orderindexListado
@@ -209,7 +209,7 @@ var toplevelform = function (objpar) {
 	,camposnoinsert = []
 	,camposcustomsql = []
 	,camposcustomsqlids = []
-	, etiquetasview = []
+	//, etiquetasview = []
 	, $container = $(	)
 	, notopform = toplevelform_elements.length
 	, da_id_actual = da_id
@@ -266,13 +266,13 @@ var toplevelform = function (objpar) {
 		that.$fkformfield = $fkformfield
 	}
 	var $msb = that.$container.find('.multistatebutton')
-	$msb.each(function(){ new multistatebutton(this)}) 
+	$msb.each(function(){ new multistatebutton(this)})
 	//$container.on ( 'click', '.multistatebutton-write', function() {formCabecera.formModificado(1)} )
-	Mousetrap.bind('ctrl+'+notopform, function(event) { 
+	Mousetrap.bind('ctrl+'+notopform, function(event) {
 		switchiframes (notopform-1,'','',$container)
 		return false
 	});
-	
+
 	var $camposform = $container.find('.inputText').not($('.divinlineform *'))
 //if(fromDB.toLowerCase()=='riesgos')console.log($camposform)
 	if (!$camposform) { alerta ( "El Main Form no tienen ningún campo asignado" ) ; return false }
@@ -313,14 +313,14 @@ var toplevelform = function (objpar) {
 	, $listadoetiqueta = $listadoetiquetatemplate.clone(true,true).attr('data-pkname',pkname).attr('da_id',da_id).attr('id','').removeClass('dbh-listado-etiqueta-template').addClass('dbh-listado-etiqueta')
 	, $formToolbarTemplate = $('.form-toolbar-template')
 	, $hook_formToolbar = $('.layout-form-toolbar-container')
-	
+
 	$hook_formToolbar.find('.form-toolbar[da_id="'+da_id+'"]').remove()
 	$hook_formToolbar.append( $formToolbarTemplate.clone().show().attr('da_id',da_id).removeClass('form-toolbar-template').addClass('form-toolbar') )
 	, $listToolbarTemplate = $('.list-toolbar-template')
 	, $hook_listToolbar = $('.layout-list-toolbar-container')
 	$hook_listToolbar.find('.list-toolbar[da_id="'+da_id+'"]').remove()
 	$hook_listToolbar.append( $listToolbarTemplate.clone().show().attr('da_id',da_id).removeClass('list-toolbar-template').addClass('list-toolbar') )
-	
+
 	$listadotemplate.after($listadocontainer)
 	if(!$('.dbh-listado-etiqueta[da_id="'+da_id+'"]').length) {
 		$listadoetiquetatemplate.after($listadoetiqueta)
@@ -333,8 +333,8 @@ var toplevelform = function (objpar) {
 		$container: $queryeditorhook,
 		$template: $('.dbh-query-editor-template')
 	})
-	
-		
+
+
 	/**** TOOLBAR ****/
 
 
@@ -452,7 +452,7 @@ var toplevelform = function (objpar) {
 		, create : selectmenu($selecthijas).create
 	})
 	/**** /TOOLBAR ****/
-	
+
 	that.tabla = tabla
 	that.pkname = pkname
 	//that.listadoWhere=listadoWhere
@@ -498,7 +498,7 @@ var toplevelform = function (objpar) {
 	$c.val('')
 	//DBH.valueLists().setColor()
 	//that.multicolumns(1)
-	
+
 	this.stringifyparams = function () {
 		//console.log(listado.get('listadoWhere'))
 		//console.log(listado.get('listadoWhereText'))
@@ -516,7 +516,7 @@ var toplevelform = function (objpar) {
 			//console.log(i)
 			var $b = $(this)
 			,$button = that.$buttonbar.$buttons[i]
-			
+
 			if ( $b.is(':visible') ) {
 				$button.addClass('active');
 				$button[0].checked=true
@@ -563,8 +563,8 @@ var toplevelform = function (objpar) {
 			,etiquetaliteral
 			,grupo = ''
 //			console.log (typeof etiqueta )
-			if ( typeof etiqueta == 'string' ) { 
-				etiquetacampo = etiqueta; etiquetaliteral = etiqueta 
+			if ( typeof etiqueta == 'string' ) {
+				etiquetacampo = etiqueta; etiquetaliteral = etiqueta
 			} else {
 				etiquetacampo = etiqueta[0]; etiquetaliteral = etiqueta[1]
 				grupo = etiqueta[2]
@@ -586,14 +586,16 @@ var toplevelform = function (objpar) {
 		}
 		return this
 	}
-	this.resetListado = function (listadoWhere,listadoWhereText) {	
+	this.resetListado = function (listadoWhere,listadoWhereText) {
 //			console.log($container)
 //			console.log(that.tabla)
 		var etiquetaslistadovars = that.etiquetaslistadovars()
+		/*
 		, r = parent.sqlExec ( "SELECT TOP 1 * FROM " + that.tabla )
 		$(r).children().each ( function () {
 			etiquetasview.push ( $(this).prop('tagName').toLowerCase() )
 		})
+		*/
 		that.campos = etiquetaslistadovars.campos
 		if ( ( typeof that.listadoWhere != 'string' || listadoWhere == 0 || !listadoWhere ) && !that.queryEditor.queryparameters ) {
 			var sql_recientes = "(SELECT top 120 his_pkvalue FROM dbh_historico where his_da_id = " + da_id + " group by his_da_id,his_pkvalue order by max(his_fecha) desc)"
@@ -611,7 +613,7 @@ var toplevelform = function (objpar) {
 			//console.log(typeof [])
 			that.queryEditor.load()
 		}
-		
+
 		if ( orderindexListado > ( etiquetasListado.length + 1 )  ) orderindexListado = etiquetasListado.length + 1
 		var j = findframenumber()
 		document.getElementById('vinculada_pkname').value=vinculada_pkname?vinculada_pkname:''
@@ -703,7 +705,7 @@ var toplevelform = function (objpar) {
 					//$campoform.find ( 'option').removeAttr('selected').filter('[value="'+valor+'"]').attr ( 'selected',true )
 					//$campoform.trigger ( 'change' )
 					$campoform.trigger ( 'change' )
-					
+
 				}
 				if($campoform.prop('tagName')=="SELECT" && !$campoform.hasClass('multistatebutton')){
 					$campoform.attr ( 'title', $campoform.find('option:selected').text() )
@@ -737,18 +739,18 @@ var toplevelform = function (objpar) {
 		if ( txt != '' ) txt = txt.substring(0,txt.length-3)
 		$(inlineform2_elements).each ( function () { this.show() })
 	/*
-		$container.find('[data-select-vinculada-madre][data-select-vinculada-madre!=""]').each ( function () { 
+		$container.find('[data-select-vinculada-madre][data-select-vinculada-madre!=""]').each ( function () {
 			var $hija = $(this)
 			, madreid = $hija.attr('data-select-vinculada-madre')
 			, $madre = $hija.closest('.divCampoForm').parent().find('[id="' + madreid + '"]' )
-			vars.filterSelectsHijas( $hija ) 
+			vars.filterSelectsHijas( $hija )
 		} )
 		*/
 		$(multistatebuttons_elements).each(function(){this.setcss();})
 		//$container.find('select').not('[id="data.data_field_id"]').css({'background':'red'}).trigger ( 'change' )
 		parent.clearDocumentAlerts(doc)
 		//that.loadInfoCreacion(pkvalue)
-		txt ="(" + pkvalue + ") " + txt 
+		txt ="(" + pkvalue + ") " + txt
 		formCabecera.formCabeceraEtiquetaUpdate(txt)
 		var tr = $('[id="trListado' + pkvalue + '"]')[0]
 		menu1Seleccionar(tr,$('#listadoCuerpoContainer')[0].getElementsByTagName('tr'))
@@ -782,7 +784,7 @@ var toplevelform = function (objpar) {
 			if(!vars.isValidFormFieldContent($ff)){invalidarCampo(this);error=1}
 		})
 		if(error){alerta("Corrija los campos indicados.");return false}
-		
+
 		if(esNuevo){
 			if(confirm('Crear una ficha nueva con estas datos?')){
 				var parametros = that.saveform_values(1)
@@ -800,9 +802,9 @@ var toplevelform = function (objpar) {
 		} else {
 			var res = that.saveform_values()
 			//alert(res)
-			if (!res) return false 
+			if (!res) return false
 		}
-		
+
 		if(esNuevo){
 			that.clear(1)
 			that.load(pkvalue)
@@ -813,7 +815,7 @@ var toplevelform = function (objpar) {
 			/***** DESCONECTADA REFRESCO DE LA FILA EN EL LISTADO PQ ES UNA CONSULTA A BD QUE RALENTIZA **********
 			var idlistado=document.getElementById('idlistado').value
 			, trListado=$('#divlist #trListado'+idlistado)[0]
-			if ( trListado == null ) { console.log('No existe la linea (' + idlistado + ') en el listado, por lo que no se ha actualizado'); 
+			if ( trListado == null ) { console.log('No existe la linea (' + idlistado + ') en el listado, por lo que no se ha actualizado');
 			} else {
 				var listadoView=tabla
 				, nombresCampos=document.getElementById("nombresCampos").value
@@ -860,9 +862,9 @@ var toplevelform = function (objpar) {
 				}
 			}
 		}
-		
+
 		/* AÑADO dbh_perfiles_admitidos_xreg SI LA TABLA TIENE LA COLUMNA */
-		
+
 		var tiene_columna_dbh_perfiles_excluidos = $('.formCuerpo:visible').attr('tiene_columna_dbh_perfiles_excluidos') * 1
 		, usu_perfiles_admitidos=sessionStorage["usu_perfiles_admitidos"]
 		if (tiene_columna_dbh_perfiles_excluidos && usu_perfiles_admitidos != '') {
@@ -957,10 +959,10 @@ var toplevelform = function (objpar) {
 			alerta ( 'Serie de registros actualizada',1 )
 		} else {
 			var respuesta = window.prompt ( "Escriba la ELIMINAR (en mayúsculas) para completar la operación.")
-			if ( respuesta != "ELIMINAR" ) { 
+			if ( respuesta != "ELIMINAR" ) {
 				var respuesta = window.prompt ( "Escriba la ELIMINAR (en mayúsculas) para terminar la operación.", respuesta)
-				if ( respuesta != "ELIMINAR" ) { 
-					alerta ( 'Operación cancelada' ) ; 
+				if ( respuesta != "ELIMINAR" ) {
+					alerta ( 'Operación cancelada' ) ;
 					return false
 				}
 			}
@@ -989,7 +991,7 @@ var toplevelform = function (objpar) {
 		if ( callback_delete )  callback_delete (pkvalue)
 	}
     this.PrintElem = function (){
-		function Popup(data) 
+		function Popup(data)
 		{
 			var mywindow = window.open('', 'my div', 'height=400,width=600');
 			mywindow.document.write('<html><head><title>my div</title>');
@@ -997,17 +999,17 @@ var toplevelform = function (objpar) {
 			mywindow.document.write('</head><body >');
 			mywindow.document.write(data);
 			mywindow.document.write('</body></html>');
-	
+
 			mywindow.document.close(); // necessary for IE >= 10
 			mywindow.focus(); // necessary for IE >= 10
-	
+
 			mywindow.print();
 			mywindow.close();
-	
+
 			return true;
 		}
         //Popup($container.html());
-		
+
 		var $eles = $('body').children().add($('#tablegeneral')).add($('#tableright')).add($container)//.add($('.celdaaffectedby_ajustarAnchoForm'))//
 		, $botoncerrar = $('<button class="boton botoncerrarprint" style="position:absolute;z-index:1000000;right:10px;top:5px;background:white;float:left">Cerrar</button>')
 		$eles.addClass('DBH-print-mode')
@@ -1025,19 +1027,19 @@ var toplevelform = function (objpar) {
 		//$('#tablegeneral').show()
 		//$('#tableright').hide()
 		//$container.attr('style','position:absolute;top:0;left:0;width:100%;z-index:9999999999999;overflow:visible;height:100%;display:show')
-		
 
-		
+
+
 	}
 	this.DBH = function (pkname,timer) {
-		
-		
+
+
 		var recsid = DBH.area().recsid
 		, recid = !isNaN ( recsid ) ? recsid : ''
 		, $campos = $container.find('.etiqueta-show')
 		, etiqueta = ''
 		, pksinactualarea = "SELECT " + that.pkname + " FROM " + that.tabla + " WHERE " + that.listadoWhere
-		if ( recsid=='') { 
+		if ( recsid=='') {
 			var condition = pkname + " IN ( " + pksinactualarea + " ) "
 		} else {
 			var condition = pkname + " IN ( " + recsid + " ) "
@@ -1079,7 +1081,7 @@ var toplevelform = function (objpar) {
 			} else {
 				var condicion = searchedfield + " IN ( SELECT " + keyfield_relationstable + " FROM " + linea.da_tabla + " WHERE " + searchedfield_relationstable + " IN ( " + recsid + " ))"
 			}
-			
+
 			var par1 = [['dbh_redactor_consultas',condicion]]
 		}
 		if ( pkname == 'avi_pkvalue' ) {
@@ -1150,7 +1152,7 @@ var toplevelform = function (objpar) {
 		formCabecera.formCabeceraEtiquetaUpdate('Ning&uacute;n registro seleccionado.');
 		$container.find( '.divCampoForm .no-insert' ).prop('disabled',false)
 		document.getElementById('idlistado').value=""
-		$(inlineform2_elements).each ( function () { 
+		$(inlineform2_elements).each ( function () {
 			var $areas = DBH.area().container.find('*');
 			if(this.$divlistado.is($areas))this.clearForm(true)
 		})
@@ -1196,7 +1198,7 @@ var toplevelform = function (objpar) {
 //console.log(wherearr)
 		, $redactor = that.$container.find('[id="dbh_redactor_consultas"]')
 		, da_areamadrastra_redactor = $redactor.attr('dbh-query-da_id')
-		
+
 		//SECONDARY FORMS
 		$(inlineform2_elements).each(function (inlineformIndex){
 			var inlineform = this
@@ -1273,7 +1275,7 @@ var toplevelform = function (objpar) {
 		if(listadoWhereText=="")listadoWhereText=""
 		that.listadoWhere=listadoWhere
 		that.listadoWhereText=listadoWhereText
-		
+
 		reFilter(listadoWhere,listadoWhereText)
 		$('#iframeListadoCuerpo').show()
 		listado.get('checkedids')
@@ -1309,7 +1311,7 @@ var toplevelform = function (objpar) {
 			return false
 		}
 		etiquetasListado.splice(i-1, 1 )
-		etiquetasview.splice(i-1, 1 )
+		//etiquetasview.splice(i-1, 1 )
 		alerta ( 'La columna ha sido eliminada del listado',1)
 		that.resetListado()
 	}
@@ -1336,31 +1338,31 @@ var toplevelform = function (objpar) {
 		$(etiquetasListado).each(function(){
 			if ( this[1] == label ) alreadyinlist = 1
 		})
-		//if ( $.inArray(colsql,that.etiquetaslistadovars().campos) > -1 ) { 
-		if ( alreadyinlist ) { 
-			alerta ( "Esta columna ya está en el listado." ) ; return false 
+		//if ( $.inArray(colsql,that.etiquetaslistadovars().campos) > -1 ) {
+		if ( alreadyinlist ) {
+			alerta ( "Esta columna ya está en el listado." ) ; return false
 		} else {
 			//selectListado = sel
 			etiquetasListado.unshift ( [id,label,grupo,sqlParams] )
 			var lobi = $('#listadoOrderByIndex').val()
-			etiquetasview.unshift ( id )
+			//etiquetasview.unshift ( id )
 		}
 		if (!noReset) {
 			that.resetListado()
-			alerta ( "La columna ha sido añadida al listado.",1 ) 
+			alerta ( "La columna ha sido añadida al listado.",1 )
 		}
 	}
 	this.show = function () {
 		$('.topform-buttonbar').hide()
 		that.$buttonbar.show()
-				
+
 
 	}
 	this.loadInfoCreacion = function (pkvalue) {
 		$('#divCabeceraEtiqueta')[0].title=""
 		var listadoView=pktabla
 		//var sql = "SELECT (select usu_nombre from DBH_USUARIOS as b where b.usu_id="+listadoView+".iduc) as nombreuc,(select usu_nombre from DBH_USUARIOS as b where b.usu_id="+listadoView+".idum) as nombreum,fechauc,fechaum FROM "+listadoView+" WHERE " + pkname + "="+pkvalue
-		var joinhistorico = " LEFT JOIN dbh_historico ON his_da_id = " + da_id + " AND his_pkvalue = " + pkname + " AND his_id IN (select max(his_id) from dbh_historico group by his_da_id,his_pkvalue)" 
+		var joinhistorico = " LEFT JOIN dbh_historico ON his_da_id = " + da_id + " AND his_pkvalue = " + pkname + " AND his_id IN (select max(his_id) from dbh_historico group by his_da_id,his_pkvalue)"
 		if(listadoView=='dbh_historico')joinhistorico=""
 		var sql = "SELECT (select usu_nombre from DBH_USUARIOS as b where b.usu_id=his_usu_id) as nombreusu,dbh_historico.his_fecha FROM "+listadoView+joinhistorico+" WHERE " + pkname + "="+pkvalue
 		//console.log(sql)
@@ -1455,7 +1457,7 @@ var toplevelform = function (objpar) {
 		//areadestino.setvalues (par1)
 		DBH.telon.hide()
 		//$('#divteloninit').hide()
-	
+
 		//DBH.area(areavinculada_name).topform.filter(2)
 		//$('#divteloninit').hide()
 	}
@@ -1488,7 +1490,7 @@ var toplevelform = function (objpar) {
 				}
 				if ( $lineamodelo.length ) {
 					var id = $lineamodelo.find('input[type="hidden"][id]').val()
-					, $registro2 = $banda.find('registro[id="'+id+'"]') 
+					, $registro2 = $banda.find('registro[id="'+id+'"]')
 					if ( ! $registro2.length ) {
 						$registro2 = $('<registro/>').attr('id',id)
 						$banda.append ( $registro2 )
