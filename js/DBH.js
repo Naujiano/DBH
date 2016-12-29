@@ -54,7 +54,6 @@ function preinit(){
 			event.stopPropagation();event.stopImmediatePropagation();
 			var inpid = $(this).attr('for')
 			, $inp = $(this).closest('.divCampoForm').find('[id="'+inpid+'"]')
-			//console.log($inp.length)
 			alimentadorAutomatico.abrir($inp[0])
 		} )
 		.on ( 'area:filter:before' , function (event,topform) {
