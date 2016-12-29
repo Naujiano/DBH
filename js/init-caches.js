@@ -136,8 +136,8 @@
             , subset = query.filter ( '9' )
             console.log(subset)
             */
+            $(document).trigger('areas-load')
         });
-        $(document).trigger('areas-load')
     }();
 
     let  = function inlineFormData () {
