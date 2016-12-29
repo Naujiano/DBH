@@ -25,6 +25,38 @@
         });
     }();
 
+    let campos = function() {
+        let fields = "" +
+            "case when ((select da_tabla from DBH_AREAS where da_id = data_da_id) = left(data_field_id,charindex('.',data_field_id)-1)) then '0' else '1' end as noinsert" +
+            ",(select da_descripcion from DBH_AREAS where da_id = (select da_areamadre from DBH_AREAS where da_id = data_da_id)) as areamadre_name" +
+            ",IS_NULLABLE as is_nullable" +
+            ",(select cast(das_da_id as varchar) + ','  from DBH_CAMPOS_AREASAFECTANTES WHERE das_data_id = data_id FOR XML PATH ('') ) as da_ids_areasafectantes" +
+            ", DBH_CAMPOS.* ",
+            table = "" +
+            "DBH_CAMPOS inner join DBH_AREAS on data_da_id = da_id inner join INFORMATION_SCHEMA.COLUMNS " +
+            "on TABLE_NAME = left(data_field_id,charindex('.',data_field_id)-1) " +
+            "and COLUMN_NAME = replace(data_field_id,left(data_field_id,charindex('.',data_field_id)),'') ",
+            where = "data_activo = 1 ANd da_activa = 1",
+            orderby = "1 desc,data_orderindex"
+
+        dbhQuery({
+            fields,
+            table,
+            where,
+            orderby
+        }).request(function(xml) {
+            let data = xml.getElementsByTagName("xml")[0].childNodes
+            DBH.$camposXml = $(data)
+            DBH.$camposXml.each(function() {
+                var $registro = $(this),
+                    da_id = $registro.find('[fieldname="data_da_id"]').text()
+                $registro.attr('da_id', da_id)
+            })
+            console.log('loaded campos')
+                //console.log($(xml).find('xml').html())
+        });
+    }();
+
     let  = function inlineFormData () {
         let fields = "case when (COL_LENGTH(da_pktabla,'dbh_perfiles_admitidos_xreg') is null ) then '0' else '1' end as tiene_columna_dbh_perfiles_excluidos,(select a.da_pkfield from DBH_AREAS as a where a.da_id = b.da_areamadre ) as pkmadre,(select a.da_perfiles from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_perfiles_madre,*",
             table = "DBH_AREAS as b",
@@ -132,37 +164,6 @@
         });
     }();
 
-    let campos = function() {
-        let fields = "" +
-            "case when ((select da_tabla from DBH_AREAS where da_id = data_da_id) = left(data_field_id,charindex('.',data_field_id)-1)) then '0' else '1' end as noinsert" +
-            ",(select da_descripcion from DBH_AREAS where da_id = (select da_areamadre from DBH_AREAS where da_id = data_da_id)) as areamadre_name" +
-            ",IS_NULLABLE as is_nullable" +
-            ",(select cast(das_da_id as varchar) + ','  from DBH_CAMPOS_AREASAFECTANTES WHERE das_data_id = data_id FOR XML PATH ('') ) as da_ids_areasafectantes" +
-            ", DBH_CAMPOS.* ",
-            table = "" +
-            "DBH_CAMPOS inner join DBH_AREAS on data_da_id = da_id inner join INFORMATION_SCHEMA.COLUMNS " +
-            "on TABLE_NAME = left(data_field_id,charindex('.',data_field_id)-1) " +
-            "and COLUMN_NAME = replace(data_field_id,left(data_field_id,charindex('.',data_field_id)),'') ",
-            where = "data_activo = 1 ANd da_activa = 1",
-            orderby = "1 desc,data_orderindex"
-
-        dbhQuery({
-            fields,
-            table,
-            where,
-            orderby
-        }).request(function(xml) {
-            let data = xml.getElementsByTagName("xml")[0].childNodes
-            DBH.$camposXml = $(data)
-            DBH.$camposXml.each(function() {
-                var $registro = $(this),
-                    da_id = $registro.find('[fieldname="data_da_id"]').text()
-                $registro.attr('da_id', da_id)
-            })
-            console.log('loaded campos')
-                //console.log($(xml).find('xml').html())
-        });
-    }();
 
 
 }
