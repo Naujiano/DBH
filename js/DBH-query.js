@@ -37,12 +37,14 @@ var dbhQuery
 		request ( successFn ) {
 			let data = "sql=" + encodeURIComponent(this.executeSyntax())
 			, that = this;
+			that.http_request_successfull = false;
 			$.ajax({ type: "POST",
 				url: this.url,
 				async: true,
 				dataType: this.dataType,
 				data: data,
 				success : function ( xml ) {
+					that.http_request_successfull = true;
 					that.cache ( xml );
 					successFn ( xml );
 				},
@@ -75,6 +77,9 @@ var dbhQuery
 					})
 				}
 				this.hound = $rows
+		}
+		ready () {
+			return this.http_request_successfull
 		}
 		filter ( id ) {
 			//return false

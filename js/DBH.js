@@ -124,12 +124,6 @@ var DBH = ( function () {
 			DBH.sessionid = usu_id + '_' + sessionStorage["sessionid"]
 			localStorage["interface_usu_id"] = usu_id
 			DBH.load().all()
-			$body.append(`<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">`)
-			$body.append(`<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/genericons/3.1/genericons.css">`)
-			$body.append(`<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">`)
-			$body.append(`<link rel="stylesheet" href="http://dbh.naujcloud.com/jquery-simple-datetimepicker-master/jquery.simple-dtpicker.css">`)
-			$body.append(`<link rel="stylesheet" href="${dbhpath}css/typeahead.css">`)
-			$body.append(`<link rel="stylesheet" href="${dbhpath}css/tagsinput.css">`)
 		}
 		//console.log(customjs)
 		console.log(dbhpath)
@@ -862,6 +856,8 @@ var DBH = ( function () {
 	this.gorecord = function (areaid,recid,timer) {
 //		console.log('#treemenu li[da_id="'+areaid+'"]')
 //return false
+		let ready = dbhQuery ( 'loadform-data').ready()
+		if ( ! ready ) { setTimeout(this,10) ; return }
 		var areahabilitada = $('#treemenu li[da_id="'+areaid+'"]').length
 		if(!areahabilitada){alert('Su usuario no tiene permiso para acceder a este área.');return false}
 		var sqls = "SELECT * FROM DBH_AREAS WHERE da_id = " + areaid
