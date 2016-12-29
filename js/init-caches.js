@@ -1,6 +1,15 @@
 {
+    let cacheMap = new Map();
+    DBH.cache_areas_state = function () {
+        let ready = true
+        for ( let [key,state] of cacheMap ) {
+            if ( ! state ) ready = false;
+        }
+        return ready
+    }
 
     let tree = function() {
+        cacheMap.set ( 'tree' , false )
         let fields = "*",
             table = "DBH_AREAS",
             where = "da_activa = 1",
@@ -23,6 +32,7 @@
                 width: treewidth
             })
             console.log('loaded tree')
+            cacheMap.set ( 'tree' , true )
             $(document).trigger('tree-load')
         })
     }();

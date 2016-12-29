@@ -854,10 +854,7 @@ var DBH = ( function () {
 		DBH.gorecord(areaid,recid)
 	}
 	this.gorecord = function (areaid,recid,timer) {
-//		console.log('#treemenu li[da_id="'+areaid+'"]')
-//return false
-		let ready = dbhQuery ( 'loadform-data').ready()
-		if ( ! ready ) { setTimeout(this,10) ; return }
+		if ( ! DBH.cache_areas_state ) { setTimeout(this,10) ; return }
 		var areahabilitada = $('#treemenu li[da_id="'+areaid+'"]').length
 		if(!areahabilitada){alert('Su usuario no tiene permiso para acceder a este área.');return false}
 		var sqls = "SELECT * FROM DBH_AREAS WHERE da_id = " + areaid
