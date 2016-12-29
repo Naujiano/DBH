@@ -24,6 +24,7 @@
             })
             console.log('loaded tree')
         })
+        $(document).trigger('tree-load')
     }();
 
     let valores = function() {
@@ -136,6 +137,7 @@
             console.log(subset)
             */
         });
+        $(document).trigger('areas-load')
     }();
 
     let  = function inlineFormData () {

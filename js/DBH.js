@@ -32,6 +32,7 @@ function preinit(){
 
 	$('#treemenu').on('contextmenu','li[role="treeitem"]', function(event){contextmenutree(event,this);return false;})
 	$(document)
+		.on('areas-load',function(){DBH.telon.hide()})
 		.on('blur','.dbh_fecha_color:not(#avisosgeneral)',function(){DBH.date().setcolor($(this))})
 		.on('contextmenu','.boton-switch-right', function(event){var $btn=$(this),checked=$btn.hasClass('color-blue');if(checked){$btn.removeClass('color-blue')} else {$btn.addClass('color-blue')};event.stopImmediatePropagation();event.stopPropagation();return false; } )
 		.on('focus','[id="dbh_redactor_consultas"]',function(){var $this = $(this); $this.removeAttr('dbh-query-description').removeAttr('dbh-query-da_id')})
@@ -149,7 +150,7 @@ var DBH = ( function () {
 			vars.pinger()
 			DBH.loaded = true
 			preinit()
-			DBH.telon.hide()
+			//DBH.telon.hide()
 		}
 		return this
 	}
