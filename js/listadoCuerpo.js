@@ -20,11 +20,11 @@ function uidialoginit () {
 				}
 			}
 			this.open = function () {
-				$uidialog.dialog ( 'open' )	
+				$uidialog.dialog ( 'open' )
 			}
 		}
 		pub.close = function (o) {
-			$uidialog.dialog ( 'close' )	
+			$uidialog.dialog ( 'close' )
 		}
 		pub.modal = function (o) {
 			$uidialog.dialog( "option", "modal", o );
@@ -294,7 +294,7 @@ var listado = ( function () {
 			//, invertido = lworiginal
 			//console.log("*"+lw.substr(0,7)+"*")
 			html += '<div class="memoryfilter" style="white-space:normal"><div class="button-notin" style="" title="NOT IN: Invierte esta condición para obtener los registros EXCLUIDOS de la misma." index="' + i + '" onclick="listado.memoryfilter(this,undefined,1)" ><span class="fa fa-random"></span></div><div style="float:left;color:inherit">'+lwt+'</div><div style="float:right">&nbsp;+</div><div style="float:right" class="button-delete" index="' + i + '" onclick="listado.memoryfilter(this)"><span style="margin:-2px 0 0 -3px;font-size:10px;" class="genericon genericon-close" title="Eliminar este filtro memorizado"></span></div></div>'
-			
+
 		})
 		var selectinvertida = $('[id="selectinvertida"]:visible').hasClass('color-tomato')
 		, lwtinfo = html+htmllast
@@ -332,7 +332,7 @@ var listado = ( function () {
 						loc.memoryfilter[i][0] = lworiginal
 						loc.memoryfilter[i][1] = lwt.substring(7)
 						loc.memoryfilter[i][2] = 0
-						
+
 					} else {
 						var lw = loc.memoryfilter[i][0]
 						, lwt = loc.memoryfilter[i][1]
@@ -424,13 +424,13 @@ var listado = ( function () {
 	pub.init = function(levantarTelon){
 		loading=0
 		allrecordsloaded=0
-		
+
 		cabezar()
 		listado.checkid('all',0,1)
 		listado.addOnePage(1)
-		
-		
-		
+
+
+
 		if(levantarTelon){parent.mostrarTelon(0)}
 	}
 	function initTable(noCols) {
@@ -449,6 +449,7 @@ var listado = ( function () {
 		}
 		$(primerafila).hide()
 	}
+	pub.listado_sql_syntax = {}
 	pub.setTablaAuxiliar = function () {
 		var pkname = $('#pkname').val()
 		, idusuario=sessionStorage["usu_id"]//('usu_id')
@@ -463,7 +464,7 @@ var listado = ( function () {
 		, keyname = eshija ? vinculada_fkname : pkname
 		, sqlstr="delete DBH_LISTADO where (sessionid= '"+sessionid+"' AND pkname= '"+pkname+"') or fecha < dateadd(day,-1,getdate())"
 		//console.log(sqlstr)
-		, arr=DBH.ajax.sql(sqlstr)
+		//, arr=DBH.ajax.sql(sqlstr)
 		//console.log('b')
 		, vinculada_condition = $('#vinculada_sql').val()? " AND " + keyname + " IN (" + $('#vinculada_sql').val() + ")" : ""
 		, vinculada_condition = ""
@@ -480,6 +481,7 @@ var listado = ( function () {
 			})
 			dbh_perfiles_excluidos_condicion = " AND (" + dbh_perfiles_excluidos_condicion + " 1=2 )"
 		}
+		pub.listado_sql_syntax._delete = encodeURIComponent(sqlstr)
 		var sql_sel = "Select '"+sessionid+"',"+idusuario+"," + pkname+",'" + pkname + "' from " + listadoView + " where " + listadoWhere + dbh_perfiles_excluidos_condicion
 		, sqlstr="set dateformat dmy insert into DBH_LISTADO (sessionid,idusuario,idlistado,pkname) (" + sql_sel + ")"
 		, vinculada_sql = "Select " + keyname + " from " + listadoView + " where " + final_condition
@@ -490,7 +492,8 @@ var listado = ( function () {
 		, $areavinculada = $('#listadoCuerpoContainer')
 		$areavinculada.find('.vinculada_sql').val(vinculada_sql)
 		$areavinculada.find('.vinculada_sql_text').val(vinculada_sql_text)
-		var arr=DBH.ajax.sql(sqlstr)
+		pub.listado_sql_syntax._insert = encodeURIComponent(sqlstr)
+		//var arr=DBH.ajax.sql(sqlstr)
 		DBH.consola(sqlstr,{title:'setTablaAuxiliar'})
 	}
 	pub.loadSql = function () {
@@ -525,8 +528,8 @@ var listado = ( function () {
 			//pub.setTablaAuxiliar()
 		}
 		var lob = isNaN(listadoOrderBy) ? customview+"."+listadoOrderBy : listadoOrderBy
-		//, joinhistorico = " LEFT JOIN dbh_historico as historico ON historico.his_da_id = " + DBH.area().id + " AND historico.his_pkvalue = " + pkname + " AND historico.his_id IN (select max(his_id) from dbh_historico group by his_da_id,his_pkvalue)" 
-		, joinhistorico = " INNER JOIN dbh_historico ON his_da_id = " + DBH.area().id + " AND his_pkvalue = " + pkname + " AND his_id IN (select max(his_id) from dbh_historico group by his_da_id,his_pkvalue)" 
+		//, joinhistorico = " LEFT JOIN dbh_historico as historico ON historico.his_da_id = " + DBH.area().id + " AND historico.his_pkvalue = " + pkname + " AND historico.his_id IN (select max(his_id) from dbh_historico group by his_da_id,his_pkvalue)"
+		, joinhistorico = " INNER JOIN dbh_historico ON his_da_id = " + DBH.area().id + " AND his_pkvalue = " + pkname + " AND his_id IN (select max(his_id) from dbh_historico group by his_da_id,his_pkvalue)"
 		, joinhistorico = ""
 		if(listadoView=='dbh_historico')joinhistorico=""
 		var sql="SELECT " + pkname + "," + nombresCampos + " from " + listadoView + joinhistorico + " where " + pkname + " in (select idlistado from DBH_LISTADO where sessionid='" + sessionid + "' AND pkname='" + pkname + "')"
@@ -534,10 +537,12 @@ var listado = ( function () {
 //		console.log(sql)
 		//var res = DBH.ajax.select(sql)
 		loc.t2=d.getTime()
-		var objXMLDoc=ajaxExecuterPaged(encodeURIComponent(sql),listadoPagina,0)
+		pub.listado_sql_syntax._select = encodeURIComponent(sql)
+		pub.listado_sql_syntax._count = encodeURIComponent(" SELECT count ( " + pkname + ") as numregs FROM " + listadoView)
+		var objXMLDoc=ajaxExecuterPaged(pub.listado_sql_syntax,listadoPagina,0)
 		//console.log(objXMLDoc)
 		loc.t3=d.getTime()
-		var root2=objXMLDoc.getElementsByTagName("xml")[0]; 
+		var root2=objXMLDoc.getElementsByTagName("xml")[0];
 		loc.root2 = root2;
 		//console.log(root2)
 		if(typeof root2 == "undefined" || typeof root2.childNodes == "undefined" || typeof root2.childNodes[1] == "undefined"){
@@ -599,9 +604,9 @@ var listado = ( function () {
 			imax = regsExcedentes
 			$('#fullLoaded').val('1')
 		}
-		
+
 		//HA SUPERADO LAS CONDICIONES Y EMPIEZA EL RENDERIZADO
-		
+
 //		console.log('Renderizando los resultados en pantalla...')
 		document.getElementById('divencabezados').style.display="block"
 		var idlistado=document.getElementById('idlistado').value
@@ -790,7 +795,7 @@ function loadingState(o){
 
 }
 function scrollEventHandler(d){
-	
+
 	scrollHeader(d);
 	//return false //obsoleto
 	var tab = document.getElementById('tablaListado')
@@ -825,7 +830,7 @@ function ajustarAnchoEncabezados(){
   	var a = tab.rows[1].cells[i].offsetWidth
   		$(tab2.rows[0].cells[i]).width ( a )
   		//$(tab.rows[1].cells[i]).width ( a )
-		
+
   }
 }
 function cerrarDrops(){
@@ -867,7 +872,7 @@ function reFilter(listadoWhere,listadoWhereText,levantarTelon){
 	document.getElementById('listadoPagina').value="1"
 	document.getElementById('scrollTop').value="0"
 	document.getElementById('numregs').value=""
-	
+
 	var tab = document.getElementById('tablaListado')
 	while(tab.rows.length>2){
 		tab.deleteRow(1)

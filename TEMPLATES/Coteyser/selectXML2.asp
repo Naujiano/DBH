@@ -4,6 +4,10 @@
 	server.scriptTimeout=6000
 	Session.LCID = 2057
 	regXPag = request("regXPag")
+	sqlCount = request("sqlCount")
+	sqlDelete = request("sqlDelete")
+	sqlInsert = request("sqlInsert")
+	sqlSelect = request("sqlSelect")
 	set rs = server.createobject ( "adodb.recordset" )
 	sql = request ( "sql" )
 	pagina = request ( "pagina" )
@@ -14,21 +18,17 @@
 	if controlDeErrores = "2" then
 		response.end
 	end if
-	'set cmd=server.createobject("adodb.command")
-	'cmd.CommandTimeout=6000
-	'sql="set dateformat dmy "&sql
-	'cmd.commandtext=sql
-	'cmd.activeconnection= dbConnZavala
 	dbConnZavala.CommandTimeout = 6000
-	
-	'Set rs = dbConnZavala.Execute(cmd)  
-	'rs.source = cmd
-	'rs.CursorType = 3
-	'rs.open "set dateformat dmy",dbConnZavala
-	noreg=0
+rs.open sqlDelete, dbConnZavala
+rs.open sqlInsert, dbConnZavala
+rs.open sqlCount, dbConnZavala
+numregs = rs.fields(0)
+rs.close
+rs.open sqlSelect, dbConnZavala
+	noreg=numregs
 	if pagina = 1 then
 		On Error Resume Next
-		rs.open sql,dbConnZavala,3
+		'rs.open sql,dbConnZavala
 		errNumber = Err.Number
 		errDescription = Err.Description
 		on error goto 0
@@ -37,14 +37,14 @@
 			response.end
 		Call Err.Raise(errNumber, "Error de Sql:" & sql, errDescription)
 		End If
-		if not rs.eof then
-		  rs.movelast
-		  rs.movefirst
-		  noreg=rs.recordcount
-		end if
+		'if not rs.eof then
+		  'rs.movelast
+		  'rs.movefirst
+		  'noreg=rs.recordcount
+		'end if
 	else
 		On Error Resume Next
-		rs.open sql,dbConnZavala,3
+		'rs.open sql,dbConnZavala
 		errNumber = Err.Number
 		errDescription = Err.Description
 		on error goto 0
@@ -94,9 +94,9 @@
 	'xml = xml & "</xml>"
 	output ( "<registro>" & "<noreg>"&noreg&"</noreg>" & "</registro>" & "</xml>" )
 	'xml = replace(xml,"+"," " )
-	'response.ContentType="text/xml"  
-	'response.CacheControl="no-cache, must-revalidate"  
-	'response.Expires=0  
+	'response.ContentType="text/xml"
+	'response.CacheControl="no-cache, must-revalidate"
+	'response.Expires=0
 	'if xml="<xml><registro><></></registro></xml>" then xml = ""
 	'response.write ( xml )
 	function tagname(cn)

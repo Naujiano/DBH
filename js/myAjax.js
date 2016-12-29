@@ -15,7 +15,7 @@ function ajaxExecuterValor(sql,controldeerrores,db){
 		//console.log ( 'Respuesta: "' + respuesta + '"' )
 		return 'error';
 	}
-	var root=xmlRootNode.childNodes[0]; 
+	var root=xmlRootNode.childNodes[0];
 	return root.text || root.textContent
 }
 function sqlExecVal (sql,controldeerrores,db){
@@ -31,7 +31,7 @@ function sqlExec (sql,controldeerrores,db){
 		if(typeof respuesta != 'undefined')console.log ( 'Respuesta: "' + respuesta + '"' )
 		return '';
 	}
-	var root=objXMLDoc.getElementsByTagName("xml")[0]; 
+	var root=objXMLDoc.getElementsByTagName("xml")[0];
 	return root.childNodes
 }
 function sqlExecAlterDB (sql,operation){
@@ -81,15 +81,16 @@ function DBH_select ( sql ){
 	})
 	return records
 }
-function ajaxExecuterPaged (sql,pagina,controldeerrores){
-	var sqlll = "pagina="+pagina+"&regXPag="+sessionStorage['regXPag']+"&sql="+sql
-		//console.log(sqlll)
+function ajaxExecuterPaged (listado_sql_syntax,pagina,controldeerrores){
+	let {_select,_insert,_delete,_count} = listado_sql_syntax
+	var sqlll = "pagina="+pagina+"&regXPag="+sessionStorage['regXPag']+"&sqlCount="+_count+"&sqlDelete="+_delete+"&sqlInsert="+_insert+"&sqlSelect="+_select
+		console.log(sqlll)
 
 	var respuesta=ajaxExecuter('selectXML2.asp',sqlll,controldeerrores)
 	return respuesta
 }
 function ajaxExecuter(urllrelative,param,controldeerrores,respuestaestexto,eslogin){
-	//var usu_id = $.get("DBH_ASP.asp?func=session&id=idusuario") 
+	//var usu_id = $.get("DBH_ASP.asp?func=session&id=idusuario")
 	if ( !eslogin && !DBH.islogged ) {$('#divacceso').fadeIn();mostrarTelon(0);return false}
 	if ( typeof controldeerrores == 'undefined' ) controldeerrores = 0
 	var apppath = $('#apppath',parent.parent.document).val()
@@ -102,15 +103,15 @@ function ajaxExecuter(urllrelative,param,controldeerrores,respuestaestexto,eslog
 	//alert(urll)
 	//alert(param)
 	controldeerrores = 0 //desactivo el control de errores este pq es viejo
-	if ( controldeerrores * 1 != 0  ) { 
+	if ( controldeerrores * 1 != 0  ) {
 		var w = urll + "?" + param
-		//window.open(w, '', 'width=500,height=400,scrollbars=no,top=250,left=250,resizable=1'); 
+		//window.open(w, '', 'width=500,height=400,scrollbars=no,top=250,left=250,resizable=1');
 	}else{
 		var dataType = 'text'
 		if ( urllrelative != 'formInsert.asp' && urllrelative != 'formUpdate.asp' && urllrelative != 'deleteFile.asp' && urllrelative != 'selectSelectOptions.asp'  ) dataType = 'xml'
 		//if ( urllrelative == 'sqlExecAlterDB.asp'  ) dataType = 'json'
-		$.ajax({ type: "POST",   
-			url: urll,   
+		$.ajax({ type: "POST",
+			url: urll,
 			async: false,
 			dataType: dataType,
 			data: param,
@@ -134,7 +135,7 @@ function ajaxExecuter(urllrelative,param,controldeerrores,respuestaestexto,eslog
 				})
 				*/
 			}
-		}); 
+		});
 	}
 	/*
 	if ( !respuesta && 1==2 ) {
@@ -159,7 +160,7 @@ function loadXMLString(txt) {
     {
     var xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
     xmlDoc.async="false";
-    xmlDoc.loadXML(txt); 
+    xmlDoc.loadXML(txt);
     }
   return xmlDoc;
 }
