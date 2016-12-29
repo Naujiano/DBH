@@ -86,7 +86,7 @@ function ajaxExecuterPaged (listado_sql_syntax,pagina,controldeerrores){
 	var sqlll = "pagina="+pagina+"&regXPag="+sessionStorage['regXPag']+"&sqlCount="+_count+"&sqlDelete="+_delete+"&sqlInsert="+_insert+"&sqlSelect="+_select
 		console.log(sqlll)
 
-	var respuesta=ajaxExecuter('selectXML2.asp',sqlll,controldeerrores)
+	var respuesta=ajaxExecuter('selectXMLpaged.asp',sqlll,controldeerrores)
 	return respuesta
 }
 function ajaxExecuter(urllrelative,param,controldeerrores,respuestaestexto,eslogin){
