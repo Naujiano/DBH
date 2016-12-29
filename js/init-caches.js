@@ -166,8 +166,8 @@
                 //debugger;
                 DBH.hounds.set('grupos:' + key, hound)
                 cacheMap.set ( 'valores' , true )
+                console.log('loaded valores')
             }
-            console.log('loaded valores')
         });
     }();
 
