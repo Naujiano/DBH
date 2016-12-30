@@ -1,5 +1,12 @@
 function preinit(){
-	//window.onmousedown=documentClick
+	window.onmousedown=function documentClick(){
+		var iscontext = $(':focus').hasClass('jscolor')
+		if ( iscontext ) return false
+		$(".divMenuContextual").each( function( index, element ){
+			if (!$(this).is(':hover'))$(this).hide()
+		});
+	}
+
 	$('[id="tablaEncabezado"]').on ( 'click' , '.celdaCampoEncabezado', function () {
 		var $this = $(this);
 		if ($this.hasClass('clicked')){
@@ -129,6 +136,7 @@ var DBH = ( function () {
 		console.log(dbhpath)
 
 		$body.addClass('DBH').show()
+		DBH.telon.hide()
 
 	};
 	this.load = function () {

@@ -6,24 +6,47 @@ var dbhQuery
 	let cacheMap = new Map()
 	class query {
 		constructor ( settings ) {
-			let { idfield , fields , assigns , select , table , where = '' , orderby = '' , httphandler = query.defaultHttpHandler , cache } = settings
-			if ( ! table ){ console.log( 'Class query: table parameter has not been provided.' ); return false;	}
+			let {
+			    idfield,
+			    fields,
+			    assigns,
+			    select,
+			    table = '',
+			    where = '',
+			    orderby = '',
+					sqlquery = '',
+					datatype = 'xml',
+			    httphandler = dbhQuery.defaultHttpHandler,
+			    url = dbhQuery.url,
+			    cache
+			} = settings
+			//if ( ! table ){ console.log( 'Class query: table parameter has not been provided.' ); return false;	}
 			this.idfield = idfield ? idfield.trim() : idfield
 			this.fields = fields
 			this.table = table.trim()
 			this.where = where.trim()
 			this.orderby = orderby.trim()
+			this.sqlquery = sqlquery.trim()
 			this.assigns = assigns
 			this.select = select
 			this.httphandler = httphandler
 			this.cacheName = cache
-			this.url = 'selectXML_new.asp'
-			this.dataType = 'xml';
+			this.url = url
+			//this.dataType = this.sqlquery == '' ? 'xml' : 'text';
+			this.datatype = datatype;
 			if ( cache ) cacheMap.set ( cache , this );
 			//this.httphandler = httphandler ? httphandler : sqlExecVal
 			//this.settings = settings
 		}
-		execute ( httphandler , ...argumentos ) {
+		executeSyntax () {
+			//debugger
+			if ( this.sqlquery == '' ) {
+				console.log( 'Class query: sqlquery has not been specified.' )
+				return false;
+			}
+			return this.sqlquery;
+		}
+		execute ( httphandler , ...argumentos ) { // Devuelve la respuesta del httphandler tal cual.
 			//return this.executeSyntax()
 			let handler = httphandler ? httphandler : this.httphandler
 			if ( ! handler ) {
@@ -34,19 +57,19 @@ var dbhQuery
 			this.http_response = respuesta;
 			return respuesta;
 		}
-		request ( successFn ) {
+		request ( successFn ) { // Devuelve un xml o text
 			let data = "sql=" + encodeURIComponent(this.executeSyntax())
 			, that = this;
 			that.http_request_successfull = false;
 			$.ajax({ type: "POST",
 				url: this.url,
 				async: true,
-				dataType: this.dataType,
+				dataType: this.datatype,
 				data: data,
 				success : function ( xml ) {
 					that.http_request_successfull = true;
 					that.cache ( xml );
-					successFn ( xml );
+					if ( successFn ) successFn ( xml );
 				},
 				error: function ( jqXHR, textStatus, errorThrown)
 				{
@@ -81,14 +104,14 @@ var dbhQuery
 		ready () {
 			return this.http_request_successfull
 		}
-		filter ( id ) {
+		filter ( id ) { // Return jQuery <tr>
 			//return false
 			//let idsArr = ids.split ( ',' )
 			let hound = this.cache()
 			, $rows = hound.filter(`[sqlQuery-id="${id}"]`)
 			return $rows
 		}
-		json ( id ) {
+		json ( id ) { // Return json formated rows
 			//return false
 			let  xmldoc = this.http_response
 			, rows = DBH.ajax.xmlToObject ( xmldoc )
@@ -100,6 +123,9 @@ var dbhQuery
 				if ( included ) filteredRows.push ( row )
 			}
 			return filteredRows
+		}
+		static init ( settings ){
+			return new query ( settings )
 		}
 	}
 	class query_insert extends query {
@@ -201,6 +227,8 @@ var dbhQuery
 		if ( typeof settings == 'string' )
 			return cacheMap.get(settings)
 		let type = settings.type
+		, sqlquery = settings.sqlquery
+		if ( sqlquery ) return query.init ( settings )
 		if ( !type || type == 'select' ) return query_select.init ( settings )
 		if ( type == 'insert' ) return query_insert.init ( settings )
 		if ( type == 'update' ) return query_update.init ( settings )
@@ -217,6 +245,8 @@ let eee = DBH.query({
 }).execute();
 */
 dbhQuery.defaultHttpHandler = DBH.ajax.select
+//dbhQuery.defaultHttpHandler = DBH.ajax.select
+dbhQuery.url = 'selectXML_new.asp'
 /*
 let eee = DBH.query({
   table: 'persona'

@@ -5,7 +5,7 @@
         for ( let [key,state] of cacheMap ) {
             if ( ! state ) ready = false;
         }
-        console.log(ready)
+        console.log
         return ready
     }
 

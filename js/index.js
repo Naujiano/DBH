@@ -1240,27 +1240,29 @@ function showCalendar(callerobj,callBackFn){
 	windowjQuery.data($win.contents()[0],"container",divcalendar);
 	contextMenu.show(divcalendar,callerobj);
 }
-function documentClick(){
-	var iscontext = $(':focus').hasClass('jscolor')
-	if ( iscontext ) return false
-	$(".divMenuContextual").each( function( index, element ){
-		if (!$(this).is(':hover'))$(this).hide()
-	});
-}
 var vars = ( function () {
 	var pub = {},
 		loc = {};
 	pub.dbBackup = function () {
 		if ( ! confirm ( '¿Hacer un Backup de la BD?' ) ) return false
-		mostrarTelon(1)
+		//mostrarTelon(1)
 		function go() {
 			var sql = "exec dbo.sp_backupDatabase"
-			, res = DBH.ajax.sql(sql)
+			//, res = DBH.ajax.sql(sql)
+			dbhQuery ( { sqlquery: sql } ).request( responseHandler )
+			alerta('Efectuando Backup...',1)
+			//responseHandler ( xml )
 			//console.log('*'+res+'*')
-			if ( !res ) {
-				alerta('Se ha producido un error al realizar el Backup')
-			}else{
-				alerta('Backup realizado correctamente',1)
+			function responseHandler ( xml ) {
+				let $xml = $(xml).find('xml')
+				, errnum = $xml.find ( 'errnum' ).text()
+				, errdesc = $xml.find ( 'errdesc' ).text()
+				console.log(xml)
+				if ( errnum ) {
+					alerta ( 'Error al realizar el Backup.<br>' + errdesc )
+				}else{
+					alerta('Backup realizado correctamente.',1)
+				}
 			}
 			mostrarTelon(0)
 		}
@@ -1463,6 +1465,8 @@ var vars = ( function () {
 				let $alertaBlank = $alerta.clone()
 				$alertaBlank.find('code').html('&nbsp;')
 				$ol.prepend ( $alertaBlank )
+				$container.scrollTop(0)
+				$container.height ( $alertaBlank.outerHeight() + 2 )
 				clearTimeout ( that.blankTimer )
 			} , 5000 )
 		}
