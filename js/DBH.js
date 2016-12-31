@@ -1,4 +1,5 @@
 function preinit(){
+	$document = $(document)
 	window.onmousedown=function documentClick(){
 		var iscontext = $(':focus').hasClass('jscolor')
 		if ( iscontext ) return false
@@ -38,7 +39,7 @@ function preinit(){
 	})
 
 	$('#treemenu').on('contextmenu','li[role="treeitem"]', function(event){contextmenutree(event,this);return false;})
-	$(document)
+	$document
 		.on('tree-load',function(){DBH.telon.hide()})
 		.on('blur','.dbh_fecha_color:not(#avisosgeneral)',function(){DBH.date().setcolor($(this))})
 		.on('contextmenu','.boton-switch-right', function(event){var $btn=$(this),checked=$btn.hasClass('color-blue');if(checked){$btn.removeClass('color-blue')} else {$btn.addClass('color-blue')};event.stopImmediatePropagation();event.stopPropagation();return false; } )
@@ -130,18 +131,6 @@ var DBH = ( function () {
 		} else {
 			DBH.sessionid = usu_id + '_' + sessionStorage["sessionid"]
 			localStorage["interface_usu_id"] = usu_id
-			DBH.load().all()
-		}
-		//console.log(customjs)
-		console.log(dbhpath)
-
-		$body.addClass('DBH').show()
-		DBH.telon.hide()
-
-	};
-	this.load = function () {
-		this.all = function () {
-
 			DBH_help = new parent.blockButton( document.getElementById('buttonhelp') , document.getElementById('tipdiv') )
 			showtip('rnd')
 			$('#alertaaviso').on('click','button',function(){
@@ -151,10 +140,14 @@ var DBH = ( function () {
 			vars.pinger()
 			DBH.loaded = true
 			preinit()
-			//DBH.telon.hide()
 		}
-		return this
-	}
+		//console.log(customjs)
+		console.log(dbhpath)
+
+		$body.addClass('DBH').show()
+		DBH.telon.hide()
+
+	};
 	this.telon = {
 		$container: $initCover = $('.init-cover')
 		, $textContainer: $initCover = $('.init-cover').find('div')
@@ -279,589 +272,7 @@ var DBH = ( function () {
 		return this
 
 	}());
-	this.ajax = ( function () {
-		var that = this
-		this.selectToXml = function (sql,eslogin) {
-			var pars = "sql=" + encodeURIComponent(sql) + (eslogin ? '&db=login' : '')
-			//console.log(pars)
-			var res = DBH.ajax.request('selectXML_new.asp',pars)
-			var r = $(res)
-			//console.log(res)
-			return r
-		}
-		this.toXml = function (sql,pkname,oldXml) {
-			var oldXml = oldXml ? oldXml : that.selectToXml(sql)
-			, $oldXml = $(oldXml)
-			, $newXml = $('<lines/>').attr('data-idFieldName',pkname)
-			$oldXml.find('registro').each ( function () {
-				var $rec = $(this)
-				, $fields = $rec.children().not('[fieldname="'+pkname+'"]')
-				, id = $rec.find('[fieldname="'+pkname+'"]').text()
-				console.assert ( !isNaN(id), 'DBH.ajax.toXml: ' + pkname + ' no ha sido suministrada en la Select: ' + sql )
-				$fields.each ( function () {
-					var $field = $(this)
-					$field.attr('fieldvalue',$field.text())
-				})
-				var $line = $('<line/>').attr ( 'id' , id ).append ($fields)
-				$newXml.append($line)
-			})
-			return $newXml
-		}
-		this.toRows = function (sql,pkname) {
-			var oldXml = that.selectToXml(sql)
-			, $oldXml = $(oldXml)
-			, $newXml = $('<table/>').attr('data-idFieldName',pkname)
-			$oldXml.find('registro').each ( function () {
-				var $rec = $(this)
-				, $fields = $rec.children()//.not('[fieldname="'+pkname+'"]')
-				, id = $rec.find('[fieldname="'+pkname+'"]').text()
-				, $tr = $('<tr/>').attr ( 'data-id' , id )
-				console.assert ( !isNaN(id), 'DBH.ajax.toXml: ' + pkname + ' no ha sido suministrada en la Select: ' + sql )
-				$fields.each ( function () {
-					var $field = $(this)
-					, $td = $( '<td/>' ).attr('data-field-name',$field.attr('fieldname')).attr('data-field-value',$field.text()).text($field.text())
-					$tr.append($td)
-					//$field.attr('fieldvalue',$field.text())
-				})
-				$newXml.append($tr)
-			})
-			return $newXml.find('tr')
-		}
-		this.xmlToJSON = function ($oldXml) {
-			let lines = []
-			$oldXml.find('line').each ( function () {
-				var $rec = $(this)
-				, $fields = $rec.children()
-				, li1_id = $rec.attr('id')
-				, obj = {li1_id }
-				$fields.each ( function () {
-					var $field = $(this)
-					, propertyName = $field.attr('fieldname')
-					, propertyValue = $field.text()
-					obj[propertyName] = propertyValue
-				})
-				lines.push(obj)
-			})
-			return lines
-		}
-		this.xmlToObject = function (xml,withlinefeeds){
-			var records = []
-			//console.log($(xml).find('registro').length)
-			$(xml).find('registro').each(function(recnum){
-				var $rec = $(this).find('*')
-				, fields = {}
-				$rec.each(function(fieldnum){
-					var $field = $(this)
-					, fieldname = $field.attr('fieldname')
-					, fieldname = fieldname ? fieldname : 'propiedad' + fieldnum
-					, regexp10 = new RegExp ( String.fromCharCode(10), "gi" )
-					, regexp13 = new RegExp ( String.fromCharCode(13), "gi" )
-					, fieldvalue = $field.text()
-					, fieldvalue = withlinefeeds ? fieldvalue : fieldvalue.replace(regexp10,"").replace(regexp13,"")//.replace(/\'/g,"'''")
-					, fieldarr = [fieldname,fieldvalue]
-					//eval("fields." + fieldname + "='" + fieldvalue + "'")
-					eval("fields." + fieldname + "=fieldvalue")
-				})
-				records.push (fields)
-			})
-			//console.log(records)
-			return records
-
-		}
-		this.selectlogin = function ( sql ){
-			var r1 = that.selectToXml ( sql,true )
-			return that.xmlToObject(r1)
-		}
-		this.select = function ( sql, withlinefeeds ){
-			var r1 = that.selectToXml ( sql )
-			, arr = that.xmlToObject(r1,withlinefeeds)
-			//console.log(arr)
-			return arr
-		}
-		this.insert = function ( requestStr ){
-			var res = that.sql(requestStr,'insert')
-			if (!res) return false
-//			console.log(res)
-			var $res = $(res)
-			var id = $res.find('respuesta').text()
-			//console.log(id)
-			return id
-		}
-		this.update = function ( requestStr ){
-//			console.log('aa')
-			return that.sql(requestStr,'update')
-
-		}
-		this.valor = function (sql) {
-			var recs = that.select (sql)
-			//console.log(recs)
-			if (!recs.length ) return false
-			var propname = Object.keys(recs[0])[0]
-			, val = eval("recs[0]."+propname)
-			//, val = unescape($res.find('respuesta').text())
-			//console.log(res)
-			//console.log(val)
-			return val
-		}
-		this.session = function (session,val,isapp) {
-			if(isapp){var func="application"}else{var func="session"}
-			var rstr = "DBH_ASP.asp?func="+func+"&id="+session+"&val="+(val?val:'')
-			, res = DBH.ajax.request(rstr)
-			return res
-		}
-		this.application = function (app,val) {
-			return that.session(app,val,true)
-		}
-		this.sql = function ( sql, operacion, msg2147217900 ){
-			if (!msg2147217900) msg2147217900 = 'Error en sentencia SQL'
-			if (!operacion || operacion == 'custom' ) {
-				var res = that.request( 'DBH_SQL.asp','DBH_sql='+encodeURIComponent(sql) )
-//				console.log(sql)
-			}
-			if ( operacion == 'insert' ) { //'sql' is the request String in this case.
-				var param = sql + '&DBH_operacion=insert&DBH_da_id=' + DBH.area().id
-				,res = that.request( 'DBH_SQL.asp',param)
-				, $res = $(res)
-				//console.log(res)
-				if ( $res.find('precondicion').length > 0 ) {
-					// PRECONDICIONES INCLUMPLIDAS
-					var msg = ""
-					$res.find('precondicion').each(function(){
-						var $pcon = $(this)
-						, pc_id = $pcon.find(pc_id).text()
-						, pc_nombre = $pcon.find('pc_nombre').text()
-						, pc_descripcion = $pcon.find('pc_descripcion').text()
-						msg += '<span style="text-transform:uppercase;">' + pc_nombre + '</span><br><span style="white-space:normal">' + pc_descripcion + '</span>'
-					})
-					alerta (msg)
-					return false
-				}
-				//console.log(param)
-			}
-			if ( operacion == 'update' ) {
-				var param = sql + '&DBH_operacion=update&DBH_da_id=' + DBH.area().id
-//				console.log(param)
-				,res = that.request( 'DBH_SQL.asp',param)
-				, $res = $(res)
-				if ( $res.find('precondicion').length > 0 ) {
-					// PRECONDICIONES INCLUMPLIDAS
-					var msg = ""
-					$res.find('precondicion').each(function(){
-						var $pcon = $(this)
-						, pc_id = $pcon.find('pc_id').text()
-						, pc_nombre = $pcon.find('pc_nombre').text()
-						, pc_descripcion = $pcon.find('pc_descripcion').text()
-						, msge = '<span style="text-transform:uppercase;">' + pc_nombre + '</span><br><span style="white-space:normal">' + pc_descripcion + '</span><br>'
-						msg += msge
-						//console.log(msge)
-					})
-					alerta (msg)
-					return false
-				}
-			}
-			if (!res) return false
-			var $res = $(res)
-			, errnum = $res.find('errnum').text()
-			, errdesc = unescape($res.find('errdesc').text())
-			, requeststr = unescape($res.find('requeststr').text())
-			, sql = unescape($res.find('sql').text())
-			, respuesta = unescape($res.find('respuesta').text())
-			if ( errnum == -2147217900 ) {
-				alerta( msg2147217900,'red' );
-			}else if ( errnum == -2147217913 ) {
-				alerta( "Tipo de datos no válido" );
-			} else if ( errnum != 0 ) {
-				alerta("Error de escritura",'red' );
-			}
-			if (errnum!=0) {
-				console.log(sql);
-				console.log(errnum);
-				console.log(errdesc);
-//				console.log(sql);
-				return false
-			}
-			if ( operacion == 'update' ) {
-				var $camposform = DBH.area().topform.$camposform
-				$camposform.prop('oldValue',$camposform.val())
-			}
-			return $res
-		}
-		this.request = function (urllrelative,param){
-			//var islogged = $.get("DBH_ASP.asp?func=session&id=idusuario")
-			//if (!DBH.islogged) {;mostrarTelon(0);$('#divacceso').fadeIn();return false}
-			//console.log(param)
-			var apppath = $('#apppath',parent.parent.document).val()
-			, apppath = apppath ? apppath : ''
-			, urll = apppath + '/' + urllrelative
-			, respuesta=''
-			, dataType = 'text'
-			, res = $.ajax({ type: "POST",
-				url: urll,
-				async: false,
-				dataType: dataType,
-				data: param,
-				success : function(txt)
-				{
-					return txt
-					console.log(txt)
-				},
-				error: function ( jqXHR, textStatus, errorThrown)
-				{
-					console.log("urllrelative: "+urllrelative)
-					console.log("param: "+param)
-					console.log("textStatus: "+textStatus)
-					console.log("errorThrown: "+errorThrown)
-					alerta ( "Error Ajax Request. ")
-					return false
-				}
-			});
-			return res.responseText
-		}
-		return this;
-	}());
-	this.area = function(name){
-			//Si el area no se ha inicializado el container no existe aún, por eso uso la pestaña para obtener el da_id.
-			if(name && typeof name != 'undefined' && name != 'undefined' && isNaN(name) ){
-				var name = name ? name.toLowerCase() : 0
-				, $pestana =  $('#treemenu li[name="'+name+'"]')
-				//, $pestana =  $('#menuPrincipal .menu1Opcion[name="'+name+'"]')
-				, selector = '[name="'+name+'"]'
-			} else if ( !isNaN(name) ) {
-				var $pestana =  $('#treemenu li[da_id="'+name+'"]')
-				//, $pestana =  $('#menuPrincipal .menu1Opcion[da_id="'+name+'"]')
-				, selector = '[da_id="'+name+'"]'
-			} else {
-				var $pestana =  $('#treemenu li[aria-selected="true"]')
-				//, $pestana =  $('#menuPrincipal .menu1OpcionSeleccionada')
-				, selector = ':visible'
-			}
-//			console.log($pestana.length)
-			if(!$pestana.length){alerta("DBH.area(): No existe el área con nombre '" + name + "'" );return false}
-			var nombre = $pestana.attr('name')
-			//console.log('a'+nombre)
-			DBH.area_obj.name = nombre
-			DBH.area_obj.pestana = $pestana
-			DBH.area_obj.id = $pestana.attr('da_id')
-			DBH.area_obj.pkname = $pestana.attr('pkname')
-			return area_obj
-	}
-	this.area_obj = new function () {
-		var that = this
-		this.setvalues = function (pararr) {
-//			console.log(pararr)
-			var topformCleared = that.topform.clear()
-			if ( !topformCleared ) {
-				return false;
-			}
-			var $container = that.container
-			if (!$container.length) {
-				alerta ( 'Se ha llamado a area.setvalues() antes de inicializar el area.','red')
-				return false
-			}
-			$(pararr).each(function(){
-				var par = this
-				, fieldid = par[0]
-				, fieldvalue = par[1]
-				, $field = $container.find('[id="'+fieldid+'"]')
-				$field.val(fieldvalue)
-				setTextareaHeight($field)
-			})
-			return that
-		}
-		this.setButtons = function () {
-			var recsid = DBH.area().recsid
-			if(recsid.length){
-				$('#divbotonesprincipalesserie').find('button').add('.req-serie').prop('disabled',false)
-			} else {
-				$('#divbotonesprincipalesserie').find('button').add('.req-serie').prop('disabled',true)
-			}
-			/*
-			var selectinvertida = $('.listadoCuerpoContainer:visible').data('selectinvertida')
-			if ( selectinvertida ) {
-				$('#selectinvertida').addClass ('color-tomato')
-			} else {
-				$('#selectinvertida').removeClass ('color-tomato')
-			}
-			*/
-		}
-		Object.defineProperties(that, {
-			"loaded": {
-				get: function(){
-					return $('.formCuerpo[da_id="'+that.id+'"]').length
-				}
-			},
-			"container": {
-				get: function(){
-					/*
-					var name = that.name
-					var selector = '[name="'+name+'"]'
-					var $cont = $('.formCuerpo'+selector).add('[id="iframeFormCabecera"]')//.add('div.botones_principales:visible')
-					*/
-					var $cont = that.formContainer//.add('[id="iframeFormCabecera"]')//.add('div.botones_principales:visible')
-					return $cont
-				}
-			},
-			"formContainer": {
-				get: function(){
-					var name = that.name
-					var selector = '[name="'+name+'"]'
-					var $cont = $('.formCuerpo'+selector)
-					return $cont
-				}
-			},
-			"topform": {
-				get: function(){
-					var name = that.name
-					/*
-					if (name){
-						var $topform = $('.formCuerpo[name="'+name+'"]')
-					} else {
-						var $topform = $('.formCuerpo:visible')
-					}
-					*/
-//					console.log(name)
-					var $topform = $('.formCuerpo[name="'+name+'"]')
-					var topform = $topform.data('topform')
-					return topform
-				}
-			},
-			"recid": {
-				get: function(){
-					var name = that.name
-					/*
-					if (name){
-						var $topform = $('.formCuerpo[name="'+name+'"]')
-					} else {
-						var $topform = $('.formCuerpo:visible')
-					}
-					*/
-//					console.log(name)
-					var pkname = that.pkname
-					, recid = that.container.find('[id="'+pkname+'"]').val()
-					return recid
-				}
-			},
-			"recsid": {
-				get: function(){
-					//var ci = that.checkedids
-					var ci = that.formContainer.data('checkedids')
-//					console.log(ci)
-					, ci = !ci ? [] : ci.slice()//.split(",")
-					, recid = that.recid
-					if(recid && recid != '' && ci.indexOf(recid)==-1 ) ci.push(recid)
-					//console.log(ci)
-					return ci
-				}
-			},
-			"redactor": {
-				get: function(){
-					//var ci = that.checkedids
-					var ci = that.formContainer.find('.dbh_redactor_consultas')
-					return ci.val()
-				},
-				set: function(txt){
-					//var ci = that.checkedids
-					var ci = that.formContainer.find('.dbh_redactor_consultas')
-					ci.val(txt)
-					return true
-				}
-			},
-			"unsaved": {
-				get: function(){
-					return that.topform.unsaved
-				},
-				set: function(val){
-					that.topform.unsaved = val
-					var $savebutton = $('.form-toolbar[da_id="'+that.id+'"] .toolbar-button-save')
-					if ( val ) {
-						$savebutton.addClass('unsaved')
-					} else {
-						$savebutton.removeClass('unsaved')
-					}
-					return true
-				}
-			},
-			"checkedids": {
-				get: function(){
-					var ids = that.formContainer.data('checkedids')
-					//console.log(ids)
-					, ids = ids ? ids : []
-					//console.log(ids.length)
-					return ids
-				},
-				set: function(ids){
-					that.formContainer.data('checkedids',ids)
-					return ids
-				}
-			}
-		});
-		this.childAreas = function (name) {
-			if(name){
-				var name = name ? name.toLowerCase() : 0
-				, $pestana =  that.container.find('.divinlineform[title="'+name+'"]')
-			}
-			DBH.childAreas_obj.name = name
-			DBH.childAreas_obj.pestana = $pestana
-			DBH.childAreas_obj.id = $pestana.attr('da_id')
-			DBH.childAreas_obj.pkname = $pestana.attr('pkname')
-			return childAreas_obj
-		}
-		this.childAreas_obj = function () {
-			var that = this
-			return this
-		}
-		this.go = function () {//alert('aa')
-			$('#divnombreusuariogeneral').find('div[id="nombrearea"]').remove()
-			$('#divnombreusuariogeneral').append('<div id="nombrearea" style="float:none;margin:-1px 0 0 0;font-weight:inherit;font-size:inherit;color:inherit">'+that.name+'</div>')
-			$('#treemenu').jstree('deselect_all').jstree('select_node', $('#treemenu li[da_id="'+that.id+'"]').attr('id'))
-			//if ( stopReset ) switchiframes_real.stopReset = 1
-			switchiframes_real(that.pestana);
-
-			cabezar();
-			ajustarAnchoEncabezados();
-			scrollEventHandler($('#divlist')[0]);
-
-			return that;
-		}
-		this.filter = function (bypass) {
-			that.topform.filter_real(bypass)
-			return that
-		}
-		return this
-	}
-	this.aviso = function (idaviso) {
-		if(isNaN(idaviso)) {
-			idaviso = $(idaviso).closest('[avi_id]').attr('avi_id')
-		}
-		if (idaviso) that.aviso_obj.id = idaviso;
-		return that.aviso_obj;
-	}
-	this.aviso_obj = new function () {
-		var that = this
-		this.go = function () {
-			var da_id = $('#treemenu li[name="dbh-acciones"]').attr('da_id')
-			//console.log(da_id+'**'+that.id)
-			DBH.gorecord(da_id,that.id)
-			return that
-		}
-		this.posponer = function (minutos) {
-			var sqls = "UPDATE dbh_avisos SET avi_fecha = DATEADD(minute,"+minutos+",getdate()), avi_alertado=0 WHERE avi_id = " + that.id
-			console.log(sqls)
-			DBH.ajax.sql(sqls)
-			alerta ( "Tarea pospuesta " + minutos + " minutos." , 1 )
-			return that
-		}
-		this.desactivar = function () {
-			var sqls = "UPDATE dbh_avisos SET avi_accion = 0 WHERE avi_id = " + that.id
-			DBH.ajax.sql(sqls)
-			return that
-		}
-		this.save = function (fecha) {
-			var sqls = "UPDATE dbh_avisos SET avi_fecha = '" + fecha + "', avi_alertado=0 WHERE avi_id = " + that.id
-			DBH.ajax.sql(sqls)
-			return that
-		}
-		this.alertar = function () {
-			var $container = $('#alertaaviso')
-			var sqls = "SELECT avi_id,avi_etiqueta,avi_texto,avi_fecha,avi_da_id,avi_pkvalue FROM dbh_avisos WHERE avi_id = " + that.id
-			, recs = DBH.ajax.select(sqls,'withLineFeeds')
-			//console.log(recs[0])
-			if ( !recs ) {alerta('DBH.aviso.alert(): Ningún aviso tiene el ID "' + that.id + '"');return false}
-			var etiqueta = recs[0].avi_etiqueta
-			, avi_id = recs[0].avi_id
-			, da_id = recs[0].avi_da_id
-			, pkvalue = recs[0].avi_pkvalue
-			, texto = recs[0].avi_texto
-			, fecha = recs[0].avi_fecha
-			, fecha = fecha.length > 16 ? fecha.substring(0,16) :  fecha
-			, divtext = "<br><b><a style='color:#32AB9F' href='javascript:;' title='Click para ir al registro vinculado' onclick='DBH.gorecord("+da_id+","+pkvalue+")'>" + etiqueta + "</a></b><br><pre style='white-space:pre-wrap;'>" + texto + "</pre>"
-			, $input = $container.find('.info input')
-			, $texto = $container.find('.info .textcontainer')
-			$texto.html(divtext)
-			$input.val(fecha)
-			DBH.date().setcolor($input)
-			var $clone = $('[id="alertaaviso"][avi_id="'+avi_id+'"]')
-			if ( !$clone.length ) {
-				var $clone = $container.clone().attr('avi_id',avi_id).attr('da_id',da_id)
-				$container.after($clone)
-			}
-			//$clone.show().addClass('zoomedin')
-			if (!$clone.is(':visible')){
-				$clone.css({ 'zoom': 0.00000001 }).show()
-				$clone.animate({ 'zoom': 1 }, 'slow');
-			}
-
-			return that
-		}
-		this.olvidar = function () {
-			var sqls = "UPDATE dbh_avisos SET avi_alertado = 1 WHERE  avi_id = " + that.id
-			, recs = DBH.ajax.sql(sqls)
-			alerta ( "Tarea marcada como avisada." , 1 )
-		}
-		return this;
-	}
-	this.avisos = {}
-	this.avisos.gorecord = function () { //va al registro relacionado con el aviso seleccionado en el area avisos.
-		var $con=DBH.area().container
-		, areaid = $con.find('[id="dbh_avisos.avi_da_id"]').val()
-		, recid = $con.find('[id="dbh_avisos.avi_pkvalue"]').val()
-		if ( !recid || !areaid ) { alerta('Este aviso no está relacionado con un registro.'); return false; }
-		DBH.gorecord(areaid,recid)
-	}
-	this.avisos.show = function () { //Muestra los avisos activados.
-		var par = [['dbh_avisos.avi_accion','1'],['dbh_avisos.iduc',sessionStorage['usu_id']]]
-		DBH.area('dbh-acciones').go().setvalues (par).filter()
-	}
-	this.avisos.setbutton = function (force) {
-		if(!force){
-			var areaname = DBH.area().name
-//			console.log(areaname)
-			if(areaname!='dbh-acciones')return false
-		}
-		var sqls = "SELECT min(avi_fecha) as fechamin, max(avi_fecha) as fechamax, count(avi_id) as count FROM dbh_avisos where iduc = " + sessionStorage['usu_id'] + " AND avi_accion = 1"
-		, res = DBH.ajax.select (sqls)
-		, $boton = $('#avisosgeneral')
-		if (!res) {
-			var txt = "0"
-			, tit = "0 avisos\n - "
-		} else {
-			var rec = res[0]
-			, fechamin = rec.fechamin
-			, fechamax = rec.fechamax
-			, count = rec.count
-			, txt = count
-			, tit = count + " avisos\n" + fechamin + " - " + fechamax
-			, fecha = fechamin.substr(0,10)
-			//console.log(fecha)
-			$boton.html(fecha)
-			DBH.date().setcolor($boton)
-		}
-		$boton.html(txt).attr('title',tit)
-//		console.log(fecha)
-//		console.log($boton)
-	}
-	this.historico = {}
-	this.historico.gorecord = function () {
-		var $con=DBH.area().container
-		, areaid = $con.find('[id="dbh_historico.his_da_id"]').val()
-		, recid = $con.find('[id="dbh_historico.his_pkvalue"]').val()
-		DBH.gorecord(areaid,recid)
-	}
-	this.comentarios = {}
-	this.comentarios.gorecord = function () {
-		var $con=DBH.area().container
-		, areaid = $con.find('[id="dbh_comentarios.cc_da_id"]').val()
-		, recid = $con.find('[id="dbh_comentarios.cc_pkvalue"]').val()
-		DBH.gorecord(areaid,recid)
-	}
-	this.documentos = {}
-	this.documentos.gorecord = function () {
-		var $con=DBH.area().container
-		, areaid = $con.find('[id="dbh_documentos.doc_da_id"]').val()
-		, recid = $con.find('[id="dbh_documentos.doc_pkvalue"]').val()
-		DBH.gorecord(areaid,recid)
-	}
-	this.gorecord = function (areaid,recid,timer) {
+		this.gorecord = function (areaid,recid,timer) {
 		var areahabilitada = $('#treemenu li[da_id="'+areaid+'"]').length
 		if(!areahabilitada){alert('Su usuario no tiene permiso para acceder a este área.');return false}
 		if(!timer && !$('.formCuerpo[da_id="'+areaid+'"]').length ) {
@@ -874,7 +285,7 @@ var DBH = ( function () {
 		if ( ! DBH.cache_areas_state() ) { setTimeout(function(){DBH.gorecord(areaid,recid,timer)},100) ; return }
 		var sqls = "SELECT * FROM DBH_AREAS WHERE da_id = " + areaid
 		//, res2 = DBH.ajax.select ( sqls )
-		, res = dbhQuery ( 'loadform-data').json(areaid)
+		, res = dbhQuery ( 'areas').json(areaid)
 		var record = res[0]
 		, da_nivel = record.da_nivel
 		, da_id = record.da_id
@@ -964,7 +375,6 @@ var DBH = ( function () {
 				//console.log(iscolor)
 				if(iscolor){
 					var fecha = (($campo.prop('tagName') == 'TEXTAREA') || ($campo.prop('tagName') == 'SELECT') || ($campo.prop('tagName') == 'INPUT')) ? $campo.val() : $campo.html()
-//					console.log(fecha)
 					if(unset || !fecha || trim(fecha) == '' ){
 						var bg = ''
 						, fg = ''
@@ -1090,247 +500,6 @@ var DBH = ( function () {
 		})
 
 	}
-	this.tree  = {}
-	this.tree.load = function () {
-		var $ul = $('<ul/>')//.addClass('jstree-children').attr('role','group')
-		, $li = $('<li/>').attr('style','white-space:noblank')//.attr('role','treeitem')//.attr('data-jstree','{"selected" : true}')
-		, das_madres = []
-		, $treemenu = $('#treemenu')
-		//, sqls = 'SELECT * FROM DBH_AREAS WHERE da_activa = 1 ORDER BY da_nivel desc,da_orderindex'
-		, areas = DBH.areasSqlArr
-		//, sqls = 'SELECT * FROM DBH_AREAS WHERE da_activa = 1 AND da_areamadre  is null ORDER BY da_orderindex'
-		//, recs = that.ajax.select(sqls)
-		var recs = areas.filter(function( obj ) {
-			return ( obj.da_areamadre == '' && obj.da_nivel == '1' )
-		});
-		$(recs).each(function(){
-			var rec = this
-			, nombre = rec.da_descripcion
-			, da_id = rec.da_id
-			, pkname = rec.da_pkfield
-			//console.log('da_id'+da_id)
-			, $clone = $ul.clone()//.attr('da_id',da_id)
-			, da_perfiles = rec.da_perfiles
-			, $tempfield = $('<div class="'+da_perfiles+'"/>')
-			//console.log("da_perfiles:"+da_perfiles)
-			//console.log("usu_perfil:"+sessionStorage["usu_perfil"])
-			if ( ! $tempfield.is ( sessionStorage["usu_perfil"] ) ) {
-				$clone.append ( $li.clone(true).attr('title',nombre).attr('name',nombre.toLowerCase()).attr('id',da_id).attr('da_id',da_id).attr('pkname',pkname.split(".")[1].toLowerCase()).html('<span class="">'+nombre.replace("DBH-","")+'</span>').append('<ul/>').attr('data-jstree','{"icon":"fa fa-database"}' ) )
-				$treemenu.append ( $clone )
-				das_madres.push(da_id)
-			}
-			//, idmadre = rec.da_areamadre
-
-		})
-		//console.log(das_madres)
-		do {
-			//var sqls = 'SELECT * FROM DBH_AREAS WHERE da_activa = 1 AND da_areamadre  IN (' + das_madres + ') ORDER BY da_nivel desc,da_orderindex'
-			//console.log(sqls)
-			//, recs = that.ajax.select(sqls)
-			var recs = areas.filter(function( obj ) {
-				//console.log(obj.da_areamadre)
-				return ( das_madres.indexOf ( obj.da_areamadre ) != -1 )
-			});
-			var das_madres = []
-				//console.log(das_madres)
-			$(recs).each(function(){
-				var rec = this
-				, nombre = rec.da_descripcion
-				, da_id = rec.da_id
-				, da_areamadre = rec.da_areamadre
-				, pkname = rec.da_pkfield
-				, da_descripcion = rec.da_descripcion
-				, da_nivel = rec.da_nivel
-				, $clone = $li.clone().attr('title',nombre).attr('name',nombre.toLowerCase()).attr('id',da_id).attr('da_id',da_id).attr('da_nivel',da_nivel).attr('pkname',pkname.split(".")[1].toLowerCase()).html('<span>'+nombre.replace("DBM-","")+'</span>').append('<ul/>')
-				if ( da_nivel == 1 ) {
-					//$clone.attr('data-jstree','{"icon":"//jstree.com/tree.png"}' )
-					$clone.attr('data-jstree','{"icon":"fa fa-database"}' )//.find( 'span').addClass('color-blue')
-				} else {
-					$clone.attr('data-jstree','{"icon":"fa fa-bars"}' )
-					//$clone.find('i').hide()
-				}
-				$treemenu.find('li[da_id="'+da_areamadre+'"]>ul').append ( $clone )
-				das_madres.push(da_id)
-			})
-		} while ( das_madres.length )
-		var $nodos = $treemenu.find('li')
-		, $select = $('.toolbar-select-multirec-navegacion')
-		$nodos.each ( function () {
-			var $nodo = $(this)
-			, da_id = $nodo.attr('da_id')
-			, name = $nodo.attr('title')
-			, pkname = $nodo.attr('pkname')
-			//$nodo.attr('name',name).attr('pkname',pkname)
-			//if ( name.indexOf('DBH-') != -1 )  $nodo.attr('data-jstree','{"icon":"fa fa-database"}' )
-			if ( name == "[VALORES]" || name == "[AREAS]" || name == "[CAMPOS]" ) {
-				var clase = "fa fa-cogs"
-			}
-			//$nodo.attr('title',name).attr('id',da_id)
-			if ( name == "DBH-Importador" ) var clase = "fa fa-file-excel-o"
-			if ( name == "DBH-Usuarios" ) var clase = "fa fa-user"
-			if ( name == "DBH-Vistas" ) var clase = "fa fa-binoculars"
-			if ( name == "DBH-Comunicaciones" ) var clase = "fa fa-envelope-o"
-			if ( name == "DBM-Comunicaciones agrupadas" ) var clase = "fa fa-paper-plane-o"
-			if ( name == "DBH-Acciones" ) {
-				var $option = $('<option/>').val ( "$('#iframeFormCuerpo').data('topform').DBH('avi_pkvalue')" ).text('Acciones')
-				, clase = 'fa fa-bolt'
-			}
-			if ( name == "DBH-Comentarios" ) {
-				var $option = $('<option/>').val ( "$('#iframeFormCuerpo').data('topform').DBH('cc_pkvalue')" ).text('Comentarios')
-				, clase = 'fa fa-commenting-o'
-			}
-			if ( name == "DBH-Documentos" ) {
-				var $option = $('<option/>').val ( "$('#iframeFormCuerpo').data('topform').DBH('doc_pkvalue')" ).text('Documentos')
-				, clase = 'fa fa-paperclip'
-			}
-			if ( name == "DBH-Histórico" ) {
-				var $option = $('<option/>').val ( "$('#iframeFormCuerpo').data('topform').DBH('his_pkvalue')" ).text('Histórico')
-				, clase = 'fa fa-history'
-			}
-			if ( name == "DBM-Comunicaciones" ) {
-				var $option = $('<option/>').val ( "$('#iframeFormCuerpo').data('topform').DBH('ial_pkvalue')" ).text('Com. enviadas')
-				, clase = 'fa fa-paper-plane-o'
-			}
-			if ( name == "DBH-Comunicaciones custom" ) {
-				var $option = $('<option/>').val ( "$('#iframeFormCuerpo').data('topform').DBH('iac_pkvalue')" ).text('Com. custom')
-				, clase = 'fa fa-envelope'
-			}
-			if ( clase ) $nodo.attr('data-jstree','{"icon":"'+clase+'"}' )
-			if ( $option ) $select.append($option.addClass(clase))
-		})
-
-		$treemenu
-			.on('click','a',function(){
-				var $a = $(this)
-				, da_id = $a.closest('li').attr('da_id')
-				DBH.gorecord(da_id)
-			} )
-			.on('after_open.jstree', function (e, data) {
-			})
-			.on('after_close.jstree', function (e, data) {
-			})
-
-			.jstree({
-			"core" : {
-				"themes" : {
-					"variant" : "large"
-					//,"dots": false
-					//,"stripes":true
-				}
-				,"multiple":false
-			}
-			})
-			.jstree('open_all')
-			.show()
-
-		$treemenu.children('ul').width('100%')
-		$('.layout-tree-container')
-			.resizable({
-				handles:'e'
-			})
-		$('.layout-log-container')
-			.resizable({
-				handles:'n'
-				,resize : function () {
-					$(this).css({top:'auto'})
-				}
-			})
-		$('.layout-alertas-container')
-			.resizable({
-				handles:'n'
-				,resize : function () {
-					$(this).css({top:'auto'})
-				}
-			})
-		$('.layout-form-container')
-			.resizable({
-				handles:'e'
-				,stop: function () {
-					DBH.area().topform.$container.find('textarea.inputText').each(function(){setTextareaHeight(this)})
-				}
-			})
-	}
-	this.tree.setWidth = function () {
-		return false //OBSOLETO
-		var $treemenu = $('#treemenu')
-		, $botones  = $('#treemainbuttons')
-		var anchotree = $('#treeresizable').outerWidth()
-		//, anchotree = anchotree < 130 ? 130 : anchotree
-		, anchoform = $('#tableleft').outerWidth()
-		//$('.toolbar').css({'width' : 'calc(100vw - '+anchotree+'px)'})
-		$('.toolbar').css({'width' : '100vw','margin-left' : '-'+anchotree+'px'})
-		$botones.css({'max-width':(anchotree),'width':(anchotree)})
-		$('body').css({'margin-left':(anchotree-1)})
-		$('#divScrollDivision').css({'left':anchotree+anchoform})
-		ajustarAnchoForm()
-	}
-	this.tree.expand = function (btn) {
-		var $btn = $(btn)
-		, isexpanded = $btn.hasClass('tree-button-expanded')
-		if(isexpanded){
-			$btn.removeClass('tree-button-expanded')
-			$('#treemenu').jstree('close_all')
-		}else{
-			$btn.addClass('tree-button-expanded')
-			$('#treemenu').jstree('open_all')
-		}
-		//$('#treeresizable').width('0')
-		//$('#treemenu').width('0').closest('div').width('0')
-		//DBH.tree.setWidth()
-	}
-	this.tree.nodes = new function () {
-		var that = this
-		this.hide = function () {
-			$('#treemenu').find('li'+selector).hide()
-		}
-		this.show = function () {
-			$('#treemenu').find('li'+selector).show()
-		}
-		this.toggle = function (btn) {
-			var $nodes = $('#treemenu').find('li'+that.selector)
-			, $btn = $(btn)
-			, ison = $btn.hasClass('color-blue')
-			if ( ison ) {
-				$btn.removeClass('color-blue')
-				$('#treemenu').addClass('tree-lvl2-hidden')
-				//$nodes.addClass('tree-node-hidden')
-			}else{
-				$btn.addClass('color-blue')
-				//$nodes.removeClass('tree-node-hidden')
-				$('#treemenu').removeClass('tree-lvl2-hidden')
-			}
-			ajustarAnchoEncabezados()
-			//setTimeout(function(){DBH.tree.setWidth()},1000)
-		}
-		return function (selector) {
-			that.selector = '[da_nivel="2"]'
-			return that
-		}
-	}
-	this.tree.expand = function (btn) {
-		var $btn = $(btn)
-		, isexpanded = $btn.hasClass('color-blue')
-		if(isexpanded){
-			$btn.removeClass('color-blue')
-			$('#treemenu').jstree('close_all')
-		}else{
-			$btn.addClass('color-blue')
-			$('#treemenu').jstree('open_all')
-		}
-		ajustarAnchoEncabezados()
-	}
-	this.tree.toggle = function () {
-		var $tree = $('#treeresizable')
-		if($tree.hasClass('toggle-hidden')){
-			$tree.removeClass('toggle-hidden')
-			$tree.width($tree.data('actualwidth'))
-		}else{
-			$tree.addClass('toggle-hidden')
-			$tree.data('actualwidth',$tree.outerWidth())
-			//$tree.width(0)
-		};
-		ajustarAnchoEncabezados()
-	}
 	this.valueLists = function ($campos) {
 		var that = this
 		if ( !DBH.valueLists.$grupos )  DBH.valueLists.$grupos = $('<grupos/>')
@@ -1408,35 +577,26 @@ Object.defineProperties(DBH, {
 	"islogged": {
 		get: function() {
 			var idusuario = sessionStorage["usu_id"]
-//			console.log(idusuario)
 			return (isNaN(idusuario)?false:idusuario)
-		/*
-			var res = $.ajax({ type: "POST",
-				url: 'DBH_ASP.asp',
-				async: false,
-				dataType: 'text',
-				data: 'func=session&id=idusuario',
-				success : function(txt)
-				{
-					return txt
-					console.log(txt)
-				},
-				error: function ( jqXHR, textStatus, errorThrown)
-				{
-					console.log("urllrelative: "+urllrelative)
-					console.log("param: "+param)
-					console.log("textStatus: "+textStatus)
-					console.log("errorThrown: "+errorThrown)
-					alerta ( "Error Ajax Request. ")
-					return false
-				}
-			});
-			return res.responseText
-		*/
 		}
 	}
 });
 //DBH.logSet = new Set()
+DBH.sql = function ( _sql , settings ) {
+	let { beginmsg , successmsg , errormsg } = settings.verbose
+	alerta ( beginmsg , 1 )
+	dbhQuery ( { sqlquery: _sql , url: 'selectXML_new.asp' } ).request( _responseHandler )
+	function _responseHandler ( xml ) {
+		let $xml = $(xml).find('xml')
+		, errnum = $xml.find ( 'errnum' ).text()
+		, errdesc = $xml.find ( 'errdesc' ).text()
+		if ( errnum ) {
+			if ( errormsg ) { alerta ( errormsg ) } else { alerta ( errdesc ) }
+		} else {
+			if ( successmsg ) { alerta ( successmsg , 1 ) }
+		}
+	}
+}
 DBH.log = class {
 	constructor ( txt = '[Sin texto]' , title = '[Sin title]' ) {
 		this.texto = txt
@@ -1457,6 +617,7 @@ DBH.log = class {
 		//DBH.logSet.add(this)
 	}
 }
+
 DBH.consola = function( txt , { title } = 0 ) {
 	if ( ! title ) return false;
 	if ( ! this.$logsContainer ) {this.$logsContainer = $('.layout-log-container')}
@@ -1470,7 +631,6 @@ DBH.consola = function( txt , { title } = 0 ) {
 	this.$logsContainer.prepend( $msg )
 	//console.log(texto)
 }
-
 
 Array.prototype.pushUnique = function (item){
 		if(item.length==0) return this;
@@ -1509,4 +669,12 @@ Array.prototype.removeAS = function ( ) {
 		})
 		return this;
 	}
+Set.prototype.toArray = function () {
+	let theSet = this
+	, setArray = []
+	for ( let item of theSet ) {
+		setArray.push ( item )
+	}
+	return setArray
+}
 $(DBH.start)

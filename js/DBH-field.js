@@ -1,10 +1,57 @@
 /************
 Dependent on: jQuery, bootstrap-tagsinput, typeahead (bundle with Bloodhound)
 **********/
+$(document).on('form:save', function ( ){
+	let $container = $(this)
+	, $tagFields = $container.find ( '._dbh-field._dbh-field-tags' )
+	, tagSetsMap = new Map()
+	$tagFields.each ( function () {
+		let $tagField = $(this)
+		, grupo = $tagField.attr('grupo')
+		, tags = $tagField.val().split ( ',' )
+		, tagSet = tagSetsMap.get ( grupo )
+		if ( ! tagSet ) tagSet = new Set()
+		tags.forEach ( tag => { tagSet.add ( tag ) } )
+		tagSetsMap.set ( grupo , tagSet )
+	})
+	return
+	console.log(event.item)
+	let item = event.item
+	, $input = $(this)
+	, cached = $input.data( 'dbh-field-instance' ).hound.get(item).length
+	, inserts = ''
+	for ( let [grupo , groupSet] of tagSetMap ) {
+		for ( let val of groupSet  ) {
+			let insert = " INSERT INTO dbh_listas ( grupo , des ) VALUES ( '" + grupo + "', 1 ,'" + item + "' )"
+			inserts += insert
+		}
+	}
+	/*
+	DBH.sql ( inserts ) {
+		let sqlm = "SELECT MAX(li1_id) FROM DBH_LISTAS"
+		, li1_id = sqlExecVal ( sqlm , 0 )
+		, obj = {li1_id,des:item,grupo}
+		$input.data( 'dbh-field-instance' ).hound.add(obj)
+		//$input.data( 'dbh-field-instance' ).hound.add(item)
+	}
+	*/
+	/*
+	let itemObj = $input.data( 'dbh-field-instance' ).hound.get(item)[0]
+	, li1_id  = itemObj.li1_id
+	, color  = itemObj.li1_color
+	, $style = $("<style type='text/css'>.tag.custom-color-"+item+"{background:" + color  + "}</style>")
+	if( ! stylesMap.has ( item ) ) {
+		$style.appendTo("head")
+		stylesMap.set(item, $style)
+	}
+*/
+//	console.log($fields.length)
+});
+
 
 {
 
-	var taginput_original = $.fn.tagsinput
+	let taginput_original = $.fn.tagsinput
 	//console.log(taginput_original)
 	$.fn.tagsinput = function ( ...argumentos ) {
 		if ( argumentos[0] == 'reload' ) {
@@ -33,7 +80,7 @@ Dependent on: jQuery, bootstrap-tagsinput, typeahead (bundle with Bloodhound)
 			return this
 		}
 	})
-	DBH.stylesMap = new Map()
+	let stylesMap = new Map()
 	DBH.field = DBH_field_instantiate
 	function DBH_field_instantiate( $jquerySet ) {
 		if ( ! $jquerySet.length ) return undefined;
@@ -71,6 +118,7 @@ Dependent on: jQuery, bootstrap-tagsinput, typeahead (bundle with Bloodhound)
 	class field_search extends field {
 		constructor ( $input ) {
 			super ( $input )
+			$input.addClass ( '_dbh-field-search' )
 		}
 		val (_val) {
 			if ( !_val && _val.trim() != '' ) {
@@ -102,6 +150,7 @@ Dependent on: jQuery, bootstrap-tagsinput, typeahead (bundle with Bloodhound)
 	class field_tags extends field {
 		constructor ( $input , grupo ) {
 			super ( $input )
+			$input.addClass ( '_dbh-field-tags' )
 			this.grupo = grupo
 			this.hound = DBH.hounds.get('grupos:'+grupo)
 			if ( ! this.hound ) {
@@ -145,35 +194,18 @@ Dependent on: jQuery, bootstrap-tagsinput, typeahead (bundle with Bloodhound)
 				if ( isEdition ) formCabecera.formModificado(1)
 			})
 			$input.on('itemAdded',	function (event) {
-				console.log(event.item)
-				let item = event.item
-				, $input = $(this)
-				, cached = $input.data( 'dbh-field-instance' ).hound.get(item).length
-				, isEdition = DBH.area().recid.length
+				let isEdition = DBH.area().recid.length
 				if ( isEdition ) formCabecera.formModificado(1)
-				if ( ! cached && isEdition ) {
-					let  sql = "SELECT id FROM DBH_LISTAS WHERE grupo = '" + grupo + "'"
-					, sql1 = "INSERT INTO DBH_LISTAS ( grupo, id, des ) ( SELECT '" + grupo + "', MAX(id)+1 AS a,'" + item + "' FROM DBH_LISTAS WHERE grupo = '" + grupo + "' )"
-					, sql2 = "INSERT INTO DBH_LISTAS ( grupo, id, des ) VALUES ( '" + grupo + "', 1 ,'" + item + "' )"
-					sql = sqlExecVal ( sql ) ? sql1 : sql2
-					sqlExecVal ( sql , 0 )
-					let sqlm = "SELECT MAX(li1_id) FROM DBH_LISTAS"
-					, li1_id = sqlExecVal ( sqlm , 0 )
-					, obj = {li1_id,des:item,grupo}
-					$input.data( 'dbh-field-instance' ).hound.add(obj)
-					//$input.data( 'dbh-field-instance' ).hound.add(item)
-				}
-				let itemObj = $input.data( 'dbh-field-instance' ).hound.get(item)[0]
-				, li1_id  = itemObj.li1_id
-				, color  = itemObj.li1_color
-				, $style = $("<style type='text/css'>.tag.custom-color-"+item+"{background:" + color  + "}</style>")
-				if( ! DBH.stylesMap.has ( item ) ) {
-					$style.appendTo("head")
-					DBH.stylesMap.set(item, $style)
-				}
-				//debugger
-				//if(color)$input.css({background:color})
 			})
+			$input.on ( 'area:save' , function () {
+				let $input = $(this)
+				, dbhField = $input.data( 'dbh-field-instance' )
+				dbhField.save()
+				console.log('abfefs')
+			})
+		}
+		save () {
+			console.log('abfefs')
 		}
 		val ( _val ) {
 			if ( !_val && _val.trim() != '' ) {

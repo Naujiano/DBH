@@ -19,18 +19,11 @@
 		response.end
 	end if
 	dbConnZavala.CommandTimeout = 6000
-
-On Error Resume Next
 rs.open sqlDelete & " " & sqlInsert, dbConnZavala
-errNumber = Err.Number
-errDescription = Err.Description
-on error goto 0
-If errNumber <> 0 Then
-	response.write "SQL:" & sql & "  --  " & errDescription
-	response.end
-Call Err.Raise(errNumber, "Error de Sql:" & sql, errDescription)
-End If
-
+'rs.open sqlInsert, dbConnZavala
+'rs.open sqlCount, dbConnZavala
+'numregs = rs.fields(0)
+'rs.close
 rs.open sqlSelect, dbConnZavala,3
 	noreg=numregs
 	if pagina = 1 then

@@ -5,10 +5,42 @@
         for ( let [key,state] of cacheMap ) {
             if ( ! state ) ready = false;
         }
-        console.log
         return ready
     }
-
+    let load = function () {
+        cacheMap.set ( 'areas' , false )
+        dbhQuery({
+            fields : `case when (COL_LENGTH(da_pktabla,'dbh_perfiles_admitidos_xreg') is null ) then '0' else '1' end as tiene_columna_dbh_perfiles_excluidos
+    , (select a.da_id from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_id_madre,(select a.da_tabla from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_pktabla_madre
+    ,(select a.da_pkfield from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_pkfield_madre,(select a.da_descripcion from DBH_AREAS as a where a.da_id = b.da_areamadre ) as namemadre
+    ,(select cast(da_id as char) + ',' from DBH_AREAS as a where b.da_id = a.da_areamadre AND a.da_nivel = 1 AND a.da_activa=1 FOR XML PATH ('') ) as da_ids_hijas
+    , (select cast(da_id as char) + ',' from DBH_AREAS as a where (b.da_id = a.da_areamadre OR b.da_id = a.da_areamadrastra) AND a.da_nivel = 2 AND a.da_areamadrastra is not null FOR XML PATH ('') ) as da_ids_relacionantes
+    , (select cast(da_descripcion as char) + ',' from DBH_AREAS as a where (b.da_id = a.da_areamadre OR b.da_id = a.da_areamadrastra) AND a.da_nivel = 2 AND a.da_areamadrastra is not null FOR XML PATH ('') ) as da_nombres_relacionantes
+    ,(select cast(da_descripcion as char) + ',' from DBH_AREAS as a where b.da_id = a.da_areamadre AND a.da_nivel = 1 AND a.da_activa=1 FOR XML PATH ('') ) as da_nombre_hijas
+    ,case when (COL_LENGTH(da_pktabla,'dbh_perfiles_admitidos_xreg') is null ) then '0' else '1' end as tiene_columna_dbh_perfiles_excluidos
+    ,(select a.da_pkfield from DBH_AREAS as a where a.da_id = b.da_areamadre ) as pkmadre,(select a.da_perfiles from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_perfiles_madre
+    ,*`
+            , table : 'DBH_AREAS as b'
+            , where : 'da_activa = 1'
+            , orderby : 'da_nivel desc,da_orderindex'
+            , idfield : 'da_id'
+            ,cache:'areas'
+        }).request(function(xml) {
+            DBH.areasSqlArr = dbhQuery('areas').json()
+            DBH.tree.load();
+            $('#treeresizable').width($('#treeresizable').outerWidth())
+                //DBH.tree.setWidth();
+            var treewidth = $('.layout-tree-container').width()
+            if (treewidth < 170)
+                treewidth = 170
+            $('.layout-tree-container').css({
+                width: treewidth
+            })
+            console.log('loaded areas')
+            cacheMap.set ( 'areas' , true )
+            //console.log(dbhQuery('areas').search({da_areamadre:'9'}))
+        })
+    }();
     let tree = function() {
         cacheMap.set ( 'tree' , false )
         let fields = "*",
@@ -22,7 +54,7 @@
             orderby
         }).request(function(xml) {
             let data = DBH.ajax.xmlToObject(xml)
-            DBH.areasSqlArr = data
+            DBH.areasSqlArr = dbhQuery('areas').json()
             DBH.tree.load();
             $('#treeresizable').width($('#treeresizable').outerWidth())
                 //DBH.tree.setWidth();
@@ -36,7 +68,7 @@
             cacheMap.set ( 'tree' , true )
             $(document).trigger('tree-load')
         })
-    }();
+    };
 
     let  = function loadFormData () {
         cacheMap.set ( 'areas' , false )
@@ -57,8 +89,9 @@
             console.log('loaded loadformData.')
             cacheMap.set ( 'areas' , true )
             $(document).trigger('areas-load')
+
         });
-    }();
+    };
 
     let campos = function() {
         cacheMap.set ( 'campos' , false )
@@ -112,7 +145,7 @@
             console.log('loaded inlineformData.')
             cacheMap.set ( 'inlineform' , true )
         });
-    }();
+    };
 
     let valores = function() {
         cacheMap.set ( 'valores' , false )

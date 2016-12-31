@@ -212,6 +212,7 @@ var listado = ( function () {
 	var pub = {}
 	, loc = {}
 	pub.pars=[]
+	/*
 	pub.limittovinculada = function ( eshija, areavinculada_id ) {
 		var da_areamadre = $('.formCuerpo:visible').attr('da_areamadre')
 		//, da_areahija = $('#listadoCuerpoContainer').find('.select_hijas').val()
@@ -233,8 +234,10 @@ var listado = ( function () {
 		//if(vinculada_condition != ''){pub.memoryfilter ( vinculada_condition, vinculada_sql_text) }
 		//console.log(vinculada_sql_fuck)
 		//console.log(vinculada_condition)
+		//debugger
 		return vinculada_condition
 	}
+	*/
 	pub.get = function ( p,v ) {
 		var pkname = $('#pkname').val()
 		, listadoView=document.getElementById("listadoView").value
@@ -542,6 +545,7 @@ var listado = ( function () {
 		var objXMLDoc=ajaxExecuterPaged(pub.listado_sql_syntax,listadoPagina,0)
 		//console.log(objXMLDoc)
 		loc.t3=d.getTime()
+		if ( ! objXMLDoc.getElementsByTagName ) { return false}
 		var root2=objXMLDoc.getElementsByTagName("xml")[0];
 		loc.root2 = root2;
 		//console.log(root2)

@@ -6,7 +6,7 @@
 		, si = $tipo[0].selectedIndex
 		, tipo = $tipo.find('option').eq(si).val()
 		, codpersona = $('[id="codpersona"]').val()
-		console.log(tipo)
+		//.log(tipo)
 		if ( tipo != "8802" ) {
 			if ( confirm ( "El TIPO seleccionado no es 'Vigor'.\n\nSi continua se asignara TIPO DE FICHA = 'Baja' para todas las polizas de este cliente." ) ) {
 				var sql = "UPDATE personas_riesgos SET pr_tipo = 8807 WHERE pr_codpersona = " + codpersona
@@ -38,7 +38,7 @@
 		DBH.html.print(html)
 	}
 	customjs.importarVisual = function () {
-		if ( ! confirm ( '�Importar datos desde Visual Seg?' ) ) return false
+		if ( ! confirm ( 'Importar datos desde Visual Seg?' ) ) return false
 		var recs = DBH.ajax.select ( "select count(id) as no from visualseg_objetos_huerfanos" )
 		if(recs[0].no!="0"){alerta('No se puede importar!<br><br>Hay objetos hu�rfanos en Visualseg.',1);return false}
 		var sql = "exec dbo.sp_VSImport_clientes_polizas_riesgos"

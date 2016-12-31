@@ -879,7 +879,7 @@ var toplevelform = function (objpar) {
 		var res = DBH.ajax.update(parametros)
 		if (!res) return false
 		DBH.ajax.sql(sqlhistorico)
-		//console.log(res)
+		$container.trigger('form:save')
 		return res
 		/*
 		var resul=ajaxExecuter('formUpdate.asp',(parametros),0)
@@ -1420,16 +1420,23 @@ var toplevelform = function (objpar) {
 		, keyname = eshija ? pkname : fkname_vinculada
 		, val = eshija ? $('.formCuerpo:visible').find('[id$=".'+fkname+'"]').val() : $('.formCuerpo:visible').find('[id="'+fkname+'"]').val()
 		, recsid = DBH.area().recsid
+		//debugger
 		if(!recsid.length){
 			var listadoWhereText = areaname + ' <b>[filtrados]</b>'
 			//var areadestino = DBH.area(areavinculada_name).go()
 			listado.memoryfilter(-1)
+			/*
 			if(!eshija) {
 				var vinculada_condition = listado.limittovinculada(1)
 			}else{
 //				console.log('parriba'+da_id)
 				var vinculada_condition = listado.limittovinculada(0,da_id)
 			}
+			*/
+			//var vinculada_condition = listado.limittovinculada(!eshija,da_id_hija)
+			let actualwhere = that.queryEditor.listadoWhere()
+			, vinculada_condition = !eshija ? dbhArea ( da_id_hija ).sqlForHija ( actualwhere ) : dbhArea ( da_id ).sqlForMadre ( actualwhere )
+			//, vinculada_condition = listado.limittovinculada(!eshija,da_id_hija)
 			var listadoWhere = vinculada_condition
 		}else{
 			//var areadestino = DBH.area(areavinculada_name).go()

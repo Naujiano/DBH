@@ -84,7 +84,7 @@ function DBH_select ( sql ){
 function ajaxExecuterPaged (listado_sql_syntax,pagina,controldeerrores){
 	let {_select,_insert,_delete,_count} = listado_sql_syntax
 	var sqlll = "pagina="+pagina+"&regXPag="+sessionStorage['regXPag']+"&sqlCount="+_count+"&sqlDelete="+_delete+"&sqlInsert="+_insert+"&sqlSelect="+_select
-		console.log(sqlll)
+		//console.log(sqlll)
 
 	var respuesta=ajaxExecuter('selectXMLpaged.asp',sqlll,controldeerrores)
 	return respuesta

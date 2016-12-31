@@ -6,7 +6,8 @@
 		DBHpath = "http://192.168.1.128/dbh/"
 	else
 		if DBHversion = "" then
-			DBHversion = "456c2e54331092cc81476034303ee0ff66726dc3"
+			DBHversion = "6600845bc3813debeb7d1a4226949d6a420d9be1"
+			DBHversion = "d79a20220218316dfe851d94bdd201e296ff63c4"
 		end if
 		DBHpath = "https://rawgit.com/Naujiano/DBH/" & DBHversion & "/"
 		DBHversion = left(DBHversion,7)
@@ -51,9 +52,6 @@
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
 <script type="text/javascript" src="<%=DBHpath%>js/DBH.js"></script>
-<script type="text/javascript" src="<%=DBHpath%>js/DBH.herramientas.js"></script>
-<script type="text/javascript" src="<%=DBHpath%>js/DBH.ajax.js"></script>
-<script type="text/javascript" src="<%=DBHpath%>js/DBH.tree.js"></script>
 <script type="text/javascript" src="<%=DBHpath%>js/DBH-cache.js"></script>
 <script type="text/javascript" src="<%=DBHpath%>js/DBH-query.js"></script>
 <script type="text/javascript" src="<%=DBHpath%>js/blockButton.js"></script>
@@ -61,7 +59,6 @@
 <script type="text/javascript" src="<%=DBHpath%>js/general.js"></script>
 <script type="text/javascript" src="<%=DBHpath%>js/myAjax.js"></script>
 <script type="text/javascript" src="<%=DBHpath%>js/listadoCuerpo.js"></script>
-<script async type="text/javascript" src="<%=DBHpath%>js/DBH.area.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/init-caches.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/DBH-query-editor.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/inlineform.js"></script>

@@ -1,8 +1,18 @@
-var dbhQuery
 {
 	String.prototype.escape_sql = function() {
 		return this.replace(/\'/g,"''");
 	}
+	dbhQuery = function ( settings ) {
+		if ( typeof settings == 'string' )
+			return cacheMap.get(settings)
+		let type = settings.type
+		, sqlquery = settings.sqlquery
+		if ( sqlquery ) return query.init ( settings )
+		if ( !type || type == 'select' ) return query_select.init ( settings )
+		if ( type == 'insert' ) return query_insert.init ( settings )
+		if ( type == 'update' ) return query_update.init ( settings )
+		if ( type == 'insert_select' ) return query_insert_select.init ( settings )
+	};
 	let cacheMap = new Map()
 	class query {
 		constructor ( settings ) {
@@ -16,8 +26,8 @@ var dbhQuery
 			    orderby = '',
 					sqlquery = '',
 					datatype = 'xml',
-			    httphandler = dbhQuery.defaultHttpHandler,
-			    url = dbhQuery.url,
+			    httphandler = DBH.ajax.select,
+			    url,
 			    cache
 			} = settings
 			//if ( ! table ){ console.log( 'Class query: table parameter has not been provided.' ); return false;	}
@@ -31,7 +41,7 @@ var dbhQuery
 			this.select = select
 			this.httphandler = httphandler
 			this.cacheName = cache
-			this.url = url
+			this.url = 'selectXML_new.asp'//url
 			//this.dataType = this.sqlquery == '' ? 'xml' : 'text';
 			this.datatype = datatype;
 			if ( cache ) cacheMap.set ( cache , this );
@@ -63,7 +73,7 @@ var dbhQuery
 			that.http_request_successfull = false;
 			$.ajax({ type: "POST",
 				url: this.url,
-				async: true,
+				async: false,
 				dataType: this.datatype,
 				data: data,
 				success : function ( xml ) {
@@ -104,11 +114,28 @@ var dbhQuery
 		ready () {
 			return this.http_request_successfull
 		}
+		search ( param ) {
+			let json = this.json()
+			, matches = []
+			json.forEach ( obj => {
+				let match = true;
+				Object.keys(param).forEach ( key => {
+					let yes = obj[key] == param[key]
+					if ( ! yes ) match = false;
+				})
+				if ( match ) matches.push(obj);
+			})
+			return matches;
+		}
 		filter ( id ) { // Return jQuery <tr>
-			//return false
-			//let idsArr = ids.split ( ',' )
+			let idArr = id.split ( ',' )
+			, selector
+			idArr.forEach ( id => {
+					selector += `,[sqlQuery-id="${id}"]`
+			})
+			selector = selector.substring ( 1 )
 			let hound = this.cache()
-			, $rows = hound.filter(`[sqlQuery-id="${id}"]`)
+			, $rows = hound.filter(selector)
 			return $rows
 		}
 		json ( id ) { // Return json formated rows
@@ -119,7 +146,7 @@ var dbhQuery
 			for ( let i = 0 ; i < rows.length ; i ++ ) {
 				let row = rows[i]
 				, rowid = row[this.idfield]
-				, included = id == rowid
+				, included = ( id ? ( id == rowid ) : 1 )
 				if ( included ) filteredRows.push ( row )
 			}
 			return filteredRows
@@ -222,18 +249,6 @@ var dbhQuery
 		let $rows = this.reset ( where ).execute (DBH.ajax.toRows)
 		return $rows
 	}
-
-	dbhQuery = function ( settings ) {
-		if ( typeof settings == 'string' )
-			return cacheMap.get(settings)
-		let type = settings.type
-		, sqlquery = settings.sqlquery
-		if ( sqlquery ) return query.init ( settings )
-		if ( !type || type == 'select' ) return query_select.init ( settings )
-		if ( type == 'insert' ) return query_insert.init ( settings )
-		if ( type == 'update' ) return query_update.init ( settings )
-		if ( type == 'insert_select' ) return query_insert_select.init ( settings )
-	};
 }
 /*
 let eee = DBH.query({
@@ -244,9 +259,7 @@ let eee = DBH.query({
   //, httphandler: DBH.ajax.select
 }).execute();
 */
-dbhQuery.defaultHttpHandler = DBH.ajax.select
 //dbhQuery.defaultHttpHandler = DBH.ajax.select
-dbhQuery.url = 'selectXML_new.asp'
 /*
 let eee = DBH.query({
   table: 'persona'

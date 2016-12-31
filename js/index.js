@@ -1,8 +1,8 @@
 function loadTopForms(da_id){
 	var sqltxt = "SELECT case when (COL_LENGTH(da_pktabla,'dbh_perfiles_admitidos_xreg') is null ) then '0' else '1' end as tiene_columna_dbh_perfiles_excluidos, (select a.da_id from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_id_madre,(select a.da_tabla from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_pktabla_madre,(select a.da_pkfield from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_pkfield_madre,(select a.da_descripcion from DBH_AREAS as a where a.da_id = b.da_areamadre ) as namemadre,(select cast(da_id as char) + ',' from DBH_AREAS as a where b.da_id = a.da_areamadre AND a.da_nivel = 1 AND a.da_activa=1 FOR XML PATH ('') ) as da_ids_hijas, (select cast(da_id as char) + ',' from DBH_AREAS as a where (b.da_id = a.da_areamadre OR b.da_id = a.da_areamadrastra) AND a.da_nivel = 2 AND a.da_areamadrastra is not null FOR XML PATH ('') ) as da_ids_relacionantes, (select cast(da_descripcion as char) + ',' from DBH_AREAS as a where (b.da_id = a.da_areamadre OR b.da_id = a.da_areamadrastra) AND a.da_nivel = 2 AND a.da_areamadrastra is not null FOR XML PATH ('') ) as da_nombres_relacionantes,(select cast(da_descripcion as char) + ',' from DBH_AREAS as a where b.da_id = a.da_areamadre AND a.da_nivel = 1 AND a.da_activa=1 FOR XML PATH ('') ) as da_nombre_hijas,* FROM DBH_AREAS as b WHERE ( da_areamadre is null or da_nivel = 1 ) and da_activa = 1 AND da_id = "+da_id+" order by da_orderindex"
 	//, r = parent.sqlExec ( sqltxt )
-	, r = dbhQuery ( 'loadform-data' ).filter(da_id)
-
+	//, r = dbhQuery ( 'loadform-data' ).filter(da_id)
+	, r = dbhQuery ( 'areas' ).filter(da_id)
 	var config_usu_perfil = sessionStorage["usu_perfil"]//$(document).data('')
 	//, topform
 		var t0 = performance.now();
@@ -80,7 +80,17 @@ function loadTopForms(da_id){
 
 	//var sqlll = "SELECT case when (COL_LENGTH(da_pktabla,'dbh_perfiles_admitidos_xreg') is null ) then '0' else '1' end as tiene_columna_dbh_perfiles_excluidos,(select a.da_pkfield from DBH_AREAS as a where a.da_id = b.da_areamadre ) as pkmadre,(select a.da_perfiles from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_perfiles_madre,* FROM DBH_AREAS as b WHERE da_nivel = 2 and da_activa = 1 and (select da_activa from DBH_AREAS where da_id=b.da_areamadre ) = '1' AND da_areamadre = "+da_id+" order by da_orderindex"
 	//r = parent.sqlExec ( sqlll )
-	r = dbhQuery ( 'inlineform-data' ).filter(da_id)
+	let da_ids_hijas = dbhQuery ('areas').search({da_areamadre:da_id,da_nivel:'2'})
+	, idsHijas = []
+	da_ids_hijas.forEach ( hijaObj => {
+		idsHijas.push (hijaObj.da_id)
+		//console.log(hijaObj)
+	})
+	//console.log(da_ids_hijas.toString())
+	r = dbhQuery ( 'areas' ).filter(idsHijas.toString())
+	//console.log(r)
+	//r = dbhQuery ( 'inlineform-data' ).filter(da_id)
+//console.log(r)
 	$(r).each ( function () {
 		var da_tabla = $(this).find('[fieldname="da_tabla"]').text().toLowerCase()
 		, da_pktabla = $(this).find('[fieldname="da_pktabla"]').text().toLowerCase()
@@ -1249,21 +1259,13 @@ var vars = ( function () {
 		function go() {
 			var sql = "exec dbo.sp_backupDatabase"
 			//, res = DBH.ajax.sql(sql)
-			dbhQuery ( { sqlquery: sql } ).request( responseHandler )
-			alerta('Efectuando Backup...',1)
-			//responseHandler ( xml )
-			//console.log('*'+res+'*')
-			function responseHandler ( xml ) {
-				let $xml = $(xml).find('xml')
-				, errnum = $xml.find ( 'errnum' ).text()
-				, errdesc = $xml.find ( 'errdesc' ).text()
-				console.log(xml)
-				if ( errnum ) {
-					alerta ( 'Error al realizar el Backup.<br>' + errdesc )
-				}else{
-					alerta('Backup realizado correctamente.',1)
+			DBH.sql ( sql , {
+				verbose: {
+					begin: 'Efectuando Backup...'
+					, success: 'Backup realizado correctamente.'
+					, error: 'No se ha podido completar el Backup.'
 				}
-			}
+			} )
 			mostrarTelon(0)
 		}
 		setTimeout(function(){go()},100)
