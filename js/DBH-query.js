@@ -73,7 +73,7 @@
 			that.http_request_successfull = false;
 			$.ajax({ type: "POST",
 				url: this.url,
-				async: false,
+				async: true,
 				dataType: this.datatype,
 				data: data,
 				success : function ( xml ) {
