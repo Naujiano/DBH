@@ -1434,6 +1434,7 @@ var toplevelform = function (objpar) {
 			}
 			*/
 			//var vinculada_condition = listado.limittovinculada(!eshija,da_id_hija)
+			//debugger
 			let actualwhere = that.queryEditor.listadoWhere()
 			, vinculada_condition = !eshija ? dbhArea ( da_id_hija ).sqlForHija ( actualwhere ) : dbhArea ( da_id ).sqlForMadre ( actualwhere )
 			//, vinculada_condition = listado.limittovinculada(!eshija,da_id_hija)

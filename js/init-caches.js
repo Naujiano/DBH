@@ -38,6 +38,7 @@
             })
             console.log('loaded areas')
             cacheMap.set ( 'areas' , true )
+            $document.trigger('cache:areas:loaded')
             //console.log(dbhQuery('areas').search({da_areamadre:'9'}))
         })
     }();

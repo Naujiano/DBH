@@ -1,5 +1,6 @@
 {
-    $document.on('tree-load', function() {
+    $document.on('cache:areas:loaded', function() {
+      console.log(DBH.areasSqlArr)
         DBH.areasSqlArr.forEach(rowObj => {
             dbhArea(rowObj)
         })
