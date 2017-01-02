@@ -629,7 +629,6 @@ DBH.consola = function( txt , { title } = 0 ) {
 		.append( $('<div class="log-title"/>').text(title).addClass(title) )
 		.append( $('<div class="log-texto"/>').text(texto) )
 	this.$logsContainer.prepend( $msg )
-	//console.log(texto)
 }
 
 Array.prototype.pushUnique = function (item){
