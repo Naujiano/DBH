@@ -1,5 +1,5 @@
+const $document = $(document)
 function preinit(){
-	$document = $(document)
 	window.onmousedown=function documentClick(){
 		var iscontext = $(':focus').hasClass('jscolor')
 		if ( iscontext ) return false
