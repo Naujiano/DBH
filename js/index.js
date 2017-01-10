@@ -922,7 +922,7 @@ function programarSelectsVinculadas($container){
 	})
 }
 function programarCampos(campos,container,tabla,param){
-	return
+	//return
 	if (campos.length == 0)return
 	var doc=document
 	, listadoView=tabla
