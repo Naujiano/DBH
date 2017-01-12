@@ -1470,7 +1470,7 @@ var vars = ( function () {
 				$container.scrollTop(0)
 				$container.height ( $alertaBlank.outerHeight() + 2 )
 				clearTimeout ( that.blankTimer )
-			} , 5000 )
+			} , 10000 )
 		}
 		return pub;
 	} () );
