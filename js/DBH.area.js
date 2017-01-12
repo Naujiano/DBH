@@ -1,6 +1,6 @@
 {
     $document.on('cache:areas:loaded', function() {
-      console.log(DBH.areasSqlArr)
+      //console.log(DBH.areasSqlArr)
         DBH.areasSqlArr.forEach(rowObj => {
             dbhArea(rowObj)
         })

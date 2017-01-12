@@ -86,17 +86,17 @@
             where,
             orderby
         }).request(function(xml) {
-            //console.log('loaded valores')
-            //return
-            let data = xml,
-                toXmled = DBH.ajax.toXml('', 'li1_id', data)
+            //console.log(xml)
+            let toXmled = xml ? DBH.ajax.toXml('', 'li1_id', xml) : $('<xml/>')
             DBH.$valoresXml = toXmled
+            //return
             let $xml = DBH.$valoresXml.find('[fieldname="grupo"]'),
                 gruposSet = new Set()
             $xml.each(function() {
                 let grupo = $(this).attr('fieldvalue')
                 gruposSet.add(grupo)
             })
+
             for (let key of gruposSet.values()) {
                 let $lines = DBH.$valoresXml.find('[fieldname="grupo"][fieldvalue="' + key + '"]').parent(),
                     deses = []
@@ -110,13 +110,15 @@
                                 li1_color,
                                 des
                             }
-                        deses.push(obj)
-                            //deses.push(des)
+                        //deses.push(obj)
+                            deses.push(des)
                     })
                     //, json = DBH.xmlToJSON ( $xml2 )
+                    //console.log(key)
+                    //console.log(deses)
                 let hound = new Bloodhound({
-                    //datumTokenizer: Bloodhound.tokenizers.whitespace,
-                    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('des'),
+                    datumTokenizer: Bloodhound.tokenizers.whitespace,
+                    //datumTokenizer: Bloodhound.tokenizers.obj.whitespace('des'),
                     queryTokenizer: Bloodhound.tokenizers.whitespace,
                     //,identify: function(obj) { return obj.des; }
 
@@ -126,6 +128,7 @@
                 //debugger;
                 DBH.hounds.set('grupos:' + key, hound)
             }
+
             cacheMap.set ( 'valores' , true )
             console.log('loaded valores')
         });

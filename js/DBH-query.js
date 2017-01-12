@@ -245,6 +245,18 @@
 		let json = this.reset ( where ).execute (DBH.ajax.select)
 		return json
 	}
+	query_select.prototype.getArray = function ( where ) {
+		const json = this.getJSON ( where )
+		let arr = []
+		json.forEach ((rec) => {
+			let str = ""
+			Object.keys(rec).forEach ( (key) => {
+				str += rec[key]
+			})
+			arr.push(str)
+		})
+		return arr
+	}
 	query_select.prototype.getRows = function ( where ) {
 		let $rows = this.reset ( where ).execute (DBH.ajax.toRows)
 		return $rows

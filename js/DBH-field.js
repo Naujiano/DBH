@@ -14,18 +14,16 @@ $(document).on('form:save', function ( ){
 		tags.forEach ( tag => { tagSet.add ( tag ) } )
 		tagSetsMap.set ( grupo , tagSet )
 	})
-	return
-	console.log(event.item)
-	let item = event.item
-	, $input = $(this)
-	, cached = $input.data( 'dbh-field-instance' ).hound.get(item).length
-	, inserts = ''
-	for ( let [grupo , groupSet] of tagSetMap ) {
+	let inserts = "";
+	for ( let [grupo , groupSet] of tagSetsMap ) {
 		for ( let val of groupSet  ) {
-			let insert = " INSERT INTO dbh_listas ( grupo , des ) VALUES ( '" + grupo + "', 1 ,'" + item + "' )"
+			let insert = " INSERT INTO dbh_listas ( grupo , des ) VALUES ( '" + grupo + "','" + val + "' )"
 			inserts += insert
 		}
 	}
+	dbhQuery ({sqlquery:inserts}).request(function(xml){
+		console.log(xml)
+	})
 	/*
 	DBH.sql ( inserts ) {
 		let sqlm = "SELECT MAX(li1_id) FROM DBH_LISTAS"
@@ -56,7 +54,7 @@ $(document).on('form:save', function ( ){
 	$.fn.tagsinput = function ( ...argumentos ) {
 		if ( argumentos[0] == 'reload' ) {
 			let valArray = this.val().split(',')
-			console.log(valArray)
+			//console.log(valArray)
 			this.tagsinput('removeAll')
 			valArray.forEach ( v => {
 				this.tagsinput('add', v)
@@ -153,7 +151,7 @@ $(document).on('form:save', function ( ){
 			$input.addClass ( '_dbh-field-tags' )
 			this.grupo = grupo
 			this.hound = DBH.hounds.get('grupos:'+grupo)
-			if ( ! this.hound ) {
+			if ( ! this.hound ) {console.log('aa')
 				let hound = new Bloodhound({
 					//datumTokenizer: Bloodhound.tokenizers.whitespace,
 					datumTokenizer: Bloodhound.tokenizers.obj.whitespace('des'),
@@ -166,7 +164,7 @@ $(document).on('form:save', function ( ){
 			}
 			//debugger
 			$input.tagsinput({
-				//itemValue: 'li1_id',
+				//itemValue: 'des',
 				//itemText: 'des',
 				tagClass: function(item) {
 					return ('custom-color-'+item);
@@ -176,7 +174,21 @@ $(document).on('form:save', function ( ){
 					,minLength : 0
 					}
 					,{
-					//source: this.hound
+					source: function (q,cb) {
+						const query = dbhQuery ( {
+							fields:'des'
+							,table:'dbh_listas'
+							,where:`grupo='${grupo}' AND des like '%${q}%'`
+							,orderby:'des'
+						})
+						//debugger
+						//console.log (query.getArray())
+							let matches = query.getArray()
+							cb ( matches )
+
+					}
+					, limit: 20
+					/*
 					source: function nflTeamsWithDefaults(q, sync) {
 						if (q === '') {
 							sync($input.data( 'dbh-field-instance' ).hound.all()); // This is the only change needed to get 'ALL' items as the defaults
@@ -185,7 +197,8 @@ $(document).on('form:save', function ( ){
 							$input.data( 'dbh-field-instance' ).hound.search(q, sync);
 						}
 					}
-					,display:'des'
+					*/
+					//,display:'des'
 				}]
 
 			});
