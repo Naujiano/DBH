@@ -155,6 +155,7 @@ var DBH = ( function () {
 			setTimeout ( that.loadUI , 50 )
 			return false;
 		}
+		console.log('load UI')
 		const initialViews = function () {
 				dbhQuery({
 						fields : `i_da_id as da_id, i_id, i_stringifyparams,i_queryeditor_params`
@@ -180,7 +181,7 @@ var DBH = ( function () {
 					width: treewidth
 			})
 		}()
-		const afterUI = () => {
+		const afterUI = function()  {
 			const usu_id = sessionStorage["usu_id"]
 			DBH.sessionid = usu_id + '_' + sessionStorage["sessionid"]
 			localStorage["interface_usu_id"] = usu_id
@@ -193,8 +194,8 @@ var DBH = ( function () {
 			vars.pinger()
 			DBH.loaded = true
 			preinit()
-		}
-		setTimeout(afterUI,0)
+		}()
+		//setTimeout(afterUI,0)
 	}
 	this.telon = {
 		$container: $initCover = $('.init-cover')
