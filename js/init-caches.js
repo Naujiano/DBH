@@ -27,15 +27,6 @@
             ,cache:'areas'
         }).request(function(xml) {
             DBH.areasSqlArr = dbhQuery('areas').json()
-            DBH.tree.load();
-            $('#treeresizable').width($('#treeresizable').outerWidth())
-                //DBH.tree.setWidth();
-            var treewidth = $('.layout-tree-container').width()
-            if (treewidth < 170)
-                treewidth = 170
-            $('.layout-tree-container').css({
-                width: treewidth
-            })
             console.log('loaded areas')
             cacheMap.set ( 'areas' , true )
             $document.trigger('cache:areas:loaded')

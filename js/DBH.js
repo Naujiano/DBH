@@ -129,6 +129,8 @@ var DBH = ( function () {
 			$('#divacceso').show();
 			//console.log(agent)
 		} else {
+			that.loadUI()
+			/*
 			DBH.sessionid = usu_id + '_' + sessionStorage["sessionid"]
 			localStorage["interface_usu_id"] = usu_id
 			DBH_help = new parent.blockButton( document.getElementById('buttonhelp') , document.getElementById('tipdiv') )
@@ -140,6 +142,7 @@ var DBH = ( function () {
 			vars.pinger()
 			DBH.loaded = true
 			preinit()
+			*/
 		}
 		//console.log(customjs)
 		console.log(dbhpath)
@@ -148,6 +151,35 @@ var DBH = ( function () {
 		DBH.telon.hide()
 
 	};
+	this.loadUI = function () {
+		if ( ! DBH.cache_areas_state || ! DBH.cache_areas_state() ) {
+			setTimeout ( that.loadUI , 50 )
+			return false;
+		}
+		const loadTree = function() {
+			DBH.tree.load();
+			$('#treeresizable').width($('#treeresizable').outerWidth())
+					//DBH.tree.setWidth();
+			var treewidth = $('.layout-tree-container').width()
+			if (treewidth < 170)
+					treewidth = 170
+			$('.layout-tree-container').css({
+					width: treewidth
+			})
+		}()
+		const usu_id = sessionStorage["usu_id"]
+		DBH.sessionid = usu_id + '_' + sessionStorage["sessionid"]
+		localStorage["interface_usu_id"] = usu_id
+		DBH_help = new parent.blockButton( document.getElementById('buttonhelp') , document.getElementById('tipdiv') )
+		showtip('rnd')
+		$('#alertaaviso').on('click','button',function(){
+			DBH.avisos.setbutton()
+		})
+		$('.botonesform').find(sessionStorage["usu_perfil"]).hide() //OCULTO BOTONES SEGÚN PERFIL
+		vars.pinger()
+		DBH.loaded = true
+		preinit()
+	}
 	this.telon = {
 		$container: $initCover = $('.init-cover')
 		, $textContainer: $initCover = $('.init-cover').find('div')
@@ -215,7 +247,7 @@ var DBH = ( function () {
 			, perfilesarr = ('.'+usu_perfil).replace(/\ /gi,',.')
 			, perfilesarr = trim(perfilesarr)
 		}
-		DBH.ajax.session('idusuario',usu_id)
+		//DBH.ajax.session('idusuario',usu_id)
 		//DBH.ajax.session('regXPag',$('#regXPag').val())
 		//DBH.ajax.session('regXPag',120)
 		sessionStorage['usu_id']=usu_id
@@ -242,7 +274,9 @@ var DBH = ( function () {
 		}
 		//alert(DBH.loaded+"***"+(idusuario!=usu_id))
 		//return false
-		if(!DBH.loaded||idusuario!=usu_id){;$(window).unbind('beforeunload');location = location;return false}
+		if(idusuario!=usu_id){;$(window).unbind('beforeunload');location = location;return false}
+		//if(!DBH.loaded || idusuario!=usu_id){that.loadUI()}
+		if(!DBH.loaded){that.loadUI()}
 		$('#divacceso').fadeOut(function(){vars.ping()})
 	}
 	this.login.checkuser = function (usu_id,template_name) {
