@@ -231,6 +231,8 @@ var DBH = ( function () {
 		//DBH.ajax.request("logout.asp")
 	}
 	this.login = function (userchecked){
+		if ( DBH.islogging ) return false;
+		DBH.islogging = true;
 		var usuario=$('.grupodf #usuario').val()
 		, contrasena=$('.grupodf #contrasena').val()
 		, perfilesarr = ''
@@ -295,7 +297,8 @@ var DBH = ( function () {
 		if(idusuario!=usu_id){;$(window).unbind('beforeunload');location = location;return false}
 		//if(!DBH.loaded || idusuario!=usu_id){that.loadUI()}
 		if(!DBH.loaded){that.loadUI()}
-		$('#divacceso').fadeOut(function(){vars.ping()})
+		$('#divacceso').fadeOut(function(){vars.ping();DBH.islogging = false;})
+
 	}
 	this.login.checkuser = function (usu_id,template_name) {
 		//DBH.login(1)
