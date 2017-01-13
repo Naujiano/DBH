@@ -166,34 +166,37 @@ var DBH = ( function () {
 					width: treewidth
 			})
 		}()
-		let initialViews = function () {
-        //cacheMap.set ( 'initialViews' , false )
-        dbhQuery({
-            fields : `i_da_id as da_id, i_id, i_stringifyparams,i_queryeditor_params`
-            , table : 'dbh_busquedas'
-            , where : `i_usu_id = ${sessionStorage["usu_id"]} AND i_id IN ( select max (i_id) from dbh_busquedas group by i_da_id )`
-            , orderby : ''
-            , idfield : 'da_id'
-            , cache: 'initialViews'
-        }).request(function(xml) {
-            //console.log(dbhQuery('initialViews').json(-333   ))
-            console.log('loaded initialViews')
-            //cacheMap.set ( 'initialViews' , true )
-        })
-    }();
-		const usu_id = sessionStorage["usu_id"]
-		DBH.sessionid = usu_id + '_' + sessionStorage["sessionid"]
-		localStorage["interface_usu_id"] = usu_id
-		DBH_help = new parent.blockButton( document.getElementById('buttonhelp') , document.getElementById('tipdiv') )
-		showtip('rnd')
-		$('#alertaaviso').on('click','button',function(){
-			DBH.avisos.setbutton()
-		})
-		$('.botonesform').find(sessionStorage["usu_perfil"]).hide() //OCULTO BOTONES SEGÚN PERFIL
-		vars.pinger()
-		DBH.loaded = true
-		preinit()
 		DBH.telon.hide()
+		const afterUI = () => {
+			const initialViews = function () {
+	        //cacheMap.set ( 'initialViews' , false )
+	        dbhQuery({
+	            fields : `i_da_id as da_id, i_id, i_stringifyparams,i_queryeditor_params`
+	            , table : 'dbh_busquedas'
+	            , where : `i_usu_id = ${sessionStorage["usu_id"]} AND i_id IN ( select max (i_id) from dbh_busquedas group by i_da_id )`
+	            , orderby : ''
+	            , idfield : 'da_id'
+	            , cache: 'initialViews'
+	        }).request(function(xml) {
+	            //console.log(dbhQuery('initialViews').json(-333   ))
+	            console.log('loaded initialViews')
+	            //cacheMap.set ( 'initialViews' , true )
+	        })
+	    }();
+			const usu_id = sessionStorage["usu_id"]
+			DBH.sessionid = usu_id + '_' + sessionStorage["sessionid"]
+			localStorage["interface_usu_id"] = usu_id
+			DBH_help = new parent.blockButton( document.getElementById('buttonhelp') , document.getElementById('tipdiv') )
+			showtip('rnd')
+			$('#alertaaviso').on('click','button',function(){
+				DBH.avisos.setbutton()
+			})
+			$('.botonesform').find(sessionStorage["usu_perfil"]).hide() //OCULTO BOTONES SEGÚN PERFIL
+			vars.pinger()
+			DBH.loaded = true
+			preinit()
+		}
+		setTimeout(afterUI,0)
 	}
 	this.telon = {
 		$container: $initCover = $('.init-cover')
