@@ -156,6 +156,21 @@ var DBH = ( function () {
 			setTimeout ( that.loadUI , 50 )
 			return false;
 		}
+		let initialViews = function () {
+        //cacheMap.set ( 'initialViews' , false )
+        dbhQuery({
+            fields : `i_da_id as da_id, max (i_id) as i_id`
+            , table : 'dbh_busquedas'
+            , where : 'i_usu_id = ' + sessionStorage["usu_id"] + ' group by i_da_id'
+            , orderby : ''
+            , idfield : 'da_id'
+            , cache: 'initialViews'
+        }).request(function(xml) {
+            //console.log(dbhQuery('initialViews').json(-333   ))
+            console.log('loaded initialViews')
+            //cacheMap.set ( 'initialViews' , true )
+        })
+    }();
 		const loadTree = function() {
 			DBH.tree.load();
 			$('#treeresizable').width($('#treeresizable').outerWidth())

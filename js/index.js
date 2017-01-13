@@ -251,7 +251,8 @@ function switchiframes_real (areanumber,listadoWhere,listadoWhereText,$container
 	var da_id = $(areanumber).attr('da_id')
 	, $container = $('.formCuerpo[da_id="'+da_id+'"]')
 	, alreadyLoaded = $container.length
-	, iframe = alreadyLoaded ? $container : loadTopForms(da_id)
+	//debugger
+	var iframe = alreadyLoaded ? $container : loadTopForms(da_id)
 	, $mp = $('#menuPrincipal .menu1Opcion')
 	, areanumber = isNaN ( areanumber) ? $mp.index($(areanumber)) : areanumber
 	var t1 = performance.now();DBH.consola( "loadform: " + (t1 - t0) + " milliseconds.")
@@ -301,6 +302,7 @@ function switchiframes_real (areanumber,listadoWhere,listadoWhereText,$container
 	, listadoWhere = callback ? '' : listadoWhere
 	if ( ! switchiframes_real.stopReset && ( $('#numregs').val() == '' || haywhere ) ) {
 		//console.log(listadoWhere)
+		console.log('resetea liatado')
 		iframe.data('topform').resetListado(listadoWhere,listadoWhereText)
 	}
 	switchiframes_real.stopReset = 0
@@ -1592,16 +1594,18 @@ var vars = ( function () {
 		} )
 		*/
 	}
-	pub.goArea = function (da_id) {
-//		console.log("da_id:"+da_id)
+	pub.goArea = function (da_id , view_da_id = $('[id="dbh_busquedas.i_da_id"]').val(), view_i_id = $('[id="i_id"]').val() ) {
+//		Default values
+
 		var firstLoad = 0
 		if (!da_id) {
-			var da_id = $('[id="dbh_busquedas.i_da_id"]').val()
+			var da_id = view_da_id
 			, firstLoad = 1
 		}
 		var area = DBH.area(da_id)
 //		console.log(area.loaded)
 		, $pestana = $('#treemenu li[da_id="'+da_id+'"]')
+		//debugger
 		if ( ! area.loaded ) {
 			if ( firstLoad ) {
 				function loadArea() {
@@ -1609,12 +1613,12 @@ var vars = ( function () {
 					switchiframes_real.stopReset = 1
 					switchiframes_real($pestana)
 					DBH.telon.hide()
-					pub.goArea(da_id)
+					pub.goArea(da_id, view_da_id, view_i_id)
 				}
 				DBH.telon.areaLoad()
 				setTimeout ( loadArea, 0 )
 			} else {
-				setTimeout ( function(){pub.goArea(da_id)}, 100 )
+				setTimeout ( function(){pub.goArea(da_id, view_da_id, view_i_id)}, 100 )
 			}
 			return false;
 		}
@@ -1622,9 +1626,8 @@ var vars = ( function () {
 			switchiframes_real($pestana)
 		}
 			//switchiframes_real($pestana)
-		//return true
 		var $diviframe = $('.formCuerpo[da_id="'+da_id+'"]')
-		var i_id = $('[id="i_id"]').val()
+		var i_id = view_i_id
 		, topform = $diviframe.data('topform')
 		, sql = "SELECT i_stringifyparams,i_queryeditor_params FROM DBH_BUSQUEDAS WHERE i_id = " + i_id
 		, rec = DBH.ajax.select ( sql )[0]

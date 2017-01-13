@@ -598,6 +598,7 @@ var toplevelform = function (objpar) {
 		*/
 		that.campos = etiquetaslistadovars.campos
 		if ( ( typeof that.listadoWhere != 'string' || listadoWhere == 0 || !listadoWhere ) && !that.queryEditor.queryparameters ) {
+			console.log('carga los 30')
 			var sql_recientes = "(SELECT top 120 his_pkvalue FROM dbh_historico where his_da_id = " + da_id + " group by his_da_id,his_pkvalue order by max(his_fecha) desc)"
 			var sql_recientes = "(SELECT top 30 " + pkname + " FROM " + that.tabla + " ORDER BY " + pkname + " desc)"
 			that.listadoWhere  = pkname + " in " + sql_recientes

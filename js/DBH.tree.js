@@ -109,9 +109,20 @@ DBH.tree.load = function () {
 
   $treemenu
     .on('click','a',function(){
-      var $a = $(this)
+      const $a = $(this)
       , da_id = $a.closest('li').attr('da_id')
-      DBH.gorecord(da_id)
+      , areaLoaded = DBH.area(da_id).loaded
+      , viewData = dbhQuery('initialViews').json(da_id)
+      , haveInitialView = viewData.length
+      if ( !areaLoaded && haveInitialView ) {
+        console.log(viewData[0])
+        const view_da_id = viewData[0].da_id
+        const view_i_id = viewData[0].i_id
+        //debugger
+        vars.goArea ( 0, view_da_id, view_i_id)
+      } else {
+        DBH.gorecord(da_id)
+      }
     } )
     .on('after_open.jstree', function (e, data) {
     })
