@@ -8,7 +8,7 @@ function inlineSearch ($campo,sqlConfig) {
 	this.$container = $('.inlinesearch-container')//.css(containerCss)
 	this.$filamodelo = $('<option class="inlinesearch-fila"></option>')//.css(filaCss)
 	this.$filamodelo = $('<tr/>')
-	
+
 	this.$container.on ( 'mouseover' , 'tr' , function () {
 		let $trs = that.$container.find('tbody tr')
 		, $tr = $(this)
@@ -26,14 +26,14 @@ function inlineSearch ($campo,sqlConfig) {
 		var inputPosition = $campo.offset()
 		, inputHeight = $campo.outerHeight()
 		, inputWidth = $campo.outerWidth()
-		, top = ( inputPosition.top * 1 + inputHeight + 0 ) 
+		, top = ( inputPosition.top * 1 + inputHeight + 0 )
 		, lineheight = that.$container.find('thead tr').eq(0).height()
 		, topbody = top + lineheight
 		, left = inputPosition.left
 		, $field = sqlConfig.$field
 		that.$container.css({left: left,top: topbody, 'min-width' : inputWidth })
 		that.$container.find('thead').css({'margin-top': -1 * lineheight})
-		
+
 	}
 	this.hide = function (){
 		that.$container.hide()
@@ -46,7 +46,7 @@ function inlineSearch ($campo,sqlConfig) {
 			//domindex = domindex == -1 ? 0 : domindex
 			domindex = ( domindex * 1 + ( event.keyCode - 39 ) )
 			if ( domindex < 0 ) domindex = 0
-			if ( domindex > ( $trs.length - 1 ) ) domindex = $trs.length - 1 
+			if ( domindex > ( $trs.length - 1 ) ) domindex = $trs.length - 1
 			let $tr = $trs.eq(domindex)
 			$trs.removeClass('hovered')
 			$tr.addClass('hovered')
@@ -96,7 +96,7 @@ function inlineSearch ($campo,sqlConfig) {
 		} else {
 			that.timer = setTimeout (function (){that.search()},200)
 		}
-		
+
 	}
 	this.search = function (focus) {
 		if ( ! $campo.is(':visible') ) return false
@@ -125,12 +125,12 @@ function inlineSearch ($campo,sqlConfig) {
 			console.log(sql)
 		} else {
 			//return false
-			var sql = "SELECT top 30 " + sqlConfig.idfield + " as dbh_temp_idvalue," + sqlConfig.field + " as dbh_temp_valor FROM " + sqlConfig.table + " WHERE " + sqlConfig.field + " LIKE '%" + inputVal + "%'" + whereAvailableIds + " ORDER BY " + sqlConfig.field
+			var sql = "SELECT top 30 " + sqlConfig.idfield + " as dbh_temp_idvalue," + sqlConfig.field + " as dbh_temp_valor FROM " + sqlConfig.table + " WHERE " + sqlConfig.field + " LIKE '%" + inputVal + "%'" + whereAvailableIds + " ORDER BY " + ( ( sqlConfig.orderby != '' ) ? sqlConfig.orderby : sqlConfig.field )
 			console.log(sql)
 			$table.find('thead').remove()
 		}
 		let resultados = DBH.ajax.select (sql)
-		
+
 
 		$(resultados).each(function(i){
 			let rowObj = this

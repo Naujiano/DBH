@@ -1834,7 +1834,12 @@ var vars = ( function () {
 //				console.log(table)
 				//, data_sql_inline_search = "SELECT " + dd + "," + cc + ff + textfield + " like '%[enteredText]%' order by " + textfield
 				, data_sql_inline_search = sql.substring ( 0, orderbypos ) + ff + textfield + " like '%[enteredText]%' " + sql.substring ( orderbypos )
-				$fieldfromdb.attr('data-sql-listado',ee).attr('select-id-field',dd).attr('select-text-field',textfield).attr('select-table',table)
+				let orderby = ''
+				if ( orderbypos > -1 ){
+					orderby = sql.substring ( orderbypos )
+					orderby = orderby.substring ( orderby.indexOf('by') + 2 )
+				}
+				$fieldfromdb.attr('data-sql-listado',ee).attr('select-id-field',dd).attr('select-text-field',textfield).attr('select-table',table).attr('select-orderby',orderby)
 			}
 			var data_blockbutton_name = trim ( data_blockbutton_name )
 			, llevabb = data_blockbutton_name && ( $('.formCuerpo[da_id="'+da_id+'"]').attr('da_nivel') == 1 )
@@ -1885,7 +1890,7 @@ var vars = ( function () {
 								if($field.closest('.inlineform').length) $tempfield.addClass('no-filter no-insert')
 								$field.hide()
 								$field.after($tempfield)
-								inlineSearch($tempfield,{$field: $field,field: $field.attr('select-text-field'), idfield:$field.attr('select-id-field'),table: $field.attr('select-table')})
+								inlineSearch($tempfield,{$field: $field,field: $field.attr('select-text-field'), idfield:$field.attr('select-id-field'),table: $field.attr('select-table'),orderby:$field.attr('select-orderby')})
 								let tempval = $field.find('option:selected').text()//?$field.text():''
 								console.log("tttttemppppval:"+tempval)
 								$tempfield.val(tempval).show().select().addClass('inputText')
