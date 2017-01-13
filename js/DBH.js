@@ -155,6 +155,7 @@ var DBH = ( function () {
 			setTimeout ( that.loadUI , 50 )
 			return false;
 		}
+		cacheMap.set ( 'initialViews' , false )
 		const loadTree = function() {
 			DBH.tree.load();
 			$('#treeresizable').width($('#treeresizable').outerWidth())
@@ -169,7 +170,7 @@ var DBH = ( function () {
 		DBH.telon.$container.hide()
 		const afterUI = () => {
 			const initialViews = function () {
-	        //cacheMap.set ( 'initialViews' , false )
+
 	        dbhQuery({
 	            fields : `i_da_id as da_id, i_id, i_stringifyparams,i_queryeditor_params`
 	            , table : 'dbh_busquedas'
@@ -180,7 +181,7 @@ var DBH = ( function () {
 	        }).request(function(xml) {
 	            //console.log(dbhQuery('initialViews').json(-333   ))
 	            console.log('loaded initialViews')
-	            //cacheMap.set ( 'initialViews' , true )
+	            cacheMap.set ( 'initialViews' , true )
 	        })
 	    }();
 			const usu_id = sessionStorage["usu_id"]
