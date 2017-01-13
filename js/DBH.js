@@ -166,20 +166,20 @@ var DBH = ( function () {
 				}).request(function(xml) {
 						//console.log(dbhQuery('initialViews').json(-333   ))
 						console.log('loaded initialViews')
+						const loadTree = function() {
+							DBH.tree.load();
+							$('#treeresizable').width($('#treeresizable').outerWidth())
+									//DBH.tree.setWidth();
+							var treewidth = $('.layout-tree-container').width()
+							if (treewidth < 170)
+									treewidth = 170
+							$('.layout-tree-container').css({
+									width: treewidth
+							})
+						}()
+						DBH.telon.$container.hide()
 				})
 		}();
-		const loadTree = function() {
-			DBH.tree.load();
-			$('#treeresizable').width($('#treeresizable').outerWidth())
-					//DBH.tree.setWidth();
-			var treewidth = $('.layout-tree-container').width()
-			if (treewidth < 170)
-					treewidth = 170
-			$('.layout-tree-container').css({
-					width: treewidth
-			})
-		}()
-		DBH.telon.$container.hide()
 		const afterUI = () => {
 			const usu_id = sessionStorage["usu_id"]
 			DBH.sessionid = usu_id + '_' + sessionStorage["sessionid"]
