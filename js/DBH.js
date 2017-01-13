@@ -151,7 +151,7 @@ var DBH = ( function () {
 
 	};
 	this.loadUI = function () {
-		if ( ! DBH.cache_tree_state || ! DBH.cache_tree_state() ) {
+		if ( ! DBH.cache_areas_state || ! DBH.cache_areas_state() ) {
 			setTimeout ( that.loadUI , 50 )
 			return false;
 		}
