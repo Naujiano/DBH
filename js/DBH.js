@@ -125,7 +125,7 @@ var DBH = ( function () {
 			if ( !ischrome ) {
 				$('#browsersalert').show()
 			}
-			DBH.telon.$container.hide()
+
 			$('#divacceso').show();
 			//console.log(agent)
 		} else {
@@ -166,7 +166,7 @@ var DBH = ( function () {
 					width: treewidth
 			})
 		}()
-		DBH.telon.hide()
+		DBH.telon.$container.hide()
 		const afterUI = () => {
 			const initialViews = function () {
 	        //cacheMap.set ( 'initialViews' , false )
