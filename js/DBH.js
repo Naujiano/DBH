@@ -148,7 +148,6 @@ var DBH = ( function () {
 		console.log(dbhpath)
 
 		$body.addClass('DBH').show()
-		DBH.telon.hide()
 
 	};
 	this.loadUI = function () {
@@ -194,6 +193,7 @@ var DBH = ( function () {
 		vars.pinger()
 		DBH.loaded = true
 		preinit()
+		DBH.telon.hide()
 	}
 	this.telon = {
 		$container: $initCover = $('.init-cover')

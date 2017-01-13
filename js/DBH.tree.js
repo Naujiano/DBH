@@ -109,22 +109,26 @@ DBH.tree.load = function () {
 
   $treemenu
     .on('click','a',function(){
-      const $a = $(this)
-      , da_id = $a.closest('li').attr('da_id')
-      , areaLoaded = DBH.area(da_id).loaded
-      , viewData = dbhQuery('initialViews').json(da_id)
-      , haveInitialView = viewData.length
-      if ( !areaLoaded && haveInitialView ) {
-        //console.log(viewData[0])
-        const view_da_id = viewData[0].da_id
-        , view_i_id = viewData[0].i_id
-        , i_stringifyparams = viewData[0].i_stringifyparams
-        , i_queryeditor_params = viewData[0].i_queryeditor_params
-        //debugger
-        vars.goArea ( 0, view_da_id, view_i_id,i_stringifyparams,i_queryeditor_params)
-      } else {
-        DBH.gorecord(da_id)
-      }
+      const navigate = function () {
+        const $a = $(this)
+        , da_id = $a.closest('li').attr('da_id')
+        , areaLoaded = DBH.area(da_id).loaded
+        , viewData = dbhQuery('initialViews').json(da_id)
+        , haveInitialView = viewData.length
+        if ( !areaLoaded && haveInitialView ) {
+          //console.log(viewData[0])
+          const view_da_id = viewData[0].da_id
+          , view_i_id = viewData[0].i_id
+          , i_stringifyparams = viewData[0].i_stringifyparams
+          , i_queryeditor_params = viewData[0].i_queryeditor_params
+          //debugger
+          vars.goArea ( 0, view_da_id, view_i_id,i_stringifyparams,i_queryeditor_params)
+        } else {
+          DBH.gorecord(da_id)
+        }
+      }.bind(this)
+      DBH.telon.show()
+      setTimeout(navigate,0)
     } )
     .on('after_open.jstree', function (e, data) {
     })
