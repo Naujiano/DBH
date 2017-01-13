@@ -7,6 +7,7 @@
         }
         return ready
     }
+    DBH.cache_tree_state = () => cacheMap.get('areas')
     let load = function () {
         cacheMap.set ( 'areas' , false )
         dbhQuery({
