@@ -125,7 +125,7 @@ var DBH = ( function () {
 			if ( !ischrome ) {
 				$('#browsersalert').show()
 			}
-
+			DBH.telon.$container.hide()
 			$('#divacceso').show();
 			//console.log(agent)
 		} else {
