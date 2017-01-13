@@ -155,7 +155,19 @@ var DBH = ( function () {
 			setTimeout ( that.loadUI , 50 )
 			return false;
 		}
-		cacheMap.set ( 'initialViews' , false )
+		const initialViews = function () {
+				dbhQuery({
+						fields : `i_da_id as da_id, i_id, i_stringifyparams,i_queryeditor_params`
+						, table : 'dbh_busquedas'
+						, where : `i_usu_id = ${sessionStorage["usu_id"]} AND i_id IN ( select max (i_id) from dbh_busquedas group by i_da_id )`
+						, orderby : ''
+						, idfield : 'da_id'
+						, cache: 'initialViews'
+				}).request(function(xml) {
+						//console.log(dbhQuery('initialViews').json(-333   ))
+						console.log('loaded initialViews')
+				})
+		}();
 		const loadTree = function() {
 			DBH.tree.load();
 			$('#treeresizable').width($('#treeresizable').outerWidth())
@@ -169,21 +181,6 @@ var DBH = ( function () {
 		}()
 		DBH.telon.$container.hide()
 		const afterUI = () => {
-			const initialViews = function () {
-
-	        dbhQuery({
-	            fields : `i_da_id as da_id, i_id, i_stringifyparams,i_queryeditor_params`
-	            , table : 'dbh_busquedas'
-	            , where : `i_usu_id = ${sessionStorage["usu_id"]} AND i_id IN ( select max (i_id) from dbh_busquedas group by i_da_id )`
-	            , orderby : ''
-	            , idfield : 'da_id'
-	            , cache: 'initialViews'
-	        }).request(function(xml) {
-	            //console.log(dbhQuery('initialViews').json(-333   ))
-	            console.log('loaded initialViews')
-	            cacheMap.set ( 'initialViews' , true )
-	        })
-	    }();
 			const usu_id = sessionStorage["usu_id"]
 			DBH.sessionid = usu_id + '_' + sessionStorage["sessionid"]
 			localStorage["interface_usu_id"] = usu_id
