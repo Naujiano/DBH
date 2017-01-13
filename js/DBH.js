@@ -159,9 +159,9 @@ var DBH = ( function () {
 		let initialViews = function () {
         //cacheMap.set ( 'initialViews' , false )
         dbhQuery({
-            fields : `i_da_id as da_id, max (i_id) as i_id`
+            fields : `i_da_id as da_id, i_id, i_stringifyparams,i_queryeditor_params`
             , table : 'dbh_busquedas'
-            , where : 'i_usu_id = ' + sessionStorage["usu_id"] + ' group by i_da_id'
+            , where : `i_usu_id = ${sessionStorage["usu_id"]} AND i_id IN ( select max (i_id) from dbh_busquedas group by i_da_id )`
             , orderby : ''
             , idfield : 'da_id'
             , cache: 'initialViews'

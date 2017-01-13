@@ -1630,7 +1630,12 @@ var vars = ( function () {
 		} )
 		*/
 	}
-	pub.goArea = function (da_id , view_da_id = $('[id="dbh_busquedas.i_da_id"]').val(), view_i_id = $('[id="i_id"]').val() ) {
+	pub.goArea = function (da_id
+		, view_da_id = $('[id="dbh_busquedas.i_da_id"]').val()
+		, view_i_id = $('[id="i_id"]').val()
+		, i_stringifyparams = $('[id="dbh_busquedas.i_stringifyparams"]').val()
+		, i_queryeditor_params = $('[id="dbh_busquedas.i_queryeditor_params"]').val()
+	) {
 //		Default values
 
 		var firstLoad = 0
@@ -1649,12 +1654,12 @@ var vars = ( function () {
 					switchiframes_real.stopReset = 1
 					switchiframes_real($pestana)
 					DBH.telon.hide()
-					pub.goArea(da_id, view_da_id, view_i_id)
+					pub.goArea(da_id, view_da_id, view_i_id,i_stringifyparams,i_queryeditor_params)
 				}
 				DBH.telon.areaLoad()
 				setTimeout ( loadArea, 0 )
 			} else {
-				setTimeout ( function(){pub.goArea(da_id, view_da_id, view_i_id)}, 100 )
+				setTimeout ( function(){pub.goArea(da_id, view_da_id, view_i_id,i_stringifyparams,i_queryeditor_params)}, 100 )
 			}
 			return false;
 		}
@@ -1665,10 +1670,10 @@ var vars = ( function () {
 		var $diviframe = $('.formCuerpo[da_id="'+da_id+'"]')
 		var i_id = view_i_id
 		, topform = $diviframe.data('topform')
-		, sql = "SELECT i_stringifyparams,i_queryeditor_params FROM DBH_BUSQUEDAS WHERE i_id = " + i_id
-		, rec = DBH.ajax.select ( sql )[0]
-		, i_stringifyparams = rec.i_stringifyparams
-		, i_queryeditor_params = rec.i_queryeditor_params
+		//, sql = "SELECT i_stringifyparams,i_queryeditor_params FROM DBH_BUSQUEDAS WHERE i_id = " + i_id
+		//, rec = DBH.ajax.select ( sql )[0]
+		//, i_stringifyparams = rec.i_stringifyparams
+		//, i_queryeditor_params = rec.i_queryeditor_params
 		, data = $.parseJSON( i_stringifyparams )
 		, i_queryeditor_params = i_queryeditor_params ? $.parseJSON( i_queryeditor_params ) : i_queryeditor_params
 		topform.setandfilter ($pestana,data,i_queryeditor_params,data)

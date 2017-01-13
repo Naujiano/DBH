@@ -117,9 +117,11 @@ DBH.tree.load = function () {
       if ( !areaLoaded && haveInitialView ) {
         //console.log(viewData[0])
         const view_da_id = viewData[0].da_id
-        const view_i_id = viewData[0].i_id
+        , view_i_id = viewData[0].i_id
+        , i_stringifyparams = viewData[0].i_stringifyparams
+        , i_queryeditor_params = viewData[0].i_queryeditor_params
         //debugger
-        vars.goArea ( 0, view_da_id, view_i_id)
+        vars.goArea ( 0, view_da_id, view_i_id,i_stringifyparams,i_queryeditor_params)
       } else {
         DBH.gorecord(da_id)
       }
