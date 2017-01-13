@@ -302,7 +302,7 @@ function switchiframes_real (areanumber,listadoWhere,listadoWhereText,$container
 	, listadoWhere = callback ? '' : listadoWhere
 	if ( ! switchiframes_real.stopReset && ( $('#numregs').val() == '' || haywhere ) ) {
 		//console.log(listadoWhere)
-		console.log('resetea liatado')
+		//console.log('resetea liatado')
 		iframe.data('topform').resetListado(listadoWhere,listadoWhereText)
 	}
 	switchiframes_real.stopReset = 0
@@ -928,9 +928,44 @@ function programarCampos(campos,container,tabla,param){
 	if (campos.length == 0)return
 	var doc=document
 	, listadoView=tabla
-	, sql = "SELECT top 1 " + campos + " FROM "+listadoView
-	, registros=sqlExec(sql,0)
-	if(registros==null)return
+	//, sql = "SELECT top 1 " + campos + " FROM "+listadoView
+	//, registros=sqlExec(sql,0)
+	//if(registros==null)return
+	dbhQuery ({
+		fields: 'top 1' + campos
+		, table: listadoView
+
+	}).request(function(xml){
+		const camposArr = $(xml).find('registro')[0].childNodes
+		, $container = $(container)
+		//, $labels = $()
+		for(var i=0;i<campos.length;i++){
+			var campo = $container.find('[id="'+ campos[i] + '"]')[0]
+			, $campo = $(campo)
+			if ( ! campo || campo == null ) { alerta ( "Error programarCampos" ); console.log ( 'campo: ' + campos[i] ) }
+			if ( !param ) {
+			}
+			var tipo=camposArr[i].getAttribute("tipo")
+			, size=camposArr[i].getAttribute("size")
+			$campo.data('tipo',tipo)
+			$campo.attr('data-size',size)
+	//	console.log($campo)
+			if ( tipo < 10 ) {
+				var data_type = "number"
+				$campo.attr('placeholder','0.00')
+			} else if ( tipo == 135 ) {
+				var data_type = "date"
+				$campo.attr('placeholder','dd/mm/aaaa')
+			} else {
+				var data_type = "text"
+			}
+			$campo.addClass('data-type-' + data_type )
+			$campo.addClass('data-dbtype-' + tipo )
+			$container.find( 'label[for="'+ campos[i] + '"]' ).data('tipo',tipo)
+		}
+		console.log('Configurado form.')
+	})
+	/*
 	var camposArr=registros[0].childNodes
 	, $container = $(container)
 	//, $labels = $()
@@ -959,6 +994,7 @@ function programarCampos(campos,container,tabla,param){
 		$container.find( 'label[for="'+ campos[i] + '"]' ).data('tipo',tipo)
 		//$labels = $labels.add ( $container.find( 'label[for="'+ campos[i] + '"]' ) )
 	}
+	*/
 }
 function programarLabels($labels){
 	//console.log($labels.length)

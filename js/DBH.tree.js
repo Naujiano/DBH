@@ -115,7 +115,7 @@ DBH.tree.load = function () {
       , viewData = dbhQuery('initialViews').json(da_id)
       , haveInitialView = viewData.length
       if ( !areaLoaded && haveInitialView ) {
-        console.log(viewData[0])
+        //console.log(viewData[0])
         const view_da_id = viewData[0].da_id
         const view_i_id = viewData[0].i_id
         //debugger
