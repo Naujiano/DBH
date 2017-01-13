@@ -155,6 +155,17 @@ var DBH = ( function () {
 			setTimeout ( that.loadUI , 50 )
 			return false;
 		}
+		const loadTree = function() {
+			DBH.tree.load();
+			$('#treeresizable').width($('#treeresizable').outerWidth())
+					//DBH.tree.setWidth();
+			var treewidth = $('.layout-tree-container').width()
+			if (treewidth < 170)
+					treewidth = 170
+			$('.layout-tree-container').css({
+					width: treewidth
+			})
+		}()
 		let initialViews = function () {
         //cacheMap.set ( 'initialViews' , false )
         dbhQuery({
@@ -170,17 +181,6 @@ var DBH = ( function () {
             //cacheMap.set ( 'initialViews' , true )
         })
     }();
-		const loadTree = function() {
-			DBH.tree.load();
-			$('#treeresizable').width($('#treeresizable').outerWidth())
-					//DBH.tree.setWidth();
-			var treewidth = $('.layout-tree-container').width()
-			if (treewidth < 170)
-					treewidth = 170
-			$('.layout-tree-container').css({
-					width: treewidth
-			})
-		}()
 		const usu_id = sessionStorage["usu_id"]
 		DBH.sessionid = usu_id + '_' + sessionStorage["sessionid"]
 		localStorage["interface_usu_id"] = usu_id
