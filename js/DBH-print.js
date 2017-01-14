@@ -1,4 +1,4 @@
-const dbhPrint = function(data) {
+const dbhPrint = function( settings ) {
     const win = window.open('./index.html')
     const load = function() {
         //const container = $winbody.find('div')
@@ -8,7 +8,7 @@ const dbhPrint = function(data) {
             setTimeout(load, 1000)
         } else {
             const testReport = function() {
-                console.log(data)
+                console.log(settings.data)
                 const intenta = function() {
                     console.log(intenta)
                     if (!win.printReport) {
@@ -17,9 +17,9 @@ const dbhPrint = function(data) {
                         win.printReport({
                             container: container,
                             state: {
-                                reportTitle: 'Búsqueda',
+                                reportTitle: settings.titulo,
                                 rowTitleField: 'rowtitle',
-                                data: data
+                                data: settings.data
                             }
                         })
                     }
