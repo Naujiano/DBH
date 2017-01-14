@@ -263,16 +263,12 @@
 	}
 }
 /*
-let eee = DBH.query({
-  table: 'personas'
-  , idfield: 'codpersona'
-  , fields : 'top 2 nombre,apellidos'
-  //, where : 'codpersona = 3'
-  //, httphandler: DBH.ajax.select
-}).execute();
-*/
+let eee = dbhQuery({
+  sqlquery: ` select top 1 'juan' from personas update personas set nombre ='test' where codpersona =3`
+	, datatype: 'text'
+}).request((res)=>console.log(res));
+
 //dbhQuery.defaultHttpHandler = DBH.ajax.select
-/*
 let eee = DBH.query({
   table: 'persona'
   , idfield: 'codpersona'

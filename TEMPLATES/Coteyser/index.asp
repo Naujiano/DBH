@@ -72,3 +72,4 @@
 <script async type="text/javascript" src="<%=DBHpath%>js/DBH-inline-search.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/DBH-filter-parameters.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/DBH-field.js"></script>
+<script async type="text/javascript" src="<%=DBHpath%>js/DBH-print.js"></script>
