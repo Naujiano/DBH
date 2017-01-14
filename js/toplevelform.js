@@ -1541,9 +1541,6 @@ var toplevelform = function (objpar) {
 		//setTimeout(function(){win.print()},0)
 		//$winbody.append('<link rel="stylesheet" type="text/css" href="theme.css">')
 	}
-	this.dbhPrint = function () {
-		dbhPrint()
-	}
 	$container.find('.takefields').removeClass('takefields').addClass('divinlineform')
 	return this;
 };

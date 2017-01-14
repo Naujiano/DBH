@@ -1,5 +1,5 @@
 const dbhPrint = function(data) {
-    const win = window.open('/LAB/src/static/index.html')
+    const win = window.open('./index.html')
     const load = function() {
         //const container = $winbody.find('div')
         const container = win.document.getElementById('container')
