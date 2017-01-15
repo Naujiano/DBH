@@ -109,11 +109,11 @@ DBH.tree.load = function () {
 
   $treemenu
     .on('click','a',function(){
+      const $a = $(this)
+      , da_id = $a.closest('li').attr('da_id')
+      , areaLoaded = DBH.area(da_id).loaded
       const navigate = function () {
-        const $a = $(this)
-        , da_id = $a.closest('li').attr('da_id')
-        , areaLoaded = DBH.area(da_id).loaded
-        , viewData = dbhQuery('initialViews').json(da_id)
+        const viewData = dbhQuery('initialViews').json(da_id)
         , haveInitialView = viewData.length
         if ( !areaLoaded && haveInitialView ) {
           //console.log(viewData[0])
@@ -126,8 +126,8 @@ DBH.tree.load = function () {
         } else {
           DBH.gorecord(da_id)
         }
-      }.bind(this)
-      DBH.telon.show()
+      }//.bind(this)
+      if ( !areaLoaded ) DBH.telon.show()
       setTimeout(navigate,0)
     } )
     .on('after_open.jstree', function (e, data) {

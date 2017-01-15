@@ -936,7 +936,9 @@ function programarCampos(campos,container,tabla,param){
 		, table: listadoView
 
 	}).request(function(xml){
-		const camposArr = $(xml).find('registro')[0].childNodes
+		const reg = $(xml).find('registro')[0]
+		if ( !reg ) return false;
+		const camposArr = reg.childNodes
 		, $container = $(container)
 		//, $labels = $()
 		for(var i=0;i<campos.length;i++){
