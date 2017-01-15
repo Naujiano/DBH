@@ -88,5 +88,6 @@
 	grupo label {
 		width: 100%;
 		text-align: center;
-		padding: 5px;
+		padding: 8px;
+		color: #32ab9f;
 	}
