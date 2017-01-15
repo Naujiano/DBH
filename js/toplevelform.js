@@ -1493,22 +1493,40 @@ var toplevelform = function (objpar) {
 				var value = $input[0].tagName == 'SELECT' ? $input.find('option:selected').text() : $input.val()
 				, banda = $ele.closest('[order-index]').find('h4 span').text()
 				, $banda = $registro.find('banda[nombre="'+banda+'"]')
+				, isgrouped = $ele.closest('[order-index]').find('.divlistado.grouped').length
 				, $lineamodelo = $ele.closest('.lineamodelo')
 				, $campoxml = $('<campo nombre="' + label + '">' + value + '</campo>')
 				if ( !$banda.length ) {
-					$banda = $('<banda nombre="' + banda + '"/>')
+					$banda = $('<banda nombre="' + banda + '" class="'+(isgrouped?'grouped':'')+'"/>')
 					$registro.append ( $banda )
+				}
+				if ( isgrouped ) {
+					const $groupcontainer = $ele.closest('.inline-group-container')//.find('h4 span').text()
+					, grupo = $groupcontainer.find('.inline-group-title').text()
+					var $grupo = $registro.find('grupo[nombre="'+grupo+'"]')
+					if ( !$grupo.length ) {
+						$grupo = $('<grupo nombre="' + grupo + '"/>')
+						$banda.append($grupo)
+					}
 				}
 				if ( $lineamodelo.length ) {
 					var id = $lineamodelo.find('input[type="hidden"][id]').val()
 					, $registro2 = $banda.find('registro[id="'+id+'"]')
 					if ( ! $registro2.length ) {
 						$registro2 = $('<registro/>').attr('id',id)
-						$banda.append ( $registro2 )
+						if ( isgrouped ) {
+							$grupo.append ( $registro2 )
+						} else {
+							$banda.append ( $registro2 )
+						}
 					}
 					$registro2.append ( $campoxml )
 				} else {
-					$banda.append ( $campoxml )
+					if ( isgrouped ) {
+						$grupo.append ( $campoxml )
+					} else {
+						$banda.append ( $campoxml )
+					}
 				}
 				//pairOfValues.push ( {label:label,value:value,grupo:banda} )
 			}

@@ -6,13 +6,13 @@
 		margin:0px;
 		width: 1000px;
 	}
-	dbharea,dbharea>registro { 
+	dbharea,dbharea>registro {
 		//width: 100vw;
 		//heigth:100vh;
 		//display: inline-block;
 		//background:red;
 		//display:block;
-		
+
 	}
 	banda {
 		width: 100%;
@@ -78,4 +78,15 @@
 	dbharea>label {
 		font-size:25px;
 		padding-bottom: 0;
+	}
+	banda.grouped campo label {
+	    display: none;
+	}
+	banda.grouped campo {
+	    min-height: 44px;
+	}
+	grupo label {
+		width: 100%;
+		text-align: center;
+		padding: 5px;
 	}
