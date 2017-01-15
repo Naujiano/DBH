@@ -725,10 +725,10 @@ var inlineform2 = ( function ($,undefined) {
 					, $rowset = inlineGroupMap.get ( key )
 					if ( ! $rowset ) {
 						$rowset = $()
-						console.log('init rowset'+key)
+						//console.log('init rowset'+key)
 					}
 					$rowset = $rowset.add ( $row )
-					console.log( $rowset.length)
+					//console.log( $rowset.length)
 					inlineGroupMap.set ( key == '' ? '------' : key , $rowset )
 					$divCampo.addClass('inline-group')
 					/*
@@ -751,6 +751,7 @@ var inlineform2 = ( function ($,undefined) {
 				that.$divlistado.addClass('grouped')//find('label[for]').hide()
 			}
 			mostrarTelon(0)
+			$document.trigger('inlineform:'+da_id+':listed')
 		}
 	}
 	//PRIVATE STATIC METHODS

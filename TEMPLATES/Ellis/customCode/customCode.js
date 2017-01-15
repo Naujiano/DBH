@@ -22,7 +22,7 @@ var customjs = ( function () {
 			, $div_testSQL = $('#div_testSQL')
 			if ( $div_testSQL.html() != '' ) { $div_testSQL.html(''); return }
 			if ( sql == '' ) return
-			
+
 			var testsqlrecordslimit = 30 //$('#testsqlrecordslimit').val()
 			sql = "SELECT TOP " + testsqlrecordslimit + sql.substr(6,sql.length)
 			//sql = sql.replace()
@@ -35,11 +35,11 @@ var customjs = ( function () {
 			$registros.first().children().each ( function () {
 				var tagname = $(this).prop('tagName')
 				$div_testSQL.append($col.clone().append($line.clone().addClass('testsql-headercell').html(tagname)))
-				
+
 			})
 			var $cols = $div_testSQL.find ( '.testsql-col' )
 			, maxcolwidth = 100 / $registros.first().children().length
-			$cols.css ( 'max-width', maxcolwidth + '%' ) 
+			$cols.css ( 'max-width', maxcolwidth + '%' )
 			$registros.each ( function () {
 				var $campos = $(this).children()
 				$campos.each ( function (i) {
@@ -139,7 +139,7 @@ var customjs = ( function () {
 				$container.find('#r_fechavencimiento').val(vencimiento)
 				$container.find('#r_fechavencimiento')[0].focus()
 			//	console.log(vencimiento )
-				
+
 			}
 		}
 		pub.clickOnCarta = function ( boton ) {
@@ -195,8 +195,8 @@ var customjs = ( function () {
 				$boton2.removeClass ( 'botondowned botonswitchdowned' )
 				$boton2.addClass ( 'botondowned botonswitchdownedred' )
 			}
-			
-	
+
+
 		}
 		pub.cargarListaTiposSubcontratista = function (l) {
 			var $select = $('#filter_tipodesubcontratista')
@@ -213,7 +213,7 @@ var customjs = ( function () {
 			, sql = "declare @a int exec @a = dbo.clonarRiesgo " + pr_id + " select top 1 @a as a from personas_riesgos;"
 			, max_pr_id = parent.sqlExecVal ( sql )
 			, lw = "pr_id = " + max_pr_id
-			, lwt = "No = <b>[" + max_pr_id + "]</b>" 
+			, lwt = "No = <b>[" + max_pr_id + "]</b>"
 			parent.uidialog.botones(
 			[
 				{
@@ -265,7 +265,7 @@ var customjs = ( function () {
 		//window.location.href = "mailto:" + email
 		$(window).unbind('beforeunload')
 		$('<a href="mailto:' + email + '">')[0].click()
-		$(window).bind('beforeunload',function(){return true})		
+		$(window).bind('beforeunload',function(){return true})
 	}
 	this.importarVisual = function () {
 		if ( ! confirm ( '¿Importar datos desde Visual Seg?' ) ) return false
@@ -292,4 +292,4 @@ var customjs = ( function () {
 		}
 	}
 	return this
-} () ); 
+} () );
