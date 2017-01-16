@@ -620,7 +620,7 @@ var listado = ( function () {
 			$('#fullLoaded').val('0')
 			document.getElementById("listadoPagina").value = '1'
 		}
-
+		DBH.telon.listado.show()
 
 		const render = function () {
 			var root2 = loc.root2
@@ -768,11 +768,10 @@ var listado = ( function () {
 			ajustarAnchoEncabezados()
 			DBH.date().setcolor($('td.celdaCampoAncho:visible.dbh_fecha_color'))
 			DBH.valueLists().setColor()
-			parent.mostrarTelon(0)
+			DBH.telon.listado.hide()
 		}
 
 		pub.loadSql(render)
-// parent.mostrarTelon(0)
 	}
 	return pub;
 } () );

@@ -222,6 +222,10 @@ var DBH = ( function () {
 				DBH.telon.$textContainer.html('')
 			}
 		}
+		, listado: {
+			show: () => $('.listado-cover').css({display:'flex'})
+			,hide: () => $('.listado-cover').hide()
+		}
 
 	}
 	this.logout = function () {
