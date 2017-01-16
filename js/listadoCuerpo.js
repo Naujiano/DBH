@@ -772,7 +772,7 @@ var listado = ( function () {
 		}
 
 		pub.loadSql(render)
-//parent.mostrarTelon(0)
+// parent.mostrarTelon(0)
 	}
 	return pub;
 } () );
