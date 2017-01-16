@@ -768,11 +768,11 @@ var listado = ( function () {
 			ajustarAnchoEncabezados()
 			DBH.date().setcolor($('td.celdaCampoAncho:visible.dbh_fecha_color'))
 			DBH.valueLists().setColor()
-			//parent.mostrarTelon(0)
+			parent.mostrarTelon(0)
 		}
 
 		pub.loadSql(render)
-parent.mostrarTelon(0)
+//parent.mostrarTelon(0)
 	}
 	return pub;
 } () );
