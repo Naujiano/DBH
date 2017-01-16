@@ -542,7 +542,7 @@ var listado = ( function () {
 		loc.t2=d.getTime()
 		pub.listado_sql_syntax._select = encodeURIComponent(sql)
 		pub.listado_sql_syntax._count = encodeURIComponent(" SELECT count ( " + pkname + ") as numregs FROM " + listadoView)
-		var objXMLDoc=ajaxExecuterPaged(pub.listado_sql_syntax,listadoPagina,0)
+		//var objXMLDoc=ajaxExecuterPaged(pub.listado_sql_syntax,listadoPagina,0)
 
 		const request = function (listado_sql_syntax,pagina){
 			let {_select,_insert,_delete,_count} = listado_sql_syntax
