@@ -21,9 +21,10 @@ $(document).on('form:save', function ( ){
 			inserts += insert
 		}
 	}
-	dbhQuery ({sqlquery:inserts}).request(function(xml){
-		console.log(xml)
-	})
+	if ( inserts != "" )
+		dbhQuery ({sqlquery:inserts}).request(function(xml){
+			console.log(xml)
+		})
 });
 
 
