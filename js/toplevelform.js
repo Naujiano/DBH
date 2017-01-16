@@ -1396,7 +1396,7 @@ var toplevelform = function (objpar) {
 			var listadoWhereText = i_stringifyparams.listadoWhereText
 		}
 		that.resetListado(listadoWhere,listadoWhereText)
-		that.clear()
+		//that.clear()
 	}
 	this.navegar_vinculada = function (eshija,timer) {
 		var da_id_hija = $selecthijas.val()
