@@ -923,7 +923,7 @@ function programarSelectsVinculadas($container){
 		}
 	})
 }
-function programarCampos(campos,container,tabla,param){
+function programarCampos_old(campos,container,tabla,param){
 	//return
 	if (campos.length == 0)return
 	var doc=document
@@ -931,6 +931,7 @@ function programarCampos(campos,container,tabla,param){
 	//, sql = "SELECT top 1 " + campos + " FROM "+listadoView
 	//, registros=sqlExec(sql,0)
 	//if(registros==null)return
+	console.log(campos)
 	dbhQuery ({
 		fields: 'top 1' + campos
 		, table: listadoView
@@ -967,35 +968,94 @@ function programarCampos(campos,container,tabla,param){
 		}
 		console.log('Configurado form.')
 	})
-	/*
-	var camposArr=registros[0].childNodes
+}
+function programarCampos(campos,container,tabla,param){
+	if (campos.length == 0)return
+	const listadoView = tabla
+	, camposRecs = window.camposJSON
 	, $container = $(container)
-	//, $labels = $()
-	for(var i=0;i<campos.length;i++){
-		var campo = $container.find('[id="'+ campos[i] + '"]')[0]
-		, $campo = $(campo)
-		if ( ! campo || campo == null ) { alerta ( "Error programarCampos" ); console.log ( 'campo: ' + campos[i] ) }
-		if ( !param ) {
+	//console.log(campos)
+	//console.log(camposRecs)
+	//return
+	campos.forEach ( ( campoId ) => {
+		const campoArr = campoId.split('.')
+		if ( campoArr.length == 2 ) {
+			const tablaName = campoArr[0].toLowerCase()
+			, campoName = campoArr[1].toLowerCase()
+			, campoRec = camposRecs.filter  ( (campoRec) => {
+				//console.log('*'+campoRec.column_name+'*')
+				//console.log('*'+campoRec.table_name+'*')
+				return ( campoRec.table_name.toLowerCase() == tablaName && campoRec.column_name.toLowerCase() == campoName )
+			} )
+			, tipo = campoRec[0].data_type
+			let size = campoRec[0].character_maximum_length
+			switch ( size ) {
+				case '-1':
+					size = 1073741823;
+					break;
+				case '':
+					size = 2;
+					break;
+			}
+			//console.log(campoRec)
+			//console.log(tipo)
+			const $campo = $container.find('[id="'+ campoId + '"]')
+			if ( ! $campo.length ) { alerta ( "Error programarCampos" ); console.log ( 'campo: ' + campoId ) }
+			$campo.attr('data-size',size)
+	//	console.log($campo)
+			if ( tipo == 'int' || tipo == 'float' ) {
+				var data_type = "number"
+				$campo.attr('placeholder','0.00')
+			} else if ( tipo == 'datetime' || tipo == 'date' ) {
+				var data_type = "date"
+				$campo.attr('placeholder','dd/mm/aaaa')
+			} else {
+				var data_type = "text"
+			}
+			$campo.addClass('data-type-' + data_type )
+			$campo.addClass('data-dbtype-' + tipo )
+			$container.find( 'label[for="'+ campoId + '"]' ).data('tipo',tipo)
 		}
-		var tipo=camposArr[i].getAttribute("tipo")
-		, size=camposArr[i].getAttribute("size")
-		$campo.data('tipo',tipo)
-		$campo.attr('data-size',size)
-//	console.log($campo)
-		if ( tipo < 10 ) {
-			var data_type = "number"
-			$campo.attr('placeholder','0.00')
-		} else if ( tipo == 135 ) {
-			var data_type = "date"
-			$campo.attr('placeholder','dd/mm/aaaa')
-		} else {
-			var data_type = "text"
+	})
+	console.log('Configurado formulario de ' + tabla)
+
+	/*
+	dbhQuery ({
+		fields: 'top 1' + campos
+		, table: listadoView
+
+	}).request(function(xml){
+		const reg = $(xml).find('registro')[0]
+		if ( !reg ) return false;
+		const camposArr = reg.childNodes
+		, $container = $(container)
+		//, $labels = $()
+		for(var i=0;i<campos.length;i++){
+			var campo = $container.find('[id="'+ campos[i] + '"]')[0]
+			, $campo = $(campo)
+			if ( ! campo || campo == null ) { alerta ( "Error programarCampos" ); console.log ( 'campo: ' + campos[i] ) }
+			if ( !param ) {
+			}
+			var tipo=camposArr[i].getAttribute("tipo")
+			, size=camposArr[i].getAttribute("size")
+			$campo.data('tipo',tipo)
+			$campo.attr('data-size',size)
+	//	console.log($campo)
+			if ( tipo < 10 ) {
+				var data_type = "number"
+				$campo.attr('placeholder','0.00')
+			} else if ( tipo == 135 ) {
+				var data_type = "date"
+				$campo.attr('placeholder','dd/mm/aaaa')
+			} else {
+				var data_type = "text"
+			}
+			$campo.addClass('data-type-' + data_type )
+			$campo.addClass('data-dbtype-' + tipo )
+			$container.find( 'label[for="'+ campos[i] + '"]' ).data('tipo',tipo)
 		}
-		$campo.addClass('data-type-' + data_type )
-		$campo.addClass('data-dbtype-' + tipo )
-		$container.find( 'label[for="'+ campos[i] + '"]' ).data('tipo',tipo)
-		//$labels = $labels.add ( $container.find( 'label[for="'+ campos[i] + '"]' ) )
-	}
+		console.log('Configurado form.')
+	})
 	*/
 }
 function programarLabels($labels){

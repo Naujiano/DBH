@@ -38,7 +38,7 @@
         let fields = "" +
             "case when ((select da_tabla from DBH_AREAS where da_id = data_da_id) = left(data_field_id,charindex('.',data_field_id)-1)) then '0' else '1' end as noinsert" +
             ",(select da_descripcion from DBH_AREAS where da_id = (select da_areamadre from DBH_AREAS where da_id = data_da_id)) as areamadre_name" +
-            ",IS_NULLABLE as is_nullable" +
+            ",IS_NULLABLE as is_nullable,TABLE_NAME,COLUMN_NAME,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH" +
             ",(select cast(das_da_id as varchar) + ','  from DBH_CAMPOS_AREASAFECTANTES WHERE das_data_id = data_id FOR XML PATH ('') ) as da_ids_areasafectantes" +
             ", DBH_CAMPOS.* ",
             table = "" +
@@ -48,12 +48,13 @@
             where = "data_activo = 1 ANd da_activa = 1",
             orderby = "1 desc,data_orderindex"
 
-        dbhQuery({
+        const query = dbhQuery({
             fields,
             table,
             where,
             orderby
-        }).request(function(xml) {
+        })
+        query.request(function(xml) {
             let data = xml.getElementsByTagName("xml")[0].childNodes
             DBH.$camposXml = $(data)
             DBH.$camposXml.each(function() {
@@ -61,6 +62,7 @@
                     da_id = $registro.find('[fieldname="data_da_id"]').text()
                 $registro.attr('da_id', da_id)
             })
+            window.camposJSON = query.getJSON()
             console.log('loaded campos')
             cacheMap.set ( 'campos' , true )
         });

@@ -243,7 +243,7 @@ var DBH = ( function () {
 		if(usuario==""||contrasena==""){alert('Introduzca Usuario y Contraseña');return false;}
 		var sql = "SELECT usu_id,usu_perfil,usu_nombre,usu_perfiles_admitidos,usu_perfiles_caninsert FROM DBH_USUARIOS WHERE BINARY_CHECKSUM(usu_usuario)=BINARY_CHECKSUM('"+usuario+"') AND BINARY_CHECKSUM(usu_contrasena)=BINARY_CHECKSUM('"+contrasena+"') AND usu_estado=1"
 		, res=DBH.ajax.selectlogin(sql)
-		if(res.length==0){alert('Usuario no reconocido.');return false}
+		if(res.length==0){alert('Usuario no reconocido.');DBH.islogging = false;return false}
 		//console.log(res)
 		var usu = res[0]
 		, usu_id=usu.usu_id
