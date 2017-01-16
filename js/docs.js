@@ -75,10 +75,14 @@ var docs = {
 			divsarr[doc_pkvalue] = divlist
 			//console.log(tienedocs)
 			if ( tienedocs == 0  ) return
+			dbhQuery ({
+				fields: 'doc_id as id,doc_nombrearchivo as nombrearchivo,doc_nombreoriginal as nombreoriginal,doc_path as path'
+				, table: 'DBH_DOCUMENTOS'
+				, where: "doc_da_id = '" + da_id + "' AND doc_pkvalue = " + doc_pkvalue + " order by fechauc desc"
+			}).request ((xml)=>docs.loadDocsList ( xml, divlist, this.deleteDocS ))
+			return
 			var sql = "SELECT doc_id as id,doc_nombrearchivo as nombrearchivo,doc_nombreoriginal as nombreoriginal,doc_path as path FROM DBH_DOCUMENTOS WHERE doc_da_id = '" + da_id + "' AND doc_pkvalue = " + doc_pkvalue + " order by fechauc desc"
 			, registros = parent.sqlExec(sql,0)
-			//console.log("sql:"+sql)
-//			console.log("registros:"+registros)
 			docs.loadDocsList ( registros, divlist, this.deleteDocS )
 		}
 		return this

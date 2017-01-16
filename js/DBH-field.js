@@ -24,27 +24,8 @@ $(document).on('form:save', function ( ){
 	dbhQuery ({sqlquery:inserts}).request(function(xml){
 		console.log(xml)
 	})
-	/*
-	DBH.sql ( inserts ) {
-		let sqlm = "SELECT MAX(li1_id) FROM DBH_LISTAS"
-		, li1_id = sqlExecVal ( sqlm , 0 )
-		, obj = {li1_id,des:item,grupo}
-		$input.data( 'dbh-field-instance' ).hound.add(obj)
-		//$input.data( 'dbh-field-instance' ).hound.add(item)
-	}
-	*/
-	/*
-	let itemObj = $input.data( 'dbh-field-instance' ).hound.get(item)[0]
-	, li1_id  = itemObj.li1_id
-	, color  = itemObj.li1_color
-	, $style = $("<style type='text/css'>.tag.custom-color-"+item+"{background:" + color  + "}</style>")
-	if( ! stylesMap.has ( item ) ) {
-		$style.appendTo("head")
-		stylesMap.set(item, $style)
-	}
-*/
-//	console.log($fields.length)
 });
+
 
 
 {
@@ -78,7 +59,42 @@ $(document).on('form:save', function ( ){
 			return this
 		}
 	})
+
+	$(document).on('form:load', function ( ){
+		let sql = ''
+		, selects = ''
+		for ( let field_search_loadOrder of field_search_loadSet ) {
+			const sql = field_search_loadOrder.sql
+			selects += sql + ' UNION ALL '
+		}
+		if ( selects != '' ) {
+			selects = selects.substring ( 0 , selects.length - 11)
+			console.log(selects)
+			dbhQuery ({ sqlquery: selects }).getJSONdef ((json)=>{
+				console.log(json)
+				let counter = 0
+				for ( let field_search_loadOrder of field_search_loadSet ) {
+					const $input = field_search_loadOrder.$campo
+					, _val = json[counter].id
+					, txt = json[counter].txt
+					, opt = '<option value="'+_val+'" selected>'+(txt?txt:'')+'</option>'
+					console.log(opt)
+					$input.find('option').remove()
+					$input.append('<option/>').append(opt)
+					counter++
+				}
+				field_search_loadSet = new Set()
+			})
+		}
+		return
+		dbhQuery ({sqlquery:inserts}).request(function(xml){
+			console.log(xml)
+		})
+	});
+
+
 	let stylesMap = new Map()
+	let field_search_loadSet = new Set()
 	DBH.field = DBH_field_instantiate
 	function DBH_field_instantiate( $jquerySet ) {
 		if ( ! $jquerySet.length ) return undefined;
@@ -128,20 +144,26 @@ $(document).on('form:save', function ( ){
 					, isInlineForm = $input.closest('.lineamodelo').length
 					id = id.substring(id.indexOf('.')+1)
 					if ( isInlineForm ) {
-						var txt = DBH.mapaSql(id).mapa.get( _val )
+						const txt = DBH.mapaSql(id).mapa.get( _val )
+						, opt = '<option value="'+_val+'" selected>'+(txt?txt:'')+'</option>'
+						$input.find('option').remove()
+						$input.append('<option/>').append(opt)
 					} else {
 						var idfield = $input.attr('select-id-field')
 						, textfield = $input.attr('select-text-field')
 						, table = $input.attr('select-table')
+						/*
 						, sqlQueryObj = { idfield : idfield , fields : `${idfield},${textfield}` , table : table }
 						DBH.mapaSql ( id , sqlQueryObj ).addIds ( _val )
 						txt = DBH.mapaSql(id).mapa.get(_val)
+						*/
+						field_search_loadSet.add({sql:`SELECT ${idfield} AS id,${textfield} as txt FROM ${table} WHERE ${idfield} = ${_val}`, $campo: this.$input })
 					}
-					var opt = '<option value="'+_val+'" selected>'+(txt?txt:'')+'</option>'
-				}
+					//var opt = '<option value="'+_val+'" selected>'+(txt?txt:'')+'</option>'
+				} else {
 				$input.find('option').remove()
-				$input.append('<option/>').append(opt)
-				//super.val ( _val )
+				//$input.append('<option/>').append(opt)
+			}
 			}
 		}
 	}

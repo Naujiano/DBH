@@ -772,6 +772,7 @@ var toplevelform = function (objpar) {
 		if ( callback_load ) eval(callback_load)
 			//alert(callback_load)
 		$container.trigger ( 'topform:modechange' , 'edit' )
+		$container.trigger ( 'form:load' )
 		parent.mostrarTelon(0)
 		alerta('Registro cargado',1)
 	}

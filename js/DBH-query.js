@@ -151,6 +151,31 @@
 			}
 			return filteredRows
 		}
+		getJSONdef (cb) {
+			const xmlToObject = function (xml,withlinefeeds){
+		    var records = []
+		    //console.log($(xml).find('registro').length)
+		    $(xml).find('registro').each(function(recnum){
+		      var $rec = $(this).find('*')
+		      , fields = {}
+		      $rec.each(function(fieldnum){
+		        var $field = $(this)
+		        , fieldname = $field.attr('fieldname')
+		        , fieldname = fieldname ? fieldname : 'propiedad' + fieldnum
+		        , regexp10 = new RegExp ( String.fromCharCode(10), "gi" )
+		        , regexp13 = new RegExp ( String.fromCharCode(13), "gi" )
+		        , fieldvalue = $field.text()
+		        , fieldvalue = withlinefeeds ? fieldvalue : fieldvalue.replace(regexp10,"").replace(regexp13,"")//.replace(/\'/g,"'''")
+		        , fieldarr = [fieldname,fieldvalue]
+		        //eval("fields." + fieldname + "='" + fieldvalue + "'")
+		        eval("fields." + fieldname + "=fieldvalue")
+		      })
+		      records.push (fields)
+		    })
+		    return records
+		  }
+			this.request((xml)=>cb(xmlToObject(xml)))
+		}
 		static init ( settings ){
 			return new query ( settings )
 		}
@@ -221,31 +246,6 @@
 		reset ( where ) {
 			if ( where ) this.where = where.trim()
 			return this;
-		}
-		getJSONdef (cb) {
-			const xmlToObject = function (xml,withlinefeeds){
-		    var records = []
-		    //console.log($(xml).find('registro').length)
-		    $(xml).find('registro').each(function(recnum){
-		      var $rec = $(this).find('*')
-		      , fields = {}
-		      $rec.each(function(fieldnum){
-		        var $field = $(this)
-		        , fieldname = $field.attr('fieldname')
-		        , fieldname = fieldname ? fieldname : 'propiedad' + fieldnum
-		        , regexp10 = new RegExp ( String.fromCharCode(10), "gi" )
-		        , regexp13 = new RegExp ( String.fromCharCode(13), "gi" )
-		        , fieldvalue = $field.text()
-		        , fieldvalue = withlinefeeds ? fieldvalue : fieldvalue.replace(regexp10,"").replace(regexp13,"")//.replace(/\'/g,"'''")
-		        , fieldarr = [fieldname,fieldvalue]
-		        //eval("fields." + fieldname + "='" + fieldvalue + "'")
-		        eval("fields." + fieldname + "=fieldvalue")
-		      })
-		      records.push (fields)
-		    })
-		    return records
-		  }
-			this.request((xml)=>cb(xmlToObject(xml)))
 		}
 		autoparse ( sqlQueryString ) {
 			sqlQueryString = sqlQueryString.toLowerCase().trim()
