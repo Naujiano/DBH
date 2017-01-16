@@ -107,27 +107,27 @@
                 if (areaname != 'dbh-acciones')
                     return false
             }
-            var sqls = "SELECT min(avi_fecha) as fechamin, max(avi_fecha) as fechamax, count(avi_id) as count FROM dbh_avisos where iduc = " + sessionStorage['usu_id'] + " AND avi_accion = 1",
-                res = DBH.ajax.select(sqls),
-                $boton = $('#avisosgeneral')
-            if (!res) {
-                var txt = "0",
-                    tit = "0 avisos\n - "
-            } else {
-                var rec = res[0],
-                    fechamin = rec.fechamin,
-                    fechamax = rec.fechamax,
-                    count = rec.count,
-                    txt = count,
-                    tit = count + " avisos\n" + fechamin + " - " + fechamax,
-                    fecha = fechamin.substr(0, 10)
-                //console.log(fecha)
-                $boton.html(fecha)
-                DBH.date().setcolor($boton)
-            }
-            $boton.html(txt).attr('title', tit)
-            //		console.log(fecha)
-            //		console.log($boton)
+            const sqls = "SELECT min(avi_fecha) as fechamin, max(avi_fecha) as fechamax, count(avi_id) as count FROM dbh_avisos where iduc = " + sessionStorage['usu_id'] + " AND avi_accion = 1"
+            , $boton = $('#avisosgeneral')
+            //, res = DBH.ajax.select(sqls)
+            dbhQuery ( {sqlquery:sqls} ).getJSONdef ((json)=>{
+                if (!json.length) {
+                    var txt = "0",
+                        tit = "0 avisos\n - "
+                } else {
+                    var rec = json[0],
+                        fechamin = rec.fechamin,
+                        fechamax = rec.fechamax,
+                        count = rec.count,
+                        txt = count,
+                        tit = count + " avisos\n" + fechamin + " - " + fechamax,
+                        fecha = fechamin.substr(0, 10)
+                    //console.log(fecha)
+                    //$boton.html(fecha)
+                    //DBH.date().setcolor($boton)
+                }
+                $boton.html(txt).attr('title', tit)
+            })
         }
         DBH.historico = {}
         DBH.historico.gorecord = function() {

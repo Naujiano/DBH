@@ -878,7 +878,7 @@ var toplevelform = function (objpar) {
 			return false
 		}
 		parametros=parametros+"DBH_tabla="+pktabla+"&DBH_pk="+pkname
-		console.log(parametros)
+		//console.log(parametros)
 		var res = DBH.ajax.update(parametros)
 		//return
 		//console.log(sqlhistorico)
