@@ -82,6 +82,7 @@ function preinit(){
 		event.stopImmediatePropagation();
 		event.stopPropagation();
 	}
+	console.log('end preinit')
 }
 var DBH = ( function () {
 	var that = this
@@ -193,7 +194,7 @@ var DBH = ( function () {
 			$('.botonesform').find(sessionStorage["usu_perfil"]).hide() //OCULTO BOTONES SEGÚN PERFIL
 			vars.pinger()
 			DBH.loaded = true
-			//preinit()
+			preinit()
 		}()
 		//setTimeout(afterUI,0)
 	}

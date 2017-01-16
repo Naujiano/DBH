@@ -69,9 +69,9 @@ $(document).on('form:save', function ( ){
 		}
 		if ( selects != '' ) {
 			selects = selects.substring ( 0 , selects.length - 11)
-			console.log(selects)
+			//console.log(selects)
 			dbhQuery ({ sqlquery: selects }).getJSONdef ((json)=>{
-				console.log(json)
+				//console.log(json)
 				let counter = 0
 				for ( let field_search_loadOrder of field_search_loadSet ) {
 					const $input = field_search_loadOrder.$campo
@@ -86,10 +86,6 @@ $(document).on('form:save', function ( ){
 				field_search_loadSet = new Set()
 			})
 		}
-		return
-		dbhQuery ({sqlquery:inserts}).request(function(xml){
-			console.log(xml)
-		})
 	});
 
 
