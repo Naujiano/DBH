@@ -54,7 +54,9 @@
             where,
             orderby
         })
+
         query.request(function(xml) {
+
             let data = xml.getElementsByTagName("xml")[0].childNodes
             DBH.$camposXml = $(data)
             DBH.$camposXml.each(function() {
@@ -62,10 +64,12 @@
                     da_id = $registro.find('[fieldname="data_da_id"]').text()
                 $registro.attr('da_id', da_id)
             })
-            window.camposJSON = query.getJSON()
+
+            window.camposJSON = DBH.ajax.xmlToObject ( xml ) //query.getJSON()
             console.log('loaded campos')
             cacheMap.set ( 'campos' , true )
         });
+
     }();
     let valores = function() {
         cacheMap.set ( 'valores' , false )

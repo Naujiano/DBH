@@ -32,8 +32,9 @@
             DBH.ajax.sql(sqls)
             return that
         }
-        this.alertar = function() {
+        this.alertar = function(rec) {
             var $container = $('#alertaaviso')
+            /*
                 var sqls = "SELECT avi_id,avi_etiqueta,avi_texto,avi_fecha,avi_da_id,avi_pkvalue FROM dbh_avisos WHERE avi_id = " + that.id,
                     recs = DBH.ajax.select(sqls, 'withLineFeeds')
                 //console.log(recs[0])
@@ -41,12 +42,13 @@
                     alerta('DBH.aviso.alert(): Ningún aviso tiene el ID "' + that.id + '"');
                     return false
                 }
-                var etiqueta = recs[0].avi_etiqueta,
-                    avi_id = recs[0].avi_id,
-                    da_id = recs[0].avi_da_id,
-                    pkvalue = recs[0].avi_pkvalue,
-                    texto = recs[0].avi_texto,
-                    fecha = recs[0].avi_fecha,
+                */
+                var etiqueta = rec.avi_etiqueta,
+                    avi_id = rec.avi_id,
+                    da_id = rec.avi_da_id,
+                    pkvalue = rec.avi_pkvalue,
+                    texto = rec.avi_texto,
+                    fecha = rec.avi_fecha,
                     fecha = fecha.length > 16
                         ? fecha.substring(0, 16)
                         : fecha,

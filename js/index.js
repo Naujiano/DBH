@@ -1603,7 +1603,7 @@ var vars = ( function () {
 	pub.ping = function () {
 		//console.log('ping')
 		if ( loc.intervalpinger != 'undefined' ) clearTimeout ( loc.intervalpinger )
-		if ( document.getElementById('divpinger') != null ) document.getElementById('divpinger').innerHTML = 'Last ping: ' + new Date().toString().slice(16,24)
+		//if ( document.getElementById('divpinger') != null ) document.getElementById('divpinger').innerHTML = 'Last ping: ' + new Date().toString().slice(16,24)
 		loc.intervalpinger = setTimeout(function(){pub.pinger ()},60000)
 	}
 	pub.pinger = function () {
@@ -1616,17 +1616,38 @@ var vars = ( function () {
 		//var DBHC_checkuser = $.get('DBHC_checkuser.html')
 		//console.log(DBHC_checkuser)
 		var islogged = 1
-		if ( !DBH.islogged ) {
-			islogged = 0
-		} else {
+		if ( !DBH.islogged ) { DBH.logout(); return false }
+			dbhQuery ({
+				fields: 'dbh_sessionid'
+				, table: 'DBH_USUARIOS'
+				, where: "usu_id="+sessionStorage["usu_id"]
+			}).getJSONdef((json)=>{
+				const dbh_sessionid = json[0].dbh_sessionid
+				if ( dbh_sessionid != sessionStorage["sessionid"] ) { DBH.logout(); return false }
+
+				dbhQuery ({
+					fields: 'avi_id,avi_etiqueta,avi_texto,avi_fecha,avi_da_id,avi_pkvalue'
+					, table: 'dbh_avisos'
+					, where: "avi_fecha is not null and avi_fecha < getdate() and avi_accion = 1 and ( avi_alertado is null or avi_alertado = 0 ) and dbh_avisos.iduc=" + sessionStorage["usu_id"]
+					, orderby: 'avi_fecha'
+				}).getJSONdef((recs)=>{
+					for ( i = 0 ; i < recs.length ; i ++ ) {
+						var rec = recs[i]
+						DBH.aviso(rec.avi_id).alertar(rec)
+					}
+					pub.ping()
+				})
+
+			})
+
+			return
+
 			var ssql = "SELECT dbh_sessionid FROM DBH_USUARIOS WHERE usu_id="+sessionStorage["usu_id"]
 			//console.log(ssql)
 			var dbh_sessionid = DBH.ajax.select (ssql)[0].dbh_sessionid
-			if ( dbh_sessionid != sessionStorage["sessionid"] ) islogged = 0
-		}
-		if( !islogged ) { DBH.logout(); return false }
+			if ( dbh_sessionid != sessionStorage["sessionid"] ) { DBH.logout(); return false }
 
-		var sqls = "select avi_id from dbh_avisos where avi_fecha is not null and avi_fecha < getdate() and avi_accion = 1 and ( avi_alertado is null or avi_alertado = 0 ) and iduc=" + sessionStorage["usu_id"] + " order by avi_fecha"
+		var sqls = "select avi_id,dbh_sessionid from dbh_avisos inner join DBH_USUARIOS on dbh_avisos.iduc = usu_id where avi_fecha is not null and avi_fecha < getdate() and avi_accion = 1 and ( avi_alertado is null or avi_alertado = 0 ) and dbh_avisos.iduc=" + sessionStorage["usu_id"] + " order by avi_fecha"
 		//console.log(sqls)
 		//var $container = $('#alertaaviso')
 		var recs = DBH.ajax.select (sqls)
@@ -1638,7 +1659,6 @@ var vars = ( function () {
 
 		}
 
-		pub.ping()
 	}
 	pub.pinger.checkuser_response = function (res) {
 		//console.log(res)
