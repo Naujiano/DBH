@@ -499,7 +499,7 @@ var listado = ( function () {
 		//var arr=DBH.ajax.sql(sqlstr)
 		DBH.consola(sqlstr,{title:'setTablaAuxiliar'})
 	}
-	pub.loadSql = function () {
+	pub.loadSql = function (cb) {
 //		console.log('Ejecutando consulta...')
 		var d=new Date()
 		, sessionid=DBH.sessionid//'DBH'+sessionStorage["sessionid"]//('')
@@ -543,7 +543,50 @@ var listado = ( function () {
 		pub.listado_sql_syntax._select = encodeURIComponent(sql)
 		pub.listado_sql_syntax._count = encodeURIComponent(" SELECT count ( " + pkname + ") as numregs FROM " + listadoView)
 		var objXMLDoc=ajaxExecuterPaged(pub.listado_sql_syntax,listadoPagina,0)
-		//console.log(objXMLDoc)
+
+		const request = function (listado_sql_syntax,pagina){
+			let {_select,_insert,_delete,_count} = listado_sql_syntax
+			var sqlll = "pagina="+pagina+"&regXPag="+sessionStorage['regXPag']+"&sqlCount="+_count+"&sqlDelete="+_delete+"&sqlInsert="+_insert+"&sqlSelect="+_select
+				//console.log(sqlll)
+				$.ajax({ type: "POST",
+					url: 'selectXMLpaged.asp',
+					async: true,
+					dataType: 'xml',
+					data: sqlll,
+					success : function ( objXMLDoc ) {
+						//console.log(objXMLDoc)
+						if ( ! objXMLDoc.getElementsByTagName ) { return false}
+						var root2=objXMLDoc.getElementsByTagName("xml")[0];
+						loc.root2 = root2;
+						//console.log(root2)
+						if(typeof root2 == "undefined" || typeof root2.childNodes == "undefined" || typeof root2.childNodes[1] == "undefined"){
+							//document.getElementById('divencabezados').style.display='none';
+				//			console.log('nauj')
+							noregistros = 0;
+							resumenQuery(0,0,0);
+							listado.updateInfoWhere(0,0);
+							//parent.mostrarTelon(0);
+						} else {
+							if ( listadoPagina == '1' ) {
+								noregistros = root2.childNodes[root2.childNodes.length-1].childNodes[0].textContent
+							} else {
+								noregistros = document.getElementById("numregs").value
+							}
+						}
+						document.getElementById("numregs").value=noregistros
+						loadingState(0)
+						var d=new Date()
+						cb()
+					},
+					error: function ( jqXHR, textStatus, errorThrown)
+					{
+						console.log(errorThrown)
+					}
+				});
+		}(pub.listado_sql_syntax,listadoPagina)
+/*
+
+		return
 		loc.t3=d.getTime()
 		if ( ! objXMLDoc.getElementsByTagName ) { return false}
 		var root2=objXMLDoc.getElementsByTagName("xml")[0];
@@ -566,7 +609,9 @@ var listado = ( function () {
 		document.getElementById("numregs").value=noregistros
 		loadingState(0)
 		var d=new Date()
+		cb()
 		//pub.addOnePage()
+		*/
 	}
 	pub.addOnePage = function (reload) {
 		loadingState(0)
@@ -575,153 +620,159 @@ var listado = ( function () {
 			$('#fullLoaded').val('0')
 			document.getElementById("listadoPagina").value = '1'
 		}
-		pub.loadSql()
-		var root2 = loc.root2
-		var noregistros=document.getElementById("numregs").value
-		//console.log("noregistros"+noregistros)
-		var regXPag=document.getElementById("regXPag").value
-		var listadoWhereText=document.getElementById("listadoWhereText").value
-		var listadoPagina = document.getElementById("listadoPagina").value
-		var imin = regXPag*(listadoPagina-1)
-		var imax = regXPag*listadoPagina
-		imin = 0
-		imax = regXPag*1
-		//console.log(!isNaN(noregistros))
-		//console.log ( noregistros + '---' + imin + '-----' + imax )
-		if ( listadoPagina == '1' ) {
-			var noCols = root2.childNodes[0].childNodes.length-1
-			initTable(noCols)
-		}
-		if( typeof root2 == 'undefined' || noregistros == 0 ) {
-			$('#fullLoaded').val('1')
-			return false
-		}
-		//ES UNA SOLA PÁGINA
-		if ( noregistros*1 < regXPag*1 ) {
-			imax = noregistros
-			$('#fullLoaded').val('1')
-		}
-		var regsExcedentes = noregistros - regXPag*(listadoPagina-1)
-		//ES LA ÚLTIMA PÁGINA
-		//console.log(regsExcedentes+' '+imax)
-		if ( ( regsExcedentes >= 0 && regsExcedentes <= imax ) ) {
-			imax = regsExcedentes
-			$('#fullLoaded').val('1')
-		}
 
-		//HA SUPERADO LAS CONDICIONES Y EMPIEZA EL RENDERIZADO
 
-//		console.log('Renderizando los resultados en pantalla...')
-		document.getElementById('divencabezados').style.display="block"
-		var idlistado=document.getElementById('idlistado').value
-		var tab = document.getElementById('tablaListado')
-		loc.tab = tab
-		var root = tab.rows[0].parentNode;//the TBODY
-		loc.root = root
-		var $fields = $(root2.childNodes[0]).children()
-		, tipos = []
-		, area = DBH.area()
-		, etiquetaslistadovars = area.topform.etiquetaslistadovars()
-		, checkedids = area.checkedids
-		, recid = area.recid
-		, $formcontainer = area.topform.$container
-		//console.log($fields)
-		$fields.each(function(){
-			var $f = $(this)
-			, tipo = $f.attr('tipo')
-			, id = $f.prop('tagName')
-			, selector = '.dbh_fecha_color[id*="'+id+'"]'
-			, $ff = $formcontainer.find(selector)
-			tipos.push($ff.length)
-		})
-		for(var i=imin;i<imax;i++){
-			var reg = root2.childNodes[i]
-			var idListado=reg.childNodes[0].textContent
-			var clone=tab.rows[0].cloneNode(true);//the clone of the first row
-			clone.setAttribute("id","trListado"+idListado)
-			clone.style.display='table-row'
-			if(idListado==idlistado){parent.menu1Seleccionar(clone,$('#listadoCuerpoContainer')[0].getElementsByTagName('tr'))}
-			var celdas=clone.getElementsByTagName('td')
-			var celdasencabezados=document.getElementById('trCeldasEncabezados').getElementsByTagName("td")
-//if (1==2){
-//----------------- LOOP X CELDAS
-			for(var j=0;j<celdas.length;j++){
-				var celda = celdas[j]
-				, $celda = $(celda)
-				, nodocampo=reg.childNodes[j]
-				if(typeof nodocampo=="undefined")alert("fila:"+i+" columna:"+j+" ultimo valor util: "+(reg.childNodes[j]?reg.childNodes[j].textContent:'inaccesible'))
-				var valorcampo=nodocampo.textContent//.replace(new RegExp("<","g"),"&#60;")
-				var tipo=nodocampo.getAttribute("tipo")
-				//console.log(j+' '+celdasencabezados.length)
-				if(tipo<10||tipo==135){
-					$celda.css("text-align","right")
-//					console.log(j)
-					celdasencabezados[j].style.textAlign='right'
-					valorcampo=valorcampo.replace(",",".")
-					valorcampo=parent.separarMiles(valorcampo,".")
-				}
-				if(tipo==135&&valorcampo!=""){
-					var v=valorcampo.split("/")
-					valorcampo=v[0]+"/"+v[1]+"/"+v[2]
-					if(valorcampo.length > 16)valorcampo=valorcampo.substring(0,16)
-					$celda.css("text-align","center")
-				}
-				if(tipo>200){celda.style.whiteSpace='normal'}
+		const render = function () {
+			var root2 = loc.root2
+			var noregistros=document.getElementById("numregs").value
+			//console.log("noregistros"+noregistros)
+			var regXPag=document.getElementById("regXPag").value
+			var listadoWhereText=document.getElementById("listadoWhereText").value
+			var listadoPagina = document.getElementById("listadoPagina").value
+			var imin = regXPag*(listadoPagina-1)
+			var imax = regXPag*listadoPagina
+			imin = 0
+			imax = regXPag*1
+			//console.log(!isNaN(noregistros))
+			//console.log ( noregistros + '---' + imin + '-----' + imax )
+			if ( listadoPagina == '1' ) {
+				var noCols = root2.childNodes[0].childNodes.length-1
+				initTable(noCols)
+			}
+			if( typeof root2 == 'undefined' || noregistros == 0 ) {
+				$('#fullLoaded').val('1')
+				return false
+			}
+			//ES UNA SOLA PÁGINA
+			if ( noregistros*1 < regXPag*1 ) {
+				imax = noregistros
+				$('#fullLoaded').val('1')
+			}
+			var regsExcedentes = noregistros - regXPag*(listadoPagina-1)
+			//ES LA ÚLTIMA PÁGINA
+			//console.log(regsExcedentes+' '+imax)
+			if ( ( regsExcedentes >= 0 && regsExcedentes <= imax ) ) {
+				imax = regsExcedentes
+				$('#fullLoaded').val('1')
+			}
 
-				if(j==0){
-					var $vv=$('<button class="boton listado-rowheader" style="" >'+valorcampo+'</button>')
-					$celda.addClass('boton listado-rowheader')
-					$celda.click(function(event){
-						var $this = $(this)
-						, checked = $this.hasClass('listado-rowheader-selected')
-						if(!checked){
-							$this.closest('tr').addClass('listado-row-selected')
-							$this.addClass('listado-rowheader-selected')
-						}else{
-							$this.closest('tr').removeClass('listado-row-selected')
-							$this.removeClass('listado-rowheader-selected')
-						}
-						pub.checkid(this)
-						event.stopPropagation()
-					})
-					$celda.append ( valorcampo );
-				} else {
-					$celda.append ( $('<div/>').text(valorcampo).html() );
+			//HA SUPERADO LAS CONDICIONES Y EMPIEZA EL RENDERIZADO
+
+	//		console.log('Renderizando los resultados en pantalla...')
+			document.getElementById('divencabezados').style.display="block"
+			var idlistado=document.getElementById('idlistado').value
+			var tab = document.getElementById('tablaListado')
+			loc.tab = tab
+			var root = tab.rows[0].parentNode;//the TBODY
+			loc.root = root
+			var $fields = $(root2.childNodes[0]).children()
+			, tipos = []
+			, area = DBH.area()
+			, etiquetaslistadovars = area.topform.etiquetaslistadovars()
+			, checkedids = area.checkedids
+			, recid = area.recid
+			, $formcontainer = area.topform.$container
+			//console.log($fields)
+			$fields.each(function(){
+				var $f = $(this)
+				, tipo = $f.attr('tipo')
+				, id = $f.prop('tagName')
+				, selector = '.dbh_fecha_color[id*="'+id+'"]'
+				, $ff = $formcontainer.find(selector)
+				tipos.push($ff.length)
+			})
+			for(var i=imin;i<imax;i++){
+				var reg = root2.childNodes[i]
+				var idListado=reg.childNodes[0].textContent
+				var clone=tab.rows[0].cloneNode(true);//the clone of the first row
+				clone.setAttribute("id","trListado"+idListado)
+				clone.style.display='table-row'
+				if(idListado==idlistado){parent.menu1Seleccionar(clone,$('#listadoCuerpoContainer')[0].getElementsByTagName('tr'))}
+				var celdas=clone.getElementsByTagName('td')
+				var celdasencabezados=document.getElementById('trCeldasEncabezados').getElementsByTagName("td")
+	//if (1==2){
+	//----------------- LOOP X CELDAS
+				for(var j=0;j<celdas.length;j++){
+					var celda = celdas[j]
+					, $celda = $(celda)
+					, nodocampo=reg.childNodes[j]
+					if(typeof nodocampo=="undefined")alert("fila:"+i+" columna:"+j+" ultimo valor util: "+(reg.childNodes[j]?reg.childNodes[j].textContent:'inaccesible'))
+					var valorcampo=nodocampo.textContent//.replace(new RegExp("<","g"),"&#60;")
+					var tipo=nodocampo.getAttribute("tipo")
+					//console.log(j+' '+celdasencabezados.length)
+					if(tipo<10||tipo==135){
+						$celda.css("text-align","right")
+	//					console.log(j)
+						celdasencabezados[j].style.textAlign='right'
+						valorcampo=valorcampo.replace(",",".")
+						valorcampo=parent.separarMiles(valorcampo,".")
+					}
+					if(tipo==135&&valorcampo!=""){
+						var v=valorcampo.split("/")
+						valorcampo=v[0]+"/"+v[1]+"/"+v[2]
+						if(valorcampo.length > 16)valorcampo=valorcampo.substring(0,16)
+						$celda.css("text-align","center")
+					}
+					if(tipo>200){celda.style.whiteSpace='normal'}
+
+					if(j==0){
+						var $vv=$('<button class="boton listado-rowheader" style="" >'+valorcampo+'</button>')
+						$celda.addClass('boton listado-rowheader')
+						$celda.click(function(event){
+							var $this = $(this)
+							, checked = $this.hasClass('listado-rowheader-selected')
+							if(!checked){
+								$this.closest('tr').addClass('listado-row-selected')
+								$this.addClass('listado-rowheader-selected')
+							}else{
+								$this.closest('tr').removeClass('listado-row-selected')
+								$this.removeClass('listado-rowheader-selected')
+							}
+							pub.checkid(this)
+							event.stopPropagation()
+						})
+						$celda.append ( valorcampo );
+					} else {
+						$celda.append ( $('<div/>').text(valorcampo).html() );
+					}
+					if($celda.css('text-align')=='')$celda.css('text-align',($(celda).text().length<3)?'center':'left')
+					if(tipos[j])$celda.addClass('dbh_fecha_color')
+					var grupo = etiquetaslistadovars.grupos[j-1]
+					if( grupo && grupo != '' ){
+	//				console.log( grupo )
+						$celda.addClass('dbh_valores_color').attr('grupo', grupo )
+					}
 				}
-				if($celda.css('text-align')=='')$celda.css('text-align',($(celda).text().length<3)?'center':'left')
-				if(tipos[j])$celda.addClass('dbh_fecha_color')
-				var grupo = etiquetaslistadovars.grupos[j-1]
-				if( grupo && grupo != '' ){
-//				console.log( grupo )
-					$celda.addClass('dbh_valores_color').attr('grupo', grupo )
+	//----------------- /LOOP X CELDAS
+	//}
+				var lastrow=tab.rows[tab.rows.length-1]
+				root.insertBefore(clone,lastrow)
+				var esseleccionado = idListado == recid ? 1: 0
+				, eschecked = checkedids.indexOf(idListado) > -1 ? 1 : 0
+				, $tr = $(clone)
+				, $tdid = $tr.find('.listado-rowheader')
+				if(esseleccionado) {
+					$tr.addClass ('menu1OpcionSeleccionada')
+				}
+				if (eschecked) {
+					$tr.addClass ('listado-row-selected')
+					$tdid.addClass ( 'listado-rowheader-selected' )
 				}
 			}
-//----------------- /LOOP X CELDAS
-//}
-			var lastrow=tab.rows[tab.rows.length-1]
-			root.insertBefore(clone,lastrow)
-			var esseleccionado = idListado == recid ? 1: 0
-			, eschecked = checkedids.indexOf(idListado) > -1 ? 1 : 0
-			, $tr = $(clone)
-			, $tdid = $tr.find('.listado-rowheader')
-			if(esseleccionado) {
-				$tr.addClass ('menu1OpcionSeleccionada')
-			}
-			if (eschecked) {
-				$tr.addClass ('listado-row-selected')
-				$tdid.addClass ( 'listado-rowheader-selected' )
-			}
+			document.getElementById("listadoPagina").value=listadoPagina*1+1*1
+			var nofilas=tab.getElementsByTagName('tr').length
+			nofilas-=2
+			listado.updateInfoWhere(nofilas,noregistros)
+			var tb=(loc.t3-loc.t2)/1000
+			if(loc.esprimeracarga)resumenQuery(0,tb,0)
+			ajustarAnchoEncabezados()
+			DBH.date().setcolor($('td.celdaCampoAncho:visible.dbh_fecha_color'))
+			DBH.valueLists().setColor()
+			//parent.mostrarTelon(0)
 		}
-		document.getElementById("listadoPagina").value=listadoPagina*1+1*1
-		var nofilas=tab.getElementsByTagName('tr').length
-		nofilas-=2
-		listado.updateInfoWhere(nofilas,noregistros)
-		var tb=(loc.t3-loc.t2)/1000
-		if(loc.esprimeracarga)resumenQuery(0,tb,0)
-		ajustarAnchoEncabezados()
-		DBH.date().setcolor($('td.celdaCampoAncho:visible.dbh_fecha_color'))
-		DBH.valueLists().setColor()
-		parent.mostrarTelon(0)
+
+		pub.loadSql(render)
+parent.mostrarTelon(0)
 	}
 	return pub;
 } () );
