@@ -2706,7 +2706,7 @@ td.dbh_valores_color {
 
 /* XXX: > TelÃ³n "iniciando" */
 
-.init-cover {
+.init-cover, .listado-cover{
   width: 100vw;
   height: 100vh;
   background: #292c3a;
@@ -2724,7 +2724,7 @@ td.dbh_valores_color {
    max-width: 600px;
    margin-bottom: 40px;
 }
-.init-cover .init-cover-text {
+.init-cover .init-cover-text,.listado-cover .init-cover-text {
   color: white;
   font-size: 15px;
   display: flex;

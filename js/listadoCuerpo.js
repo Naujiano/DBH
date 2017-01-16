@@ -170,7 +170,7 @@ function eliminarFila(idd){
 }
 function ordenar(c){
 	var noregistros=document.getElementById("numregs").value
-	if ( noregistros != '0' ) parent.mostrarTelon(1);
+	if ( noregistros != '0' ) DBH.telon.listado.show()//parent.mostrarTelon(1);
 	setTimeout("ordenarListado('"+c+"')",10)
 }
 function ordenarListado(orderBy){
@@ -641,6 +641,7 @@ var listado = ( function () {
 			}
 			if( typeof root2 == 'undefined' || noregistros == 0 ) {
 				$('#fullLoaded').val('1')
+				DBH.telon.listado.hide()
 				return false
 			}
 			//ES UNA SOLA PÁGINA
