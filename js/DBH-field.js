@@ -78,7 +78,7 @@ $(document).on('form:save', function ( ){
 					, _val = json[counter].id
 					, txt = json[counter].txt
 					, opt = '<option value="'+_val+'" selected>'+(txt?txt:'')+'</option>'
-					console.log(opt)
+					//console.log(opt)
 					$input.find('option').remove()
 					$input.append('<option/>').append(opt)
 					counter++

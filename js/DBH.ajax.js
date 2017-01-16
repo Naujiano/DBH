@@ -201,7 +201,12 @@ DBH.ajax = ( function () {
     }
     if ( operacion == 'update' ) {
       var $camposform = DBH.area().topform.$camposform
-      $camposform.prop('oldValue',$camposform.val())
+      $camposform.each(function(){
+        const $this = $(this)
+        , val = $this.val()
+        if ( val ) $this.prop('oldValue',val)
+      })
+      //$camposform.prop('oldValue',$camposform.val())
     }
     return $res
   }

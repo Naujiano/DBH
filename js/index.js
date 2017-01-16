@@ -1017,7 +1017,7 @@ function programarCampos(campos,container,tabla,param){
 			$container.find( 'label[for="'+ campoId + '"]' ).data('tipo',tipo)
 		}
 	})
-	console.log('Configurado formulario de ' + tabla)
+	//console.log('Configurado formulario de ' + tabla)
 
 	/*
 	dbhQuery ({
@@ -1810,9 +1810,13 @@ var vars = ( function () {
 		}
 		var sql = "INSERT INTO DBH_BUSQUEDAS ( i_da_id, i_pkfield,i_usu_id,i_nombre,i_descripcion, i_listadoWhere, i_tabla, i_queryeditor_params, i_stringifyparams, i_sql, dbh_perfiles_admitidos_xreg ) VALUES (" + da_id + ",'" + pkfield + "'," + idusu + "," + nombre + ",'" + lwt + "','" + topform.queryEditor.listadoWhere().replace(/\'/g,"''") + "','" + topform.tabla + "','" + i_queryeditor_params + "','" + stringifyparams + "','" + vars.sqlfromparams(stringifyparams) + "','" + sessionStorage['usu_perfiles_admitidos'] + "')"
 		//console.log(sql)
-		sqlExec(sql)
-		alerta("Vista almacenada",1)
-		if ( nombre != "null" ) $('#alimentador').trigger('vistas:list:changed')
+		dbhQuery ({
+			sqlquery: sql
+		}).request((xml)=>{
+			alerta("Vista almacenada",1)
+			if ( nombre != "null" ) $('#alimentador').trigger('vistas:list:changed')
+		})
+		//sqlExec(sql)
 		if ( silent ) return true
 		var xml = sqlExecVal ( "SELECT max ( i_id ) as a from DBH_BUSQUEDAS",0 )
 		var pars = [['dbh_redactor_consultas','i_id='+xml]]

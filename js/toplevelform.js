@@ -854,6 +854,7 @@ var toplevelform = function (objpar) {
 				var valor = campo.value
 				, oldValue = campo.oldValue
 				, nombre = campos[i]
+				//console.log(oldValue)
 				if (valor!=oldValue || nombre == pkname || serie ) {
 					if(nombre!=pkname && !serie)sqlhistorico += "INSERT INTO DBH_historico (his_da_id,his_pkvalue,his_fieldname,his_valor,his_usu_id,dbh_perfiles_admitidos_xreg) VALUES ("+da_id+","+pkvalue+",'"+nombre+"','"+oldValue+"',"+usu_id+",'"+sessionStorage['usu_perfiles_admitidos']+"') "
 					var nombre = nombre.substring ( nombre.indexOf('.')+1 )
@@ -877,10 +878,13 @@ var toplevelform = function (objpar) {
 			return false
 		}
 		parametros=parametros+"DBH_tabla="+pktabla+"&DBH_pk="+pkname
-		//console.log(parametros)
+		console.log(parametros)
 		var res = DBH.ajax.update(parametros)
+		//return
+		//console.log(sqlhistorico)
 		if (!res) return false
-		DBH.ajax.sql(sqlhistorico)
+		//DBH.ajax.sql(sqlhistorico)
+		dbhQuery ({sqlquery: sqlhistorico}).request()
 		$container.trigger('form:save')
 		return res
 		/*
