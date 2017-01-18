@@ -1264,29 +1264,35 @@ button.pestanas.active {
   fill: #fff;
 }*/
 
-.layout-tree-container #treemenu::-webkit-scrollbar {
+.layout-tree-container #treemenu::-webkit-scrollbar ,
+.layout-alertas-container::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
-.layout-tree-container #treemenu::-webkit-scrollbar-thumb {
+.layout-tree-container #treemenu::-webkit-scrollbar-thumb ,
+.layout-alertas-container::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.3);
   border-radius: 10px;
 }
-.layout-tree-container #treemenu::-webkit-scrollbar-corner {
+.layout-tree-container #treemenu::-webkit-scrollbar-corner ,
+.layout-alertas-container::-webkit-scrollbar-corner {
   background: none;
 }
-.layout-tree-container #treemenu::-webkit-scrollbar-button {
+.layout-tree-container #treemenu::-webkit-scrollbar-button ,
+.layout-alertas-container::-webkit-scrollbar-button {
   background: rgba(255, 255, 255, 0);
   width: 8px;
   height: 8px;
   background-size: 4px 4px, 4px 4px;
   background-repeat: no-repeat;
 }
-.layout-tree-container #treemenu::-webkit-scrollbar-button:single-button:vertical:decrement {
+.layout-tree-container #treemenu::-webkit-scrollbar-button:single-button:vertical:decrement ,
+.layout-alertas-container::-webkit-scrollbar-button:single-button:vertical:decrement {
   background-image: linear-gradient(135deg, transparent 50%, rgba(255, 255, 255, 1) 50%), linear-gradient(45deg, rgba(255, 255, 255, 1) 50%, transparent 50%);
   background-position: 0px 4px, 4px 4px;
 }
-.layout-tree-container #treemenu::-webkit-scrollbar-button:single-button:vertical:increment {
+.layout-tree-container #treemenu::-webkit-scrollbar-button:single-button:vertical:increment ,
+.layout-alertas-container::-webkit-scrollbar-button:single-button:vertical:increment {
   background-image: linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.8) 50%), linear-gradient(135deg, rgba(255, 255, 255, 0.8) 50%, transparent 50%);
   background-position: 0px 0px, 4px 0px;
 }
@@ -1467,6 +1473,7 @@ button.pestanas.active {
   animation: blinker-warning 0.5s linear infinite;
   animation-iteration-count: 2;
 }
+/*
 .layout-alertas-container::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -1485,13 +1492,22 @@ button.pestanas.active {
   background-size: 4px 4px, 4px 4px;
   background-repeat: no-repeat;
 }
-.layout-alertas-container::-webkit-scrollbar-button:vertical:decrement {
-  background-image: linear-gradient(135deg, transparent 50%, rgba(255, 255, 255, 0.8) 50%);
-  background-position: 0px 0px;
+.layout-alertas-container::-webkit-scrollbar-button:single-button:vertical:decrement {
+  background-image: linear-gradient(135deg, transparent 50%, rgba(255, 255, 255, 1) 50%), linear-gradient(45deg, rgba(255, 255, 255, 1) 50%, transparent 50%);
+  background-position: 0px 4px, 4px 4px;
 }
-.layout-alertas-container::-webkit-scrollbar-button:vertical:increment {
-  background-image: linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.8) 50%);
-  background-position: 0px 0px;
+.layout-alertas-container::-webkit-scrollbar-button:single-button:vertical:increment {
+  background-image: linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.8) 50%), linear-gradient(135deg, rgba(255, 255, 255, 0.8) 50%, transparent 50%);
+  background-position: 0px 0px, 4px 0px;
+}
+
+.layout-tree-container #treemenu::-webkit-scrollbar-button:single-button:vertical:decrement {
+  background-image: linear-gradient(135deg, transparent 50%, rgba(255, 255, 255, 1) 50%), linear-gradient(45deg, rgba(255, 255, 255, 1) 50%, transparent 50%);
+  background-position: 0px 4px, 4px 4px;
+}
+.layout-tree-container #treemenu::-webkit-scrollbar-button:single-button:vertical:increment {
+  background-image: linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.8) 50%), linear-gradient(135deg, rgba(255, 255, 255, 0.8) 50%, transparent 50%);
+  background-position: 0px 0px, 4px 0px;
 }
 .layout-alertas-container::-webkit-scrollbar-button:horizontal:increment {
   background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.8) 50%, transparent 50%);
@@ -1501,6 +1517,7 @@ button.pestanas.active {
   background-image: linear-gradient(135deg, transparent 50%, rgba(255, 255, 255, 0.8) 50%);
   background-position: 0px 0px;
 }
+*/
 
 /*===============================================*/
 

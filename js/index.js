@@ -104,10 +104,10 @@ function loadTopForms(da_id){
 		, da_areamadre = $(this).find('[fieldname="da_areamadre"]').text().toLowerCase()
 		, da_areamadrastra = $(this).find('[fieldname="da_areamadrastra"]').text().toLowerCase()
 		, da_perfiles = $(this).find('[fieldname="da_perfiles"]').text()
-		, da_perfiles_excluidos = $(this).find('[fieldname="da_perfiles_excluidos"]').text()
+		, da_perfiles_excluidos = $(this).find('[fieldname="da_perfiles_excluidos"]').text() // no existe el campo en BD :O
 		, tiene_columna_dbh_perfiles_excluidos = $(this).find('[fieldname="tiene_columna_dbh_perfiles_excluidos"]').text()
 		, da_perfiles_madre = $(this).find('[fieldname="da_perfiles_madre"]').text()
-		, da_fkfield_areamadre = $(this).find('[fieldname="da_fkfield_areamadre"]').text()
+		, da_fkfield_areamadre = $(this).find('[fieldname="da_fkfield_areamadre"]').text() // no existe el campo en BD :O
 		, pkmadre = $(this).find('[fieldname="pkmadre"]').text().toLowerCase()
 		, pkmadre = pkmadre.substring(pkmadre.indexOf('.')+1)
 		, $topcontainer = $('.formCuerpo[pkname="'+pkmadre+'"]')

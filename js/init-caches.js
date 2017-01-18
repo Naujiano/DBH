@@ -19,8 +19,8 @@
     , (select cast(da_descripcion as char) + ',' from DBH_AREAS as a where (b.da_id = a.da_areamadre OR b.da_id = a.da_areamadrastra) AND a.da_nivel = 2 AND a.da_areamadrastra is not null FOR XML PATH ('') ) as da_nombres_relacionantes
     ,(select cast(da_descripcion as char) + ',' from DBH_AREAS as a where b.da_id = a.da_areamadre AND a.da_nivel = 1 AND a.da_activa=1 FOR XML PATH ('') ) as da_nombre_hijas
     ,case when (COL_LENGTH(da_pktabla,'dbh_perfiles_admitidos_xreg') is null ) then '0' else '1' end as tiene_columna_dbh_perfiles_excluidos
-    ,(select a.da_pkfield from DBH_AREAS as a where a.da_id = b.da_areamadre ) as pkmadre,(select a.da_perfiles from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_perfiles_madre
-    ,*`
+    ,(select a.da_pkfield from DBH_AREAS as a where a.da_id = b.da_areamadre ) as pkmadre,(select a.da_perfiles from DBH_AREAS as a where a.da_id = b.da_areamadre ) as da_perfiles_madre,*`
+    //,da_pktabla,da_id,da_perfiles_excluidos,da_perfiles,da_orderindexlistado,da_tabla,da_pkfield,da_fkfield,da_areamadre,da_areamadrastra,da_nivel,da_descripcion,da_custom_buttons,da_callback_save,da_callback_load`
             , table : 'DBH_AREAS as b'
             , where : 'da_activa = 1'
             , orderby : 'da_nivel desc,da_orderindex'
