@@ -89,7 +89,7 @@ function $formatFilter($cmpsfiltro){
 								, rightexp : ''
 							}
 							wherearr.push(whereobj)
-							
+
 						})
 					}
 				} else if ( fieldid != "dbh_redactor_consultas" ) {
@@ -114,13 +114,13 @@ function $formatFilter($cmpsfiltro){
 						, da_id : $field.attr('dbh-query-da_id')
 					}
 					wherearr.push(whereobj)
-					
+
 				}
 			}
 		}
-		
+
 	})
-	
+
 	//console.log('idsselectsrepesconselectedoption'+idsselectsrepesconselectedoption)
 	$(idsselectsrepesconselectedoption).each ( function (i) {
 		var $twins = $cmpsfiltro.filter('[id="' + idsselectsrepesconselectedoption[i] + '"]').not('.lineamodelo_wrapper *')
@@ -140,7 +140,7 @@ function $formatFilter($cmpsfiltro){
 			//listadoWhereText+=$twins[0].name+" <b>["+names+"]</b><br>"
 			listadoWhere += "(" + variablesFiltro.r + ") AND "
 			listadoWhereText+=$twins[0].name+" <b>["+variablesFiltro.v+"]</b><br>"
-			
+
 			wherearr.push(variablesFiltro.whereobj)
 		}
 
@@ -154,15 +154,19 @@ function filterStringMatch(campo,campooriginal){
 	, n=campo.id
 	, leftsql = n
 	, $campo = $(campo)
-	, tipo=$campo.data('tipo')
+	, tipo=$campo.attr('tipo')//data('tipo')
 	, data_sql_select=$campo.attr('data-customfield-sql-select')
+	, isnumeric = ( tipo == 'float' || tipo == 'int' )
+	, isdate = ( tipo == 'datetime' )
 	//console.log(data_sql_listado)
 	if ( typeof data_sql_select != 'undefined' && data_sql_select.length ) n = "(" + data_sql_select + ")"
 	if(campo.tagName=="SELECT"){
 		if(v=="True")v="1"
 		if(v=="False")v="0"
 	}
-	if(tipo<10){
+	//console.log(tipo)
+	//if(tipo<10){
+	if(isnumeric){
 		v=v.replace(".","")
 		v=v.replace(",",".")
 	}
@@ -177,13 +181,13 @@ function filterStringMatch(campo,campooriginal){
 	, esinlinelist = $campooriginal.hasClass('inlinelist')
 	, whereobj = {}
 	v=v.replace(espacioraro,"").replace(saltodelinea,"")
-	if(tipo<10||tipo==135){v=v.replace('""',sqlparanulo)}
+	if(isnumeric||isdate){v=v.replace('""',sqlparanulo)}
 	var matches=v.match(re)
 	if(matches){
-		if(tipo<10||tipo==135){
+		if(isnumeric||isdate){
 			r=v.replace(re,n+"$1")
 			//if(tipo==135 && v.toLowerCase().indexOf('getdate')==-1 && v.toLowerCase().indexOf(sqlparanulo)==-1){
-			if(tipo==135){
+			if(isdate){
 				var red=new RegExp("[0-9]{1,2}/[0-9]{1,2}/[0-9]{4}","g")
 				var matchesf = r.match(red)
 				//if (matchesf == null){alerta('Sintaxis de filtrado no válida');return false}
@@ -207,7 +211,7 @@ function filterStringMatch(campo,campooriginal){
 		else if(campo.tagName=="SELECT"||esinlinelist){
 			vt=esinlinelist? $campo.siblings().filter('input.inlinelist').val() :campo.options[campo.selectedIndex].text
 			r=n+" IN ('"+v+"')"
-		}else if(tipo==135) {
+		}else if(isdate) {
 			r="convert(char(10),"+n+",103) like '%"+eliminarAcentos(v)+"%'"
 		}else{
 			r=n+" like '%"+eliminarAcentos(v)+"%'"

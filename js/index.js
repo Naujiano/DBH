@@ -950,6 +950,7 @@ function programarCampos_old(campos,container,tabla,param){
 			}
 			var tipo=camposArr[i].getAttribute("tipo")
 			, size=camposArr[i].getAttribute("size")
+			console.log(tipo)
 			$campo.data('tipo',tipo)
 			$campo.attr('data-size',size)
 	//	console.log($campo)
@@ -1012,8 +1013,7 @@ function programarCampos(campos,container,tabla,param){
 			} else {
 				var data_type = "text"
 			}
-			$campo.addClass('data-type-' + data_type )
-			$campo.addClass('data-dbtype-' + tipo )
+			$campo.addClass('data-type-' + data_type ).addClass('data-dbtype-' + tipo ).attr('tipo' , tipo )
 			$container.find( 'label[for="'+ campoId + '"]' ).data('tipo',tipo)
 		}
 	})
