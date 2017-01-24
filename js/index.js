@@ -753,19 +753,13 @@ function helpText(tipo){
 function loadInfoCreacion(idlistado,pkname){
 }
 function setTextareaHeight(ta){
-	//console.log("ta:"+ta.id)
-	//return
 	if ( ta.tagName != 'TEXTAREA' || $(ta).hasClass('dbh-resizable') ) return
-	var cv=document.getElementById('cv')
 	ta.style.height=0
 	var hcv=ta.scrollHeight*1
-	//if(hcv<
-	//alert(hcv)
 	var corr = 2.8;
 	var hh = hcv+corr
 	hh = Math.round(hh)
 	if ( hh < 18 ) hh = 18
-	//corr = 0;
 	ta.style.height=(hh)+'px'
 }
 function filterOnEnter(cp,event){
@@ -1373,7 +1367,7 @@ var vars = ( function () {
 	pub.init = function () {
 		$(document).on ( 'blockbutton:toggle' , 'h4.blockbutton', function () { $('#iframeFormCuerpo').data('topform').setbuttonbar() } )
 		$(document).on ( 'keydown' , '.inputText', function (event) { filterOnEnter(this,event) } )
-		$(document).on ( 'keyup' , '.inputText', function () { setTextareaHeight(this) } )
+		$(document).on ( 'keyup' , '.inputText', function () { if($(this).height()<400)setTextareaHeight(this) } )
 		$('#alimentador').draggable({ handle: ".bandatitulo" })
 		var $alertaaviso = $('#alertaaviso')
 		, $input = $alertaaviso.find('input')
