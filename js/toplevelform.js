@@ -580,7 +580,7 @@ var toplevelform = function (objpar) {
 			return etiquetasListado
 		}
 		this.set = function (etis) {
-//			console.log(etis)
+			//console.log(etis)
 			etiquetasListado = etis
 			document.getElementById("nombresCampos").value = that.etiquetaslistadovars().campos
 		}
@@ -597,6 +597,7 @@ var toplevelform = function (objpar) {
 		})
 		*/
 		that.campos = etiquetaslistadovars.campos
+		
 		if ( ( typeof that.listadoWhere != 'string' || listadoWhere == 0 || !listadoWhere ) && !that.queryEditor.queryparameters ) {
 			console.log('carga los 30')
 			var sql_recientes = "(SELECT top 120 his_pkvalue FROM dbh_historico where his_da_id = " + da_id + " group by his_da_id,his_pkvalue order by max(his_fecha) desc)"
@@ -615,6 +616,7 @@ var toplevelform = function (objpar) {
 			that.queryEditor.load()
 		}
 
+//if ( that.queryEditor.queryparameters ) {that.queryEditor.queryparameters = [];that.queryEditor.load()}
 		if ( orderindexListado > ( etiquetasListado.length + 1 )  ) orderindexListado = etiquetasListado.length + 1
 		var j = findframenumber()
 		document.getElementById('vinculada_pkname').value=vinculada_pkname?vinculada_pkname:''

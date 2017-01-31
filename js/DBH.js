@@ -338,6 +338,7 @@ var DBH = ( function () {
 					DBH.telon.areaLoad()
 					//DBH.telon.texto.append('Generando el Área...')
 					//$('#divteloninit').show()
+					//console.log('calltogorec')
 					setTimeout (function(){DBH.gorecord(areaid,recid,1)},0)
 					return false
 		}

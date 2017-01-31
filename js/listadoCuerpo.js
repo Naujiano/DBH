@@ -430,8 +430,8 @@ var listado = ( function () {
 
 		cabezar()
 		listado.checkid('all',0,1)
+		document.getElementById("listadoPagina").value="1"
 		listado.addOnePage(1)
-
 
 
 		if(levantarTelon){parent.mostrarTelon(0)}
@@ -501,6 +501,8 @@ var listado = ( function () {
 	}
 	pub.loadSql = function (cb) {
 //		console.log('Ejecutando consulta...')
+		if ( pub.loadSql.loading ) { setTimeout ( function () { pub.loadSql ( cb ) } , 100 ); return false }
+		pub.loadSql.loading = true
 		var d=new Date()
 		, sessionid=DBH.sessionid//'DBH'+sessionStorage["sessionid"]//('')
 		, pkname = $('#iframeFormCuerpo').data('topform').pkname
@@ -577,6 +579,7 @@ var listado = ( function () {
 						loadingState(0)
 						var d=new Date()
 						cb()
+						pub.loadSql.loading = false
 					},
 					error: function ( jqXHR, textStatus, errorThrown)
 					{
@@ -625,7 +628,7 @@ var listado = ( function () {
 		const render = function () {
 			var root2 = loc.root2
 			var noregistros=document.getElementById("numregs").value
-			//console.log("noregistros"+noregistros)
+//			console.log("noregistros"+noregistros)
 			var regXPag=document.getElementById("regXPag").value
 			var listadoWhereText=document.getElementById("listadoWhereText").value
 			var listadoPagina = document.getElementById("listadoPagina").value
@@ -633,9 +636,10 @@ var listado = ( function () {
 			var imax = regXPag*listadoPagina
 			imin = 0
 			imax = regXPag*1
-			//console.log(!isNaN(noregistros))
+			//console.log('listadoPagina'+listadoPagina)
 			//console.log ( noregistros + '---' + imin + '-----' + imax )
 			if ( listadoPagina == '1' ) {
+				//console.log('initTable')
 				var noCols = root2.childNodes[0].childNodes.length-1
 				initTable(noCols)
 			}
