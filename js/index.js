@@ -1363,8 +1363,8 @@ var vars = ( function () {
 				console.log("res"+res)
 			})
 		}
-		go()
-		//setTimeout( go,100)
+		alerta('Realizando backup de la BD...',1)
+		setTimeout( go,100)
 	}
 	pub.init = function () {
 		$(document).on ( 'blockbutton:toggle' , 'h4.blockbutton', function () { $('#iframeFormCuerpo').data('topform').setbuttonbar() } )
