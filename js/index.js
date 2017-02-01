@@ -1348,21 +1348,23 @@ var vars = ( function () {
 	var pub = {},
 		loc = {};
 	pub.dbBackup = function () {
-		if ( ! confirm ( '¿Hacer un Backup de la BD?' ) ) return false
+		if ( ! confirm ( '¿Hacer un Backup de la BDd?' ) ) return false
 		//mostrarTelon(1)
 		function go() {
 			var sql = "exec dbo.sp_backupDatabase"
-			//, res = DBH.ajax.sql(sql)
-			DBH.sql ( sql , {
-				verbose: {
-					begin: 'Efectuando Backup...'
-					, success: 'Backup realizado correctamente.'
-					, error: 'No se ha podido completar el Backup.'
+			dbhQuery ({
+				sqlquery: "exec dbo.sp_backupDatabase"
+			}).request ( (res) => {
+				if ( res == null ) {
+					alerta ( 'Backup realizado correctamente.',1)
+				} else {
+					alerta ( 'Se ha producido un error al realizar el Backup.')					
 				}
-			} )
-			mostrarTelon(0)
+				console.log("res"+res)
+			})
 		}
-		setTimeout(function(){go()},100)
+		go()
+		//setTimeout( go,100)
 	}
 	pub.init = function () {
 		$(document).on ( 'blockbutton:toggle' , 'h4.blockbutton', function () { $('#iframeFormCuerpo').data('topform').setbuttonbar() } )
