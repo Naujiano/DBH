@@ -86,6 +86,7 @@
 					//console.log("textStatus: "+textStatus)
 					//console.log("param: "+param)
 					console.log(errorThrown)
+					if ( successFn ) successFn ( errorThrown );
 					//alerta ( "Error de SQL. ")
 					/*
 					$.post ( urll, param ,function( data ) {

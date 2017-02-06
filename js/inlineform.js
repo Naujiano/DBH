@@ -316,11 +316,15 @@ var inlineform2 = ( function ($,undefined) {
 		this.clearForm = function (clearrecords) {
 			var $form = that.$divinsertform
 			$form.find('.inputText').each ( function(){
-				this.value='';
-				parent.setTextareaHeight(this);
-				$(this).css('background',parent.$(this).data ( 'oldbg' ))
+				const $input = $(this)
+				, skip = ( clearrecords == "fromCrear" && $input.hasClass('no-autoclear') )
+				if ( ! skip ) {
+					this.value='';
+					parent.setTextareaHeight(this);
+					$(this).css('background',parent.$input.data ( 'oldbg' ))
+				}
 			})
-			if ( clearrecords ) that.$divlistado.html('<div class="inlineform-vacio">Vacío</div>')
+			if ( clearrecords && clearrecords != "fromCrear" ) that.$divlistado.html('<div class="inlineform-vacio">Vacío</div>')
 			$divinlineform.find('*').removeClass('validation-notvalid')
 			DBH.valueLists().setColor()
 		}
@@ -631,7 +635,7 @@ var inlineform2 = ( function ($,undefined) {
 				that.$divlistado.find('.botonfiles').removeClass('botonfiles').css('cursor','default').attr('disabled',true)
 			}
 			that.setup();
-			if ( typeof serie == 'undefined' )that.clearForm()
+			if ( typeof serie == 'undefined' )that.clearForm('fromCrear')
 
 			if ( typeof callbackFnWhenAddNew != 'undefined' ) callbackFnWhenAddNew()
 			return true
