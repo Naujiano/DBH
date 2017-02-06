@@ -321,7 +321,7 @@ var inlineform2 = ( function ($,undefined) {
 				if ( ! skip ) {
 					this.value='';
 					parent.setTextareaHeight(this);
-					$(this).css('background',parent.$input.data ( 'oldbg' ))
+					$(this).css('background',$input.data ( 'oldbg' ))
 				}
 			})
 			if ( clearrecords && clearrecords != "fromCrear" ) that.$divlistado.html('<div class="inlineform-vacio">Vacío</div>')
