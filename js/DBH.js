@@ -1,14 +1,12 @@
 
 const $document = $(document)
-const testfn = function ( ) {
-	const win = window.open('./test.html')
-}()
 window.addEventListener("message", receiveMessage, false);
 function receiveMessage ( event ) {
 	const message = event.data
 	, {areaid, recid} = message
 	console.log(message)
 	DBH.gorecord(areaid, recid)
+	window.focus()
 }
 function preinit(){
 	window.onmousedown=function documentClick(){
