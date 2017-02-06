@@ -314,7 +314,6 @@ var inlineform2 = ( function ($,undefined) {
 			$divbotonesoperaciones.prepend($boton)
 		}
 		this.clearForm = function (clearrecords) {
-			
 			var $form = that.$divinsertform
 			$form.find('.inputText').each ( function(){
 				const $input = $(this)
