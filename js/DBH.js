@@ -1,4 +1,15 @@
+
 const $document = $(document)
+const testfn = function ( ) {
+	const win = window.open('./test.html')
+}()
+window.addEventListener("message", receiveMessage, false);
+function receiveMessage ( event ) {
+	const message = event.data
+	, {areaid, recid} = message
+	console.log(message)
+	DBH.gorecord(areaid, recid)
+}
 function preinit(){
 	window.onmousedown=function documentClick(){
 		var iscontext = $(':focus').hasClass('jscolor')
