@@ -400,7 +400,7 @@ var inlineform2 = ( function ($,undefined) {
 			} else {
 				sql += " ORDER BY " + customview + "." + that.pktablefieldname + " desc"
 			}
-			console.log(sql)
+//			console.log(sql)
 			var registros = parent.sqlExec(sql,0)
 			return registros
 		}
@@ -751,7 +751,7 @@ var inlineform2 = ( function ($,undefined) {
 					$container.append ( $toggleContainer )
 					$toggleContainer.append ( $rowset.detach() )
 					that.$divlistado.append($container)
-					console.log(key+'**'+ $rowset.length)
+//					console.log(key+'**'+ $rowset.length)
 				}
 				that.$divlistado.addClass('grouped')//find('label[for]').hide()
 			}

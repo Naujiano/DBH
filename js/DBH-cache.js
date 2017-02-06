@@ -60,7 +60,7 @@
 //      console.log(selectSyntax)
       //let $rows = DBH.ajax.toRows ( selectSyntax , idFieldName )
       this.add$rows ( $rows )
-      console.log(idFieldName+presentIds)
+      //console.log(idFieldName+presentIds)
 //	  console.log(this.$table.wrap('<div/>').parent().html())
     }
 	clear () {
