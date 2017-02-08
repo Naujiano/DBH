@@ -21,8 +21,9 @@ function $formatFilter($cmpsfiltro){
 		if ( this == null ) console.log ( "Function formatFilter: el campo " + n + " no se encuentra." )
 		var v = this.value
 		, $field = $(this)
-		, data = $(this).data('data-filter-conditions')
-		, sqlfilter = $(this).attr('data-sql-filter')
+		, data = $field.data('data-filter-conditions')
+		, sqlfilter = $field.attr('data-sql-filter')
+		, tipo = $field.attr('tipo')
 		, usefilterdata = false
 		, l = this.name
 		if ( v != '' && v && v != null && this.tagName=="SELECT" ) { //Es select repetida con valor directo seleccionado
@@ -36,12 +37,12 @@ function $formatFilter($cmpsfiltro){
 		if ( ! sqlfilter || v == '' ) { //Si tiene filtro especial y selecciona una valor dejo que se ocupe la función de filtro custom del topform.
 			//if ( filtro && data  ) {
 			if ( data  ) {
-				var vv = $field.data('data-filter-conditions')
+				var vv = data
 				usefilterdata = true
 				if ( sqlfilter ) {
 					var variablesFiltro = {}
 					, id = sqlfilter.substring ( sqlfilter.indexOf ( "{" )+1, sqlfilter.indexOf ("}") )
-					, $cmp = $('<textarea id="' + id + '">' + vv + '</textarea>')
+					, $cmp = $('<textarea id="' + id + '" tipo="'+tipo+'">' + vv + '</textarea>')
 					, cmp = $cmp[0]
 					, variablesFiltro = filterStringMatch(cmp,this)
 					variablesFiltro.r = sqlfilter.replace ( '{' + id + '}', variablesFiltro.r )
@@ -55,7 +56,7 @@ function $formatFilter($cmpsfiltro){
 					} else {
 						var id= this.id
 					}
-					var $cmp = $('<textarea id="' + id + '">' + vv + '</textarea>')
+					var $cmp = $('<textarea id="' + id + '" tipo="'+tipo+'">' + vv + '</textarea>')
 					, cmp = $cmp[0]
 					, variablesFiltro=filterStringMatch(cmp,this)
 					//console.log(cmp)

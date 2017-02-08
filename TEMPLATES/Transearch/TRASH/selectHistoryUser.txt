@@ -1,0 +1,1 @@
+select top 1 his_usu_id from dbh_historico where his_da_id = 26 and his_pkvalue = pb_id order by his_id
