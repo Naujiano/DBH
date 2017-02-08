@@ -1998,7 +1998,8 @@ var vars = ( function () {
 								})
 							})
 						} else {
-							new inlineSearch($fieldfromdb,{field:$fieldfromdb.attr('id'),table:$fieldfromdb.attr('id').split(".")[0]})
+							inlineSearch($fieldfromdb,{$field:$fieldfromdb,field:$fieldfromdb.attr('id'),table:$fieldfromdb.attr('id').split(".")[0]})
+							//inlineSearch($tempfield,{$field: $field,field: $field.attr('select-text-field'), idfield:$field.attr('select-id-field'),table: $field.attr('select-table'),orderby:$field.attr('select-orderby')})
 						}
 					}
 					//var $label = $('<div style="width:100%;clear:both;height:12px;float:none"><label style="" title="'+data_label_title+'" for="' + data_field_id + '">' + data_field_name + '</label></div>')

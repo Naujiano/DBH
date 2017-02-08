@@ -125,7 +125,7 @@ function inlineSearch ($campo,sqlConfig) {
 			console.log(sql)
 		} else {
 			//return false
-			var sql = "SELECT top 30 " + sqlConfig.idfield + " as dbh_temp_idvalue," + sqlConfig.field + " as dbh_temp_valor FROM " + sqlConfig.table + " WHERE " + sqlConfig.field + " LIKE '%" + inputVal + "%'" + whereAvailableIds + " ORDER BY " + ( ( sqlConfig.orderby != '' ) ? sqlConfig.orderby : sqlConfig.field )
+			var sql = "SELECT top 30 " + sqlConfig.idfield + " as dbh_temp_idvalue," + sqlConfig.field + " as dbh_temp_valor FROM " + sqlConfig.table + " WHERE " + sqlConfig.field + " LIKE '%" + inputVal + "%'" + whereAvailableIds + " ORDER BY " + ( ( sqlConfig.orderby && sqlConfig.orderby != '' ) ? sqlConfig.orderby : sqlConfig.field )
 			console.log(sql)
 			$table.find('thead').remove()
 		}
@@ -189,8 +189,8 @@ function inlineSearch ($campo,sqlConfig) {
 	$campo.on ( 'keydown' , function(event){that.keypressed(event)} )
 	$campo.on ( 'focus' , function(){that.keypressed(0)} )
 	$campo.on ( 'blur' , function(){that.hide()} )
-	sqlConfig.$field.on ( 'setValue' , function(valor){
-	} )
+	//console.log(sqlConfig)
+	//sqlConfig.$field.on ( 'setValue' , function(valor){} )
 	$(document).on ( 'scrolled' , that.position )
 	//$campo.on ( 'blur' , function(){that.hide()} )
 }
