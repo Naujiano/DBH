@@ -583,6 +583,10 @@ var listado = ( function () {
 					},
 					error: function ( jqXHR, textStatus, errorThrown)
 					{
+						console.log('jode marrana')
+						alerta ( 'Error en sentencia SQL.' )
+						DBH.telon.listado.hide()
+						pub.loadSql.loading = false
 						console.log(errorThrown)
 					}
 				});

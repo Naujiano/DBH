@@ -158,7 +158,7 @@ function inlineSearch ($campo,sqlConfig) {
 				event.preventDefault();
 				//event.stopImmediatePropagation();
 				event.stopPropagation();
-				//console.log('nnewww')
+				console.log($campo[0])
 				//return false;
 
 			$campo.attr('idvalue',$(this).attr('idvalue')).val($(this).attr('valor'));
