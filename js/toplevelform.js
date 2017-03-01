@@ -1152,7 +1152,7 @@ var toplevelform = function (objpar) {
 		$container.find('.inputText').not('[name="static"]').each(function(){
 			var $cp = $(this)
 			, val = setDefaults*1?$cp.attr("data_default_value"):''
-			console.log(this.id + val)
+			//console.log(this.id + val)
 			//if ( $cp.hasClass('inline-search') ) debugger;
 			$cp.valor(val).removeData('data-filter-conditions');
 			this.readOnly=0

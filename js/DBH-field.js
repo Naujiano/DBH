@@ -96,10 +96,11 @@ $(document).on('form:save', function ( ){
 	function DBH_field_instantiate( $jquerySet ) {
 		if ( ! $jquerySet.length ) return undefined;
 		let $input = $jquerySet.eq(0)
+		, tagName = $input[0].tagName
 		, type = $input.attr ( 'data-dbh-field-type' )
 		, isInlineSearch = $input.hasClass ( 'inline-search' )
 		, fieldClassInstance
-		if ( $input.hasClass ( 'inline-search' ) ) {
+		if ( $input.hasClass ( 'inline-search' ) && tagName == 'SELECT' ) {
 			fieldClassInstance = new field_search ( $input )
 		} else if ( $input.hasClass ( 'tags-cloud' ) ) {
 			fieldClassInstance = new field_tags ( $input , $input.attr('grupo') )
