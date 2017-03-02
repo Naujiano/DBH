@@ -31,7 +31,9 @@ function inlineSearch ($campo,sqlConfig) {
 		, topbody = top + lineheight
 		, left = inputPosition.left
 		, $field = sqlConfig.$field
-		that.$container.css({left: left,top: topbody, 'min-width' : inputWidth })
+		, cssPosition = {left: left,top: topbody, 'min-width' : inputWidth }
+		console.log ( cssPosition )
+		that.$container.css(cssPosition)
 		that.$container.find('thead').css({'margin-top': -1 * lineheight})
 
 	}
