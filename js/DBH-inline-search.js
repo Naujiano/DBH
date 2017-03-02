@@ -127,7 +127,7 @@ function inlineSearch ($campo,sqlConfig) {
 			console.log(sql)
 		} else {
 			//return false
-			var sql = "SELECT top 30 " + sqlConfig.idfield + " as dbh_temp_idvalue," + sqlConfig.field + " as dbh_temp_valor FROM " + sqlConfig.table + " WHERE " + sqlConfig.field + " LIKE '%" + inputVal + "%'" + whereAvailableIds + " ORDER BY " + ( ( sqlConfig.orderby && sqlConfig.orderby != '' ) ? sqlConfig.orderby : sqlConfig.field )
+			var sql = "SELECT DISTINCT top 30 " + sqlConfig.idfield + " as dbh_temp_idvalue," + sqlConfig.field + " as dbh_temp_valor FROM " + sqlConfig.table + " WHERE " + sqlConfig.field + " LIKE '%" + inputVal + "%'" + whereAvailableIds + " ORDER BY " + ( ( sqlConfig.orderby && sqlConfig.orderby != '' ) ? sqlConfig.orderby : sqlConfig.field )
 			console.log(sql)
 			$table.find('thead').remove()
 		}
