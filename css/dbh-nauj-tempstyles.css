@@ -139,3 +139,14 @@ span.ui-selectmenu-button,span.ui-selectmenu-button:hover,span.ui-selectmenu-but
 	margin-left: 5px;
 	margin-top: -25px;
 }
+.dbh-query-editor .parameter-container .parameter .label,
+.dbh-query-editor .parameter-container .parameter .value
+{
+	text-decoration: line-through;
+	text-transform: none;
+}
+.dbh-query-editor .parameter-container.active .parameter .label,
+.dbh-query-editor .parameter-container.active .parameter .value
+{
+	text-decoration: none;
+}

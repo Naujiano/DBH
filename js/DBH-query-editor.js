@@ -39,6 +39,38 @@ function dbhQueryEditor (parameters) {
 		that.$container.find('input').trigger('input')
 		
     }
+	this.editParameter = function (div) {
+		console.log(div)
+		const $div = $(div)
+		, text = $div.text()
+		prompt("Copy to clipboard: Ctrl+C, Enter", text);
+		/*
+		, $ta = $('<textarea style="margin-left:0 5px 0 -5px;"/>').val($div.text())
+		, hh = $div.height()
+		, ww = $div.width()
+		$div.after($ta)
+		$div.hide()
+		$ta.height(hh).width(ww)
+		$ta.focus()
+		//setTextareaHeight ( $ta )
+		*/
+		
+	}
+	this.saveParameter = ( ta ) => {
+		const $ta = $(ta)
+		, $div = $ta.parent().find('.value')
+		, value = $ta.val()
+		$ta.remove()
+		$div.show()
+		/*
+		$div.html($('<div/>').text(value).html()).show()
+		const qp = $div.closest('.parameter-container').data('queryparameters')
+		, id = qp.id
+		, $field = DBH.area().$container.find ( `[id="${id}"]` )
+		, $clone = field.clone().val()
+		console.log(qp)
+		*/
+	}
 	this.remakeQP = function () {
 		that.queryparameters = []
 		that.$container.find('.parameter-container').each ( function () {
@@ -258,6 +290,15 @@ function dbhQueryEditor (parameters) {
 			if ( !confirm ( 'Borrar todos los parámetros de filtrado?' ) ) return false
 			that.queryparameters = []
 			that.load()
+		})
+		.on ( 'contextmenu', '.parameter .value', function (event) {
+			that.editParameter(this)
+			event.preventDefault();
+			event.stopImmediatePropagation() ;
+		})
+		.on ( 'blur', '.parameter textarea', function (event) {
+			that.saveParameter(this)
+			event.stopImmediatePropagation() ;
 		})
 		.on ( 'click','button.activatepars', function (event) {
 			var $btn = $(this)
