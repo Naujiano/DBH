@@ -50,5 +50,19 @@
 			alerta('Datos de Visual Seg importados correctamente',1)
 		}
 	}
+	customjs.updateOfertas = function () {
+		var ids = DBH.area().recsid
+		if ( ! ids.length ) { alert('Seleccione registros' ); return false }
+		if ( ! confirm ( 'Reducir un 5% las ofertas caducadas?' ) ) return false
+		var sql = "exec dbo.sp_update_ofertas '" + ids + "'"
+	     , res = DBH.ajax.sql(sql)
+		console.log(sql)
+		if ( !res ) {
+			alerta('Error en la actualización de ofertas.')
+		}else{
+			alerta('Ofertas actualizadas correctamente.',1)
+		}
+		console.log(ids)
+	}
 	//customjs.importar
 }());

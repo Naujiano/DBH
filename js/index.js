@@ -2235,7 +2235,8 @@ var vars = ( function () {
 						valores.push("'"+val.replace(/\'/g,"''")+"'")
 					}
 				})
-				txtsql += "INSERT INTO " + da_pktabla + " (" + validcols + ",dbh_perfiles_admitidos_xreg) VALUES (" + valores + ",'user" + usu_id + "') "
+				//txtsql += "INSERT INTO " + da_pktabla + " (" + validcols + ",dbh_perfiles_admitidos_xreg) VALUES (" + valores + ",'user" + usu_id + "') "
+				txtsql += "INSERT INTO " + da_pktabla + " (" + validcols + ") VALUES (" + valores + ") "
 				contador++
 				if ( contador > 400 ) {
 					contador = 0;
