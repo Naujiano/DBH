@@ -1,10 +1,13 @@
 var docs = {
 	'loadDocsList' : function (registros,div,callbackFnWhenDeleteFile){
+		//console.log(div)
 		var $div = $(div)
 		$div.html ( '' )
 		if ( registros == null ) return false
-		if ( registros.length == 0 ) return false
-			//console.log(registros )
+		registros = registros.firstChild.children
+		//if ( registros.length == 0 ) return false
+			//console.log(registros.firstChild.children )
+			//console.log(registros.firstChild.children.length )
 		$(registros).each ( function (item, ele){
 			//console.log(this)
 			var id = $(ele).find('[fieldname="id"]').text()
@@ -79,7 +82,7 @@ var docs = {
 				fields: 'doc_id as id,doc_nombrearchivo as nombrearchivo,doc_nombreoriginal as nombreoriginal,doc_path as path'
 				, table: 'DBH_DOCUMENTOS'
 				, where: "doc_da_id = '" + da_id + "' AND doc_pkvalue = " + doc_pkvalue + " order by fechauc desc"
-			}).request ((xml)=>docs.loadDocsList ( xml, divlist, this.deleteDocS ))
+			}).request ((xml)=>{docs.loadDocsList ( xml, divlist, this.deleteDocS )})
 			return
 			var sql = "SELECT doc_id as id,doc_nombrearchivo as nombrearchivo,doc_nombreoriginal as nombreoriginal,doc_path as path FROM DBH_DOCUMENTOS WHERE doc_da_id = '" + da_id + "' AND doc_pkvalue = " + doc_pkvalue + " order by fechauc desc"
 			, registros = parent.sqlExec(sql,0)
