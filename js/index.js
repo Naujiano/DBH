@@ -2219,6 +2219,7 @@ var vars = ( function () {
 			, da_pktabla = sqlExecVal(sql)
 			, usu_id = sessionStorage["usu_id"]//$(document).data('usu_id')
 			, contador = 1
+			, lineasTotales = 0
 			data.splice ( 0, 1 )
 			console.log(data)
 			while ( validcols.indexOf(null)!=-1 && validcols.length>0 ) {
@@ -2238,6 +2239,7 @@ var vars = ( function () {
 				//txtsql += "INSERT INTO " + da_pktabla + " (" + validcols + ",dbh_perfiles_admitidos_xreg) VALUES (" + valores + ",'user" + usu_id + "') "
 				txtsql += "INSERT INTO " + da_pktabla + " (" + validcols + ") VALUES (" + valores + ") "
 				contador++
+				lineasTotales++
 				if ( contador > 400 ) {
 					contador = 0;
 					var res = DBH.ajax.sql(txtsql)
@@ -2270,7 +2272,7 @@ var vars = ( function () {
 				return false
 			}
 			*/
-			alerta(contador + ' registros importados correctamente',1)
+			alerta(lineasTotales + ' registros importados correctamente',1)
 			//console.log(txtsql)
 		}
 		return pub
