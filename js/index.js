@@ -2270,7 +2270,7 @@ var vars = ( function () {
 				return false
 			}
 			*/
-			alerta('Registros importados correctamente',1)
+			alerta(contador + ' registros importados correctamente',1)
 			//console.log(txtsql)
 		}
 		return pub
