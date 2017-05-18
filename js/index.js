@@ -2233,14 +2233,18 @@ var vars = ( function () {
 					var val = this
 					, col = cols[j]
 					if ( col!=null&&col!=''){
-						valores.push("'"+val.replace(/\'/g,"''")+"'")
+						if ( typeof val == "undefined" || val == null ) {
+							valores.push ( "null" )
+						} else {
+							valores.push("'"+val.replace(/\'/g,"''")+"'")
+						}
 					}
 				})
 				//txtsql += "INSERT INTO " + da_pktabla + " (" + validcols + ",dbh_perfiles_admitidos_xreg) VALUES (" + valores + ",'user" + usu_id + "') "
 				txtsql += "INSERT INTO " + da_pktabla + " (" + validcols + ") VALUES (" + valores + ") "
 				contador++
 				lineasTotales++
-				if ( contador > 400 ) {
+				if ( contador > 200 ) {
 					contador = 0;
 					var res = DBH.ajax.sql(txtsql)
 					if ( !res ) {
