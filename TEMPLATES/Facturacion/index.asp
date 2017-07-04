@@ -4,6 +4,7 @@
 	DBHversion = request("v")
 	if DBHversion = "0" then
 		DBHpath = "http://192.168.1.128/dbh/"
+		DBHpath = "http://localhost/dbh/"
 	else
 		if DBHversion = "" then
 			DBHversion = "456c2e54331092cc81476034303ee0ff66726dc3"

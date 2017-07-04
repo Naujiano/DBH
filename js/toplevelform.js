@@ -541,11 +541,14 @@ var toplevelform = function (objpar) {
 		, filename = e.filename
 		, $tempfield = $('<div class="dbh-excel-limit-400"/>')
 		, excelLimit = -1
+		, checkedids = DBH.area().checkedids
+		, where = checkedids.length ? "id in (" + checkedids + ")" : ""
+		//console.log(view)
 		if ( $tempfield.is ( sessionStorage["usu_perfil"] ) ) {
 			excelLimit = 400
 			alerta ( 'EXCEL limitado a 400 registros.' )
 		}
-		window.open ( 'excelMaker.asp?titulo=' + filename + '&tituloexcel=' + tit + '&vista=' + view + '&excelLimit=' + excelLimit )
+		window.open ( 'excelMaker.asp?titulo=' + filename + '&tituloexcel=' + tit + '&vista=' + view + '&where=' + where + '&excelLimit=' + excelLimit )
 	}
 	this.numerarcols = function () {
 		$(parent.document.getElementById('iframeListadoCuerpo').contentWindow.document).find('#tablaEncabezado #trCeldasEncabezados td').each ( function (i) {
