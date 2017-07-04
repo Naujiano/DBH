@@ -543,7 +543,6 @@ var toplevelform = function (objpar) {
 		, excelLimit = -1
 		, checkedids = DBH.area().checkedids
 		, where = checkedids.length ? "id in (" + checkedids + ")" : ""
-		//console.log(view)
 		if ( $tempfield.is ( sessionStorage["usu_perfil"] ) ) {
 			excelLimit = 400
 			alerta ( 'EXCEL limitado a 400 registros.' )
