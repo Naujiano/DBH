@@ -342,7 +342,7 @@ var DBH = ( function () {
 	}());
 		this.gorecord = function (areaid,recid,timer) {
 		var areahabilitada = $('#treemenu li[da_id="'+areaid+'"]').length
-		if(!areahabilitada){alerta ('Su usuario no tiene permiso para acceder a este área.');return false}
+		if(!areahabilitada){alerta('Su usuario no tiene permiso para acceder a este área.');return false}
 		if(!timer && !$('.formCuerpo[da_id="'+areaid+'"]').length ) {
 					DBH.telon.areaLoad()
 					//DBH.telon.texto.append('Generando el Área...')
