@@ -1,0 +1,1 @@
+sqlcmd -U sa -P Sqlserver0 -S localhost\SQLEXPRESS -d DBH_Coteyser -Q "exec dbo.sp_backupDatabase"

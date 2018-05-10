@@ -7,6 +7,7 @@
 	else
 		if DBHversion = "" then
 			DBHversion = "456c2e54331092cc81476034303ee0ff66726dc3"
+			DBHversion = "9d1fc197c95c2813d648ca73662547ce8ea1be38"
 		end if
 		DBHpath = "https://rawgit.com/Naujiano/DBH/" & DBHversion & "/"
 		DBHversion = left(DBHversion,7)
