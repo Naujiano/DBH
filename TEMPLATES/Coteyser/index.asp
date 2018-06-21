@@ -16,6 +16,7 @@
 			DBHversion = "11abffe3bcd71638e3696beb753209d06cbed281"
 			DBHversion = "9d1fc197c95c2813d648ca73662547ce8ea1be38"
 			DBHversion = "b6f6125e445ce84feb6db3650f04c9f0124f3095"
+			DBHversion = "0402c033787f8cc10c380d6dd5436cd00012b61e"
 		end if
 		DBHpath = "https://rawgit.com/Naujiano/DBH/" & DBHversion & "/"
 		DBHversion = left(DBHversion,7)

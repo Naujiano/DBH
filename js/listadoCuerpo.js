@@ -742,7 +742,12 @@ var listado = ( function () {
 						})
 						$celda.append ( valorcampo );
 					} else {
-						$celda.append ( $('<div/>').text(valorcampo).html() );
+						var valor = $('<div/>').text(valorcampo).html()
+						, linesArray = valorcampo.split(new RegExp(" 1a2a3a ","g"))
+						, endVal = ""
+						linesArray.forEach ( line => {endVal += line + '<br>'})
+						$celda.append ( endVal );
+						//console.log()
 					}
 					if($celda.css('text-align')=='')$celda.css('text-align',($(celda).text().length<3)?'center':'left')
 					if(tipos[j])$celda.addClass('dbh_fecha_color')
@@ -951,10 +956,9 @@ function reFilter(listadoWhere,listadoWhereText,levantarTelon){
 		, grupo = eti[2]
 		, sqlParams = eti[3]
 		if ( sqlParams ) {
-	console.log(eti)
 			var groupedColumnSql = topform.queryEditor.groupedColumnSql(sqlParams)
 			//, columnSql = "(SELECT distinct cast(" + sqlParams.fields + " as varchar(max)) + ', ' FROM " + sqlParams.table + " WHERE (" + groupedColumnSql + ") AND " + sqlParams.where + " FOR XML PATH(''))"
-			, columnSql = "(SELECT distinct convert(varchar(max)," + sqlParams.fields + ",103) + ' * ' FROM " + sqlParams.table + " WHERE (" + groupedColumnSql + ") AND " + sqlParams.where + " FOR XML PATH(''))"
+			, columnSql = "(SELECT distinct convert(varchar(max)," + sqlParams.fields + ",103) + ' 1a2a3a ' FROM " + sqlParams.table + " WHERE (" + groupedColumnSql + ") AND " + sqlParams.where + " FOR XML PATH(''))"
 			etiquetasListado[i][0] = columnSql
 			etiquetasHasInlineformParam = 1
 			console.log(columnSql)
