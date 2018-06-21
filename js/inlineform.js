@@ -288,7 +288,7 @@ var inlineform2 = ( function ($,undefined) {
 				, inlineformIndex : that.inlineformIndex
 				//, da_areamadrastra : da_areamadrastra
 			}
-			console.log(sql)
+			//console.log($i.attr('tipo')== 'datetime')
 			topform.addcolumn ( sqlParams, "", blockButton+": "+name, grupo, noResetListado );
 			//console.log(sql)
 

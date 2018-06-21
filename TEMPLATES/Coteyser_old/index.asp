@@ -6,13 +6,7 @@
 		DBHpath = "http://192.168.1.128/dbh/"
 	else
 		if DBHversion = "" then
-			DBHversion = "4b8d449eaff737aaf938bd3c1ccd62517959c79a"
-			DBHversion = "6a248a485928e9c3f2df7b5b74a8674fb8ffca16"
-			DBHversion = "a6c8e6e0fc0401e895681c71ad938adde0ff68a2"
-			DBHversion = "25a3d64556668c2f4705aad5fda22e409fbb71a7"
-			DBHversion = "659526f6b7dd008dc3711a2edfbaeb915273b8d7"
-			DBHversion = "acbb878efad51245a98eef4364114fb57860e746"
-			DBHversion = "11abffe3bcd71638e3696beb753209d06cbed281"
+			DBHversion = "456c2e54331092cc81476034303ee0ff66726dc3"
 			DBHversion = "9d1fc197c95c2813d648ca73662547ce8ea1be38"
 		end if
 		DBHpath = "https://rawgit.com/Naujiano/DBH/" & DBHversion & "/"
@@ -68,7 +62,7 @@
 <script type="text/javascript" src="<%=DBHpath%>js/general.js"></script>
 <script type="text/javascript" src="<%=DBHpath%>js/myAjax.js"></script>
 <script type="text/javascript" src="<%=DBHpath%>js/listadoCuerpo.js"></script>
-<script async type="text/javascript" src="<%=DBHpath%>js/DBH.area.js"></script>
+<script type="text/javascript" src="<%=DBHpath%>js/DBH.area.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/init-caches.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/DBH-query-editor.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/inlineform.js"></script>
@@ -79,3 +73,4 @@
 <script async type="text/javascript" src="<%=DBHpath%>js/DBH-inline-search.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/DBH-filter-parameters.js"></script>
 <script async type="text/javascript" src="<%=DBHpath%>js/DBH-field.js"></script>
+<script async type="text/javascript" src="<%=DBHpath%>js/DBH-print.js"></script>

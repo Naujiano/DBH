@@ -4,7 +4,6 @@
 	session.codepage = 65001
 	response.charset = "utf-8"
 	set rs=server.createobject("adodb.recordset")
-	'rs.CommandTimeout=180
 	operacion = request("DBH_operacion")
 	tabla=request("DBH_tabla")
 	pk=request("DBH_pk")

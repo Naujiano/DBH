@@ -1,4 +1,3 @@
-<script>
 var customjs = ( function () {
 	this.filtros = ( function () {
 		var pub = {},
@@ -37,35 +36,33 @@ var customjs = ( function () {
 				})
 			})
 		}
-		pub.sqlfromparams = function () {
-			var i_stringifyparams = $('[id="informes.i_stringifyparams"]').val()
-			console.log(i_stringifyparams)
+		pub.sqlfromparams = function (stringifyparams) {
+			var i_stringifyparams = stringifyparams ? stringifyparams : $('[id="informes.i_stringifyparams"]').val()
 			, pars = JSON.parse(i_stringifyparams)
-			console.log(pars)
 			, tabla = pars.tabla
 			, etiquetasListado = pars.etiquetasListado
 			, listadoWhere = pars.listadoWhere
 			, listadoWhereText = pars.listadoWhereText
 			, listadoOrderByIndex = pars.listadoOrderByIndex
 			, listadoOrderByIndexDesc = pars.listadoOrderByIndexDesc ? pars.listadoOrderByIndexDesc : ""
-			, i_pkfield = $('#i_pkfield').val()
+			, i_pkfield = $('.formCuerpo[da_id="'+$('[id="informes.i_da_id"]').val()+'"]').attr('pkname')
 			, campos = []
 			$(etiquetasListado).each ( function (i) {
 				var campo = etiquetasListado[i][0] + " AS [" + etiquetasListado[i][1] + "]"
 				campos.push ( campo )
 			} )
-			/*
-			var sql = "SELECT it_table FROM informes_tablas_pk WHERE it_pkfield = '" + i_pkfield + "'"
-			, it_table = sqlExecVal ( sql )
-			, orderby = etiquetasListado[listadoOrderByIndex][0] + " " + listadoOrderByIndexDesc
-			*/
-			var sql = "SELECT " + i_pkfield + "," + campos + " FROM " + tabla + " WHERE " + listadoWhere
-			$('#i_sql').val(sql)
-			setTextareaHeight($('#i_sql')[0])
-			$('#i_sql').val(sql)
+			var sql = "SELECT " + campos + " FROM " + tabla + " WHERE " + listadoWhere
+			if(!stringifyparams){
+				var $i_sql = $('[id="informes.i_sql"]')
+				$i_sql.val(sql)
+				setTextareaHeight($i_sql[0])
+				$i_sql.val(sql)
+			} else {
+				return sql
+			}
 		}
 		pub.sendAvisos = function () {
-			window.open('informes_avisos_sendemail.asp?i_id=' + $('#i_id').val() )
+			window.open('customcode/informes_avisos_sendemail.asp?i_id=' + $('#i_id').val() )
 		}
 		pub.resetAvisos = function () {
 			if ( ! confirm ( 'Desea borrar el registros de envíos para todos los avisos de este informe y resetearlo?') ) return false
@@ -74,7 +71,16 @@ var customjs = ( function () {
 			if(informesForm.botonavisos.isOpen)avisosinlineform.listar()
 		}
 		pub.excel = function () {
-			window.open('informes_SQL_excelmaker.asp?sql='+$('#i_sql').val().replace(/%/gi,'%25')+'&titulo='+$('#i_nombre').val())
+			pub.sqlfromparams()
+			var sql = $('[id="informes.i_sql"]').val().replace(/\'/g,"''")
+			, areaname = trim($('[id="informes.i_nombre"]').val())
+			, filterconditions = $('[id="informes.i_descripcion"]').val()
+			, e = vars.createViewForExcel(sql,areaname,filterconditions)
+			, view = e.view
+			, tit = e.title
+			, filename = e.filename;
+			console.log(e)
+			window.open ( 'excelMaker.asp?titulo=' + filename + '&tituloexcel=' + tit + '&vista=' + view )
 		}
 		return pub;
 	} () );
@@ -219,7 +225,36 @@ var customjs = ( function () {
 			parent.uidialog.open ( 'Se dispone a hacer una copia de riesgo seleccionado.\n\nDesea darlo de baja antes de clonar?','Clonar el riesgo actual?' )
 		}
 		return pub;
-	} () )
+	} () );
+	this.printhtml = function (fieldid,button) {
+		if ( typeof button != 'undefined' ) {
+			var html = $(button).closest('.lineamodelo').find('[id="' + fieldid + '"]').val()
+		} else {
+			var html = $('[id="' + fieldid + '"]').val()
+		}
+		DBH.html.print(html)
+	}
+	this.importarVisual = function () {
+		if ( ! confirm ( '¿Importar datos desde Visual Seg?' ) ) return false
+		var sql = "exec dbo.sp_VSImport_clientes_polizas_riesgos"
+		, res = DBH.ajax.sql(sql)
+		//console.log('*'+res+'*')
+		if ( !res ) {
+			alerta('Se ha producido un error en la importacion')
+		}else{
+			alerta('Datos de Visual Seg importados correctamente',1)
+		}
+	}
+	this.dbBackup = function () {
+		if ( ! confirm ( '¿Hacer un Backup de la BD?' ) ) return false
+		var sql = "exec dbo.sp_backupDatabase"
+		, res = DBH.ajax.sql(sql)
+		//console.log('*'+res+'*')
+		if ( !res ) {
+			alerta('Se ha producido un error al realizar el Backup')
+		}else{
+			alerta('Backup realizado correctamente',1)
+		}
+	}
 	return this
 } () );
-</script>

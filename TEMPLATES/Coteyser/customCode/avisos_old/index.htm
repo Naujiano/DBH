@@ -1,0 +1,52 @@
+<title>DBMailer v1</title>
+<h2>DBMailer</h2>
+<h4>
+	Filtros 
+	<select name="i_estado">
+		<option value="1">Activos</option>
+		<option value="3">De prueba</option>
+	</select>
+	<br><br>
+	Limitar número de registros a procesar
+	<input name="toprecs">
+	<br><br>
+	Modo
+	<select name="modo">
+		<option value="1">Test (Sólo se envia a Coteyser. No se marcan como enviados)</option>
+		<option value="0">Producción (Se envía a las direcciones reales y se marcan como enviados) </option>
+	</select>
+	<br><br>
+	<button onclick="generar()">Generar avisos</button>&nbsp;>&nbsp;<button onclick="agrupar()">Agrupar avisos</button>&nbsp;>&nbsp;<button onclick="enviar()">Enviar avisos</button>
+	<br>
+	<button disabled>Modo y límite de registros no afecta no afecta.</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button disabled>Modo Test: No se marcan como agrupados los Avisos.</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button disabled>Modo Test: No se marcan como enviados los Avisos Agrupados y los emails sólo envían a Coteyser.</button>
+</h4>
+<style>
+	button { width: 150px }
+	button[disabled] {border-color:transparent;background:transparent}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<script>
+	function generar () {
+		var i_estado = $('[name="i_estado"]').val()
+		window.open('avisos_generate.asp?i_estado='+i_estado)
+	}
+	function agrupar () {
+		var toprecs = $('[name="toprecs"]').val()
+		, interno = $('[name="modo"]').val()
+		, i_estado = $('[name="i_estado"]').val()
+
+		window.open('avisos_send.asp?interno='+interno+'&i_estado='+i_estado+'&toprecs='+toprecs)
+	}
+	function enviar () {
+		if ( ! confirm ( 'Si continúa enviará todos los avisos programados para el tipo de filtros seleccionado.') ) return false
+		var toprecs = $('[name="toprecs"]').val()
+		, interno = $('[name="modo"]').val()
+		, i_estado = $('[name="i_estado"]').val()
+		//window.open('avisos_send_email.asp?interno='+interno+'&i_estado='+i_estado+'&toprecs='+toprecs)
+		const noEmails = $.get ( 'http://ADMIN1-HP1:8000/noemails?interno='+interno+'&i_estado='+i_estado+'&toprecs='+toprecs )
+console.log(noEmails)		
+		if ( ! confirm ( 'Se van a enviar ' + noEmails + ' emails.\n\nCONTINUAR?' ) ) return false
+		//console.log(noEmails)
+		window.open('http://ADMIN1-HP1:9000/querymail?interno='+interno+'&i_estado='+i_estado+'&toprecs='+toprecs)
+	}
+</script>

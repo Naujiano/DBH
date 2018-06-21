@@ -1,7 +1,6 @@
-{
-	var customjs = {}
-	customjs.callbacks = {}
-	customjs.callbacks.clientes_save = function () {
+var customjs = ( function () {
+	this.callbacks = {}
+	this.callbacks.clientes_save = function () {
 		var $tipo = $('[id="personas.tipo"]')
 		, si = $tipo[0].selectedIndex
 		, tipo = $tipo.find('option').eq(si).val()
@@ -14,8 +13,7 @@
 			}
 		}
 	}
-	customjs.callbacks.dbh_comunicaciones_load = function () {
-		return
+	this.callbacks.dbh_comunicaciones_load = function () {
 		var $lists = $('[id="dbh_comunicaciones_busquedas.cb_i_id"]')
 		, grupo_id = $('[id="dbh_comunicaciones.com_grupo_id"]').val()
 		, subgrupo_id = $('[id="dbh_comunicaciones.com_subgrupo_id"]').val()
@@ -29,7 +27,7 @@
 		console.log( sql )
 		vars.filterSelectLists( $lists,sql );
 	}
-	customjs.filtros = ( function () {
+	this.filtros = ( function () {
 		var pub = {},
 			loc = {},
 			that = this;
@@ -82,11 +80,9 @@
 			, $clone = $email_mime.clone()
 			, $form = $('<form action="customcode/avisos/avisos_view_email.asp" target="_blank" method="post"></form>')
 			$form.append($clone.attr('name','email_mime'))
-			//console.log($clone.val())
+			console.log($email_mime.val())
 			//$form.find('input').val(email_mime)
-			$('body').append($form)
 			$form[0].submit()
-			$form.remove()
 			//window.open('customcode/avisos/avisos_view_email.asp?email_mime='+email_mime)
 		}
 		pub.excel = function () {
@@ -103,7 +99,6 @@
 		}
 		return pub;
 	} () );
-	/*
 	this.riesgos = ( function () {
 		var pub = {},
 			loc = {},
@@ -115,6 +110,11 @@
 			var efecto = $container.find('#r_fechaefecto').val()
 			var vencimiento = $container.find('#r_fechavencimiento').val()
 			var fp = $('#pr_idformapago').val()
+			/*
+			console.log ( efecto )
+			console.log(fp )
+			console.log(vencimiento)
+			*/
 			if ( efecto != '' && fp != '' ) {
 				if ( vencimiento != '' && typeof vencimiento != 'undefined' ) {
 					if ( ! confirm ( 'Actualizar la fecha de vencimiento del recibo de acuerdo a la fecha de efecto y la forma de pago?' ) ) return false
@@ -241,8 +241,7 @@
 		}
 		return pub;
 	} () );
-	*/
-	customjs.printhtml = function (fieldid,button) {
+	this.printhtml = function (fieldid,button) {
 		if ( typeof button != 'undefined' ) {
 			var html = $(button).closest('.lineamodelo').find('[id="' + fieldid + '"]').val()
 		} else {
@@ -250,7 +249,7 @@
 		}
 		DBH.html.print(html)
 	}
-	customjs.importarVisual = function () {
+	this.importarVisual = function () {
 		if ( ! confirm ( '¿Importar datos desde Visual Seg?' ) ) return false
 		var recs = DBH.ajax.select ( "select count(id) as no from visualseg_objetos_huerfanos" )
 		if(recs[0].no!="0"){alerta('No se puede importar!<br><br>Hay objetos huérfanos en Visualseg.',1);return false}
@@ -263,7 +262,7 @@
 			alerta('Datos de Visual Seg importados correctamente',1)
 		}
 	}
-	customjs.dbBackup = function () {
+	this.dbBackup = function () {
 		if ( ! confirm ( '¿Hacer un Backup de la BD?' ) ) return false
 		var sql = "exec dbo.sp_backupDatabase"
 		, res = DBH.ajax.sql(sql)
@@ -274,22 +273,5 @@
 			alerta('Backup realizado correctamente',1)
 		}
 	}
-	customjs.updateOfertas = function () {
-		var ids = DBH.area().recsid
-		if ( ! confirm ( 'Modificar ofertas de los registros seleccionados?' ) ) return false
-		//var porcentaje = prompt ( 'Introducir tanto porciento (%) de reducción de las ofertas caducadas' )
-		//if ( ! procentaje || !isNaN(porcentaje) ) { alert('Seleccione registros' ); return false }
-		if ( ! ids.length ) { alert('Seleccione registros' ); return false }
-		//if ( ! prompt ( 'Introducir tanto porciento (sin %) variacion oferta' ) ) return false
-		var sql = "exec dbo.sp_update_ofertas '" + ids + "'"
-	     , res = DBH.ajax.sql(sql)
-		console.log(sql)
-		if ( !res ) {
-			alerta('Error en la actualización de ofertas.')
-		}else{
-			alerta('Ofertas actualizadas correctamente.',1)
-		}
-		console.log(ids)
-	}
-	
-}
+	return this
+} () );

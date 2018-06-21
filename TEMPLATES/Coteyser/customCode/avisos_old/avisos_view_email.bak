@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<style>
+	* { margin: 0; box-sizing: border-box;font-family:arial; font-size:12px}
+	body { padding:10px; }
+</style>
+<%
+Response.ContentType = "application/x-unknown" 
+'response.charset = "utf-8"
+Response.AddHeader "Content-Disposition","attachment; filename=email.eml"
+'session.codepage = 65001
+iaa_id = request("iaa_id")
+set dbConn = server.createobject ( "adodb.connection" )
+conStr = "driver={SQL Server};Server=srv2\MPM;Database=DBH_Coteyser;Uid=SuperUser;Pwd=Oinst;"
+dbConn.open conStr
+'server.scripttimeout=36000 '10 horas
+set rs = server.createobject ( "adodb.recordset" )
+sql = "SELECT iaa_email_mime FROM informes_avisos_agrupados WHERE iaa_id = " & iaa_id
+rs.open sql , dbConn
+iaa_email_mime = rs ( "iaa_email_mime")
+rs.close
+ 
+    Set adoStream = CreateObject("ADODB.Stream") 
+    adoStream.Open() 
+    adoStream.Type = 1 
+    adoStream.WriteText(iaa_email_mime) 
+	Response.BinaryWrite(adoStream.Read)
+    Response.End 
+    DO WHILE NOT objStream.EOS
+    Response.BinaryWrite objStream.Read(10*1024)
+    LOOP
+    adoStream.Close 
+    Set adoStream = Nothing 
+ 
+set rs2 = server.createobject ( "adodb.recordset" )
+set rs3 = server.createobject ( "adodb.recordset" )
+set Mail = Server.CreateObject("Chilkat.MailMan2")
+set email = Server.CreateObject("Chilkat.Email2")
+Mail.UnlockComponent ("JUANMIMAILQ_mmCEdGHQ9Q89")
+'Mail.SmtpHost = "smtp.qscoteyser.com"
+response.write sql
+Mail.LoadMime ( iaa_email_mime )
+pp = "C:\NAUJ\Coteyser\DBH\TEMPLATES\Coteyser\documentos\emails"
+dname = "email.eml"
+ff = pp&"/"&dname
+success = email.SaveEml(ff)
+response.redirect ff
+%>
+<script runat="server" language="javascript">
+</script>

@@ -139,7 +139,7 @@ var originalfilename = file.name
 var dir = $(document).data("pars").dir //"c:\\data\\documentos\\usersUploads"
 
 $.ajax({
-    url: 'http://admin1-hp1:8000/upload',
+    url: 'upload.asp',
     data: data,
     cache: false,
     contentType: false,
