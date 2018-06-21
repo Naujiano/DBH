@@ -36,38 +36,31 @@
    <NumberFormat ss:Format="@"/>
   </Style>
  </Styles>
-<Worksheet ss:Name='Hoja1'><Table ss:DefaultColumnWidth='90'><Row><Cell><Data ss:Type='String'> -  </Data></Cell></Row><Row><Cell><Data ss:Type='String'>21/06/2018 17:41:19</Data></Cell></Row><Row ss:Index='4'><Cell ss:StyleID='s25'><Data ss:Type='String'>id</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>recibos: fecha de efecto</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>cliente</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>ramo</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>compa&#241;&#237;a</Data></Cell></Row>
+<Worksheet ss:Name='Hoja1'><Table ss:DefaultColumnWidth='90'><Row><Cell><Data ss:Type='String'> -  </Data></Cell></Row><Row><Cell><Data ss:Type='String'>21/06/2018 17:47:06</Data></Cell></Row><Row ss:Index='4'><Cell ss:StyleID='s25'><Data ss:Type='String'>id</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>recibos: fecha de efecto</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>cliente</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>ramo</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>compa&#241;&#237;a</Data></Cell></Row>
 <Row>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>993</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>01/01/2000 
- 01/01/2015 
- 01/01/2016 
- 01/01/2018 
- </Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>01/01/2000 ** 01/01/2015 ** 01/01/2016 ** 01/01/2018 ** </Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>CEPSAATIMUBISL</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>ESTACIONES DE SERVICIO</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'></Data></Cell>
 </Row>
 <Row>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>1151</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>01/01/2000 
- </Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>01/01/2000 ** </Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>10 sl</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'></Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'></Data></Cell>
 </Row>
 <Row>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>1484</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>20/11/2014 
- </Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>20/11/2014 ** </Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>CONSTRUCCIONES QUIROMAR, S.L.</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>R.C. GENERAL</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'></Data></Cell>
 </Row>
 <Row>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>1489</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>01/02/2015 
- </Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>01/02/2015 ** </Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>6 SL</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>R.C. GENERAL</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'></Data></Cell>
