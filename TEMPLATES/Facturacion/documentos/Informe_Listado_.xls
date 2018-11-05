@@ -36,13 +36,13 @@
    <NumberFormat ss:Format="@"/>
   </Style>
  </Styles>
-<Worksheet ss:Name='Hoja1'><Table ss:DefaultColumnWidth='90'><Row><Cell><Data ss:Type='String'> -  </Data></Cell></Row><Row><Cell><Data ss:Type='String'>18/04/2018 00:05:16</Data></Cell></Row><Row ss:Index='4'><Cell ss:StyleID='s25'><Data ss:Type='String'>id</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>cliente</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>n&#186; de factura</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>fecha</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>estado</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>irpf</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>iva</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>base imponible</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>importe total calculado</Data></Cell></Row>
+<Worksheet ss:Name='Hoja1'><Table ss:DefaultColumnWidth='90'><Row><Cell><Data ss:Type='String'> -  </Data></Cell></Row><Row><Cell><Data ss:Type='String'>04/10/2018 20:11:22</Data></Cell></Row><Row ss:Index='4'><Cell ss:StyleID='s25'><Data ss:Type='String'>id</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>cliente</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>n&#186; de factura</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>fecha</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>estado</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>irpf</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>iva</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>base imponible</Data></Cell><Cell ss:StyleID='s25'><Data ss:Type='String'>importe total calculado</Data></Cell></Row>
 <Row>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>6447</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>Ellis &amp; Partners, SL</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>452</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>2/1/2018</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>100 &#8364;</Data></Cell>
@@ -64,7 +64,7 @@
 <Cell ss:StyleID='s24'><Data ss:Type='String'>Coteyser S.L.</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>454</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>2/1/2018</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>300 &#8364;</Data></Cell>
@@ -75,7 +75,7 @@
 <Cell ss:StyleID='s24'><Data ss:Type='String'>Rosillo Hermanos S.A.</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>455</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>2/1/2018</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>100 &#8364;</Data></Cell>
@@ -86,7 +86,7 @@
 <Cell ss:StyleID='s24'><Data ss:Type='String'>Transearch Espa&#241;a S.L.</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>456</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>2/1/2018</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>75 &#8364;</Data></Cell>
@@ -97,7 +97,7 @@
 <Cell ss:StyleID='s24'><Data ss:Type='String'>TAT Mediadores S.L.</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>457</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>30/1/2018</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>1675 &#8364;</Data></Cell>
@@ -108,7 +108,7 @@
 <Cell ss:StyleID='s24'><Data ss:Type='String'>Ellis &amp; Partners, SL</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>458</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>5/2/2018</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>100 &#8364;</Data></Cell>
@@ -130,7 +130,7 @@
 <Cell ss:StyleID='s24'><Data ss:Type='String'>Coteyser S.L.</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>460</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>5/2/2018</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>300 &#8364;</Data></Cell>
@@ -141,7 +141,7 @@
 <Cell ss:StyleID='s24'><Data ss:Type='String'>Rosillo Hermanos S.A.</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>461</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>5/2/2018</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>100 &#8364;</Data></Cell>
@@ -152,7 +152,7 @@
 <Cell ss:StyleID='s24'><Data ss:Type='String'>Transearch Espa&#241;a S.L.</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>462</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>5/2/2018</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>75 &#8364;</Data></Cell>
@@ -163,7 +163,7 @@
 <Cell ss:StyleID='s24'><Data ss:Type='String'>Zavala Executive Search S.L.</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>463</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>5/2/2018</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>120 &#8364;</Data></Cell>
@@ -174,7 +174,7 @@
 <Cell ss:StyleID='s24'><Data ss:Type='String'>Zavala Executive Search S.L.</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>464</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>5/2/2018</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>150 &#8364;</Data></Cell>
@@ -185,7 +185,7 @@
 <Cell ss:StyleID='s24'><Data ss:Type='String'>Ellis &amp; Partners, SL</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>465</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>14/3/2018</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>100 &#8364;</Data></Cell>
@@ -196,7 +196,7 @@
 <Cell ss:StyleID='s24'><Data ss:Type='String'>Murimar Brok, Correduria de Seguros, S.L.</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>466</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>14/3/2018</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>15 &#8364;</Data></Cell>
@@ -207,7 +207,7 @@
 <Cell ss:StyleID='s24'><Data ss:Type='String'>Coteyser S.L.</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>467</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>14/3/2018</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>300 &#8364;</Data></Cell>
@@ -218,7 +218,7 @@
 <Cell ss:StyleID='s24'><Data ss:Type='String'>Rosillo Hermanos S.A.</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>468</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>14/3/2018</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>100 &#8364;</Data></Cell>
@@ -229,7 +229,7 @@
 <Cell ss:StyleID='s24'><Data ss:Type='String'>Transearch Espa&#241;a S.L.</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>469</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>14/3/2018</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>75 &#8364;</Data></Cell>
@@ -251,7 +251,7 @@
 <Cell ss:StyleID='s24'><Data ss:Type='String'>Ellis &amp; Partners, SL</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>471</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>2/4/2018</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>100 &#8364;</Data></Cell>
@@ -262,7 +262,7 @@
 <Cell ss:StyleID='s24'><Data ss:Type='String'>Murimar Brok, Correduria de Seguros, S.L.</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>472</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>2/4/2018</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>15 &#8364;</Data></Cell>
@@ -284,7 +284,7 @@
 <Cell ss:StyleID='s24'><Data ss:Type='String'>Rosillo Hermanos S.A.</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>474</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>2/4/2018</Data></Cell>
-<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>100 &#8364;</Data></Cell>
@@ -311,6 +311,391 @@
 <Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>1000 &#8364;</Data></Cell>
 <Cell ss:StyleID='s24'><Data ss:Type='String'>1060 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>9459</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Rosillo Hermanos S.A.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>477</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>18/4/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>1400 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>1484 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>10459</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Ellis &amp; Partners, SL</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>478</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>7/5/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>100 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>106 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>10460</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Murimar Brok, Correduria de Seguros, S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>479</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>7/5/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>15 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>15.9 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>10461</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Coteyser S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>480</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>7/5/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>300 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>318 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>10462</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Rosillo Hermanos S.A.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>481</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>7/5/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>250 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>265 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>10463</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Transearch Espa&#241;a S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>482</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>7/5/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>75 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>79.5 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>11459</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>TAT Mediadores S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>483</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>26/5/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>800 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>848 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>11460</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>TAT Mediadores S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>484</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>26/5/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>600 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>636 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>11461</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Ellis &amp; Partners, SL</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>485</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>4/6/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>100 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>106 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>11462</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Murimar Brok, Correduria de Seguros, S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>486</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>4/6/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>15 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>15.9 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>11463</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Coteyser S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>487</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>4/6/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>300 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>318 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>11464</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Rosillo Hermanos S.A.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>488</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>4/6/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>250 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>265 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>11465</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Transearch Espa&#241;a S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>489</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>4/6/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>75 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>79.5 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>11466</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Ellis &amp; Partners, SL</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>490</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>2/7/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>100 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>106 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>11467</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Murimar Brok, Correduria de Seguros, S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>491</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>2/7/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>15 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>15.9 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>11468</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Coteyser S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>492</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>2/7/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>300 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>318 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>11469</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Rosillo Hermanos S.A.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>493</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>2/7/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>250 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>265 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>11470</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Transearch Espa&#241;a S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>494</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>2/7/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>75 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>79.5 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>11471</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Coteyser S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>495</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>2/7/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>2000 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>2120 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>11472</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Ellis &amp; Partners, SL</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>496</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>2/7/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>1600 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>1696 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>11473</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Ellis &amp; Partners, SL</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>497</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>3/8/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>100 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>106 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>11474</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Murimar Brok, Correduria de Seguros, S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>498</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>3/8/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>15 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>15.9 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>11475</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Coteyser S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>499</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>3/8/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>300 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>318 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>11476</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Rosillo Hermanos S.A.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>500</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>3/8/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>250 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>265 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>11477</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Transearch Espa&#241;a S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>501</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>3/8/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>75 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>79.5 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>12473</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Ellis &amp; Partners, SL</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>502</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>18/9/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>100 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>106 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>12474</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Murimar Brok, Correduria de Seguros, S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>503</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>18/9/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>15 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>15.9 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>12475</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Coteyser S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>504</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>18/9/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>300 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>318 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>12476</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Rosillo Hermanos S.A.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>505</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>18/9/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>250 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>265 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>12477</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Transearch Espa&#241;a S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>506</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>18/9/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>75 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>79.5 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>12478</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Ellis &amp; Partners, SL</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>507</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>4/10/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>100 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>106 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>12479</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Murimar Brok, Correduria de Seguros, S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>508</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>4/10/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>15 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>15.9 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>12480</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Coteyser S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>509</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>4/10/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>300 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>318 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>12481</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Rosillo Hermanos S.A.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>510</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>4/10/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>250 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>265 &#8364;</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>12482</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>Transearch Espa&#241;a S.L.</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>511</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>4/10/2018</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>No pagada</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>15</Data></Cell>
+<Cell ss:StyleID='s23'><Data ss:Type='Number'>21</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>75 &#8364;</Data></Cell>
+<Cell ss:StyleID='s24'><Data ss:Type='String'>79.5 &#8364;</Data></Cell>
 </Row>
 </Table>
 <AutoFilter x:Range='R4C1:R4C9' xmlns='urn:schemas-microsoft-com:office:excel'></AutoFilter></Worksheet></Workbook>

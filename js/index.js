@@ -1556,7 +1556,7 @@ var vars = ( function () {
 			//if ( clase == 'alerta-warning' ) $alerta.find('code').append('hola que tal yo bien y vos<br>todo bien lindo día')
 			$ol.prepend($alerta.addClass(clase).addClass('blink_me'))
 			$container.scrollTop(0)
-			$container.height ( $alerta.outerHeight() + 2 )
+			//$container.height ( $alerta.outerHeight() + 2 )
 			let that = this
 			if ( that.blankTimer ) clearTimeout ( that.blankTimer )
 			this.blankTimer = setInterval ( function () {
@@ -1564,7 +1564,7 @@ var vars = ( function () {
 				$alertaBlank.find('code').html('&nbsp;')
 				$ol.prepend ( $alertaBlank )
 				$container.scrollTop(0)
-				$container.height ( $alertaBlank.outerHeight() + 2 )
+				//$container.height ( $alertaBlank.outerHeight() + 2 )
 				clearTimeout ( that.blankTimer )
 			} , 10000 )
 		}

@@ -60,15 +60,18 @@
 	end if
 	'response.write sqlsppc
 	if ( DBH_da_id <> "" ) then
+		obligatorias = 0
 		rs.open sqlsppc,dbConnZavala
 		pcalertas = ""
 		do while not rs.eof
-			pcalertas = pcalertas + "<pc_id>" & rs("pc_id") & "</pc_id><pc_nombre>" & rs("pc_nombre") & "</pc_nombre><pc_descripcion>" & rs("pc_desc") & "</pc_descripcion>"'
+			pcalertas = pcalertas & "<precondicion><pc_id>" & rs("pc_id") & "</pc_id><pc_nombre>" & rs("pc_nombre") & "</pc_nombre><pc_descripcion>" & rs("pc_desc") & "</pc_descripcion><pc_tipo>" & rs("pc_tipo") & "</pc_tipo></precondicion>"'
+			if ( rs ( "pc_tipo" ) = 10365 ) then obligatorias = 1 ' 10365 = condición obligatoria
 			rs.movenext
 		loop
 		if pcalertas <> "" then
-			response.write "<precondiciones><precondicion>"&pcalertas&"</precondicion></precondiciones>"
-			response.end
+			response.write "<precondiciones>"&pcalertas&"</precondiciones>"
+			if (obligatorias = 1 ) then response.end
+			'response.end
 		end if
 		rs.close
 	end if
@@ -83,6 +86,9 @@
 		rs.open sql,dbConnZavala
 		res = rs(0)
 		rs.close
+	else
+		'if ( errNumber = 0 AND operacion <> "insert" AND operacion <> "update" ) then res = rs(0)
+		if res = null then res="1"
 	end if
 	'if (not rs.eof) then res = rs(0)
 	'if rs.State=1 then res = rs(0)

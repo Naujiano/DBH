@@ -297,7 +297,7 @@ select:after {
 /* XXX: > HistÃ³rico alertas  */
 
 .layout-alertas-container {
-  height: 27px;
+  height: 100px;
   min-height: 27px;
   width: 100%;
   overflow-y: auto;
@@ -1433,7 +1433,7 @@ button.pestanas.active {
 }
 .layout-alertas-container>ol li {
   margin: 0;
-  padding: 5px 5px 5px 5px;
+  padding: 0px 5px 0px 5px;
   width: 100%;
   box-sizing: border-box;
   cursor: help;

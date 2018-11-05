@@ -67,7 +67,11 @@
                 selector = ':visible'
         }
         if (!$pestana.length) {
-            alerta("DBH.area(): No existe el área con nombre '" + name + "'");
+            if ( name ) {
+				alerta("DBH.area(): No existe el área con nombre '" + name + "'");
+			} else {
+				console.log("DBH.area(): No existe el área con nombre '" + name + "'");
+			}
             return false
         }
         var nombre = $pestana.attr('name')

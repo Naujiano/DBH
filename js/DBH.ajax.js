@@ -175,7 +175,7 @@ DBH.ajax = ( function () {
           //console.log(msge)
         })
         alerta (msg)
-        return false
+        //return false
       }
     }
     if (!res) return false
