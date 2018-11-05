@@ -172,6 +172,7 @@ DBH.ajax = ( function () {
           , pc_descripcion = $pcon.find('pc_descripcion').text()
           , msge = '<span style="text-transform:uppercase;">' + pc_nombre + '</span><br><span style="white-space:normal">' + pc_descripcion + '</span><br>'
           msg += msge
+		  alert ( pc_nombre + '\n\n' + pc_descripcion )
           //console.log(msge)
         })
         alerta (msg)
