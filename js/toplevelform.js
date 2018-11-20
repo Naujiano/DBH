@@ -684,6 +684,7 @@ var toplevelform = function (objpar) {
 			//var $campoform = $campoform.length == 0 ? $container.find ( '[id$=".' + campo + '"]' ).not('.inlineform *') : $campoform
 			if ( cmpsidscargados.indexOf (campo) == -1 ) {
 				//valor = valor.replace(/[\x00-\x1F\x7F-\x9F]/g, "");
+				if ( $campoform.prop ( 'id' ) == 'personas_riesgos.pr_copiadelapoliza' ) debugger;
 				$campoform.valor ( valor )
 				//$campoform.dbhField().val ( valor )
 				$campoform.prop ( 'oldValue', valor )

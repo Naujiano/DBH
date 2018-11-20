@@ -150,10 +150,12 @@ DBH.ajax = ( function () {
           , pc_id = $pcon.find(pc_id).text()
           , pc_nombre = $pcon.find('pc_nombre').text()
           , pc_descripcion = $pcon.find('pc_descripcion').text()
-          msg += '<span style="text-transform:uppercase;">' + pc_nombre + '</span><br><span style="white-space:normal">' + pc_descripcion + '</span>'
+          , pc_tipo = $pcon.find('pc_tipo').text() // 1 = Obligatoria. 2 = Aviso
+          , msge = '<span style="text-transform:uppercase;color:'+(pc_tipo=='1'?'red':'')+'">' + pc_nombre + '</span><br><span style="white-space:normal;color:'+(pc_tipo=='1'?'red':'')+'">' + pc_descripcion + '</span><br>'
+          msg += msge
+		  alert ( pc_nombre + (pc_tipo=='1'?' (Obligatoria)':' (Aviso)') + '\n\n' + pc_descripcion )
         })
         alerta (msg)
-        return false
       }
       //console.log(param)
     }
@@ -165,18 +167,20 @@ DBH.ajax = ( function () {
       if ( $res.find('precondicion').length > 0 ) {
         // PRECONDICIONES INCLUMPLIDAS
         var msg = ""
+		, obligatorias = 0
         $res.find('precondicion').each(function(){
           var $pcon = $(this)
           , pc_id = $pcon.find('pc_id').text()
           , pc_nombre = $pcon.find('pc_nombre').text()
           , pc_descripcion = $pcon.find('pc_descripcion').text()
-          , msge = '<span style="text-transform:uppercase;">' + pc_nombre + '</span><br><span style="white-space:normal">' + pc_descripcion + '</span><br>'
+          , pc_tipo = $pcon.find('pc_tipo').text() // 1 = Obligatoria. 2 = Aviso
+          , msge = '<span style="text-transform:uppercase;color:'+(pc_tipo=='1'?'red':'')+'">' + pc_nombre + '</span><br><span style="white-space:normal;color:'+(pc_tipo=='1'?'red':'')+'">' + pc_descripcion + '</span><br>'
           msg += msge
-		  alert ( pc_nombre + '\n\n' + pc_descripcion )
-          //console.log(msge)
+		  alert ( pc_nombre + (pc_tipo=='1'?' (Obligatoria)':' (Aviso)') + '\n\n' + pc_descripcion )
+		  if ( pc_tipo == '1' ) obligatorias = 1
         })
         alerta (msg)
-        //return false
+		if ( obligatorias ) return false
       }
     }
     if (!res) return false
