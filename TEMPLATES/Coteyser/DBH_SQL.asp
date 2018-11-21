@@ -65,7 +65,7 @@
 		pcalertas = ""
 		do while not rs.eof
 			pcalertas = pcalertas & "<precondicion><pc_id>" & rs("pc_id") & "</pc_id><pc_nombre>" & rs("pc_nombre") & "</pc_nombre><pc_descripcion>" & rs("pc_desc") & "</pc_descripcion><pc_tipo>" & rs("pc_tipo") & "</pc_tipo></precondicion>"'
-			if ( rs ( "pc_tipo" ) = 10365 ) then obligatorias = 1 ' 10365 = condición obligatoria
+			if ( rs ( "pc_tipo" ) = 1 ) then obligatorias = 1 ' 10365 = condición obligatoria
 			rs.movenext
 		loop
 		if pcalertas <> "" then
