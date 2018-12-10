@@ -609,7 +609,7 @@ var inlineform2 = ( function ($,undefined) {
 			}
 			//if ( typeof serie != 'undefined' ) return sql
 			if ( topformloaded ) {
-				var r = DBHsql ( sql )
+				var r = DBHsql ( sql, 'custom' )
 				if ( !r ) return false
 			}
 			//console.log(r)
@@ -673,7 +673,7 @@ var inlineform2 = ( function ($,undefined) {
 			parent.sqlExecVal ( sql , 0 )
 			*/
 			//console.log(DBHsql)
-			var res = DBHsql(sql)
+			var res = DBHsql(sql, 'custom')
 			if (!res) return false
 			var sqlhistorico = "INSERT INTO DBH_historico (his_da_id,his_pkvalue,his_fieldname,his_valor,his_usu_id,dbh_perfiles_admitidos_xreg) VALUES ("+da_id+","+id+",'"+fieldname+"','"+oldValue+"',"+usu_id+",'"+sessionStorage['usu_perfiles_admitidos']+"') "
 			console.log(sqlhistorico)
