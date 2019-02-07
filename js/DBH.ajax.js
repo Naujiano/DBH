@@ -133,7 +133,7 @@ DBH.ajax = ( function () {
   }
   this.sql = function ( sql, operacion, msg2147217900 ){
     if (!msg2147217900) msg2147217900 = 'Error en sentencia SQL'
-    if (!operacion || operacion == 'custom' ) {
+    if (!operacion || ( operacion != 'update' && operacion != 'insert' ) ) {
       var res = that.request( 'DBH_SQL.asp','DBH_sql='+encodeURIComponent(sql) + '&DBH_operacion=' + ( operacion ? operacion : '' ) )
 //				console.log(sql)
     }

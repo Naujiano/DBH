@@ -57,14 +57,8 @@ var toplevelform = function (objpar) {
 			$cols.removeClass('fields-width-controlled')
 		}
 		DBH.area().topform.$container.find('textarea.inputText').each(function(){setTextareaHeight(this)})
+		/*
 		$cols.droppable({
-			/*
-			drop: function( event, ui ) {
-				var $col = $(this)
-				, colindex = $col.attr('column-index')
-				console.log(colindex)
-			}
-			*/
 		}).sortable({
 			handle : 'h4',
 			stop: function (event,ui) {
@@ -89,6 +83,7 @@ var toplevelform = function (objpar) {
 			}
 
 		});
+		*/
 		//that.$container.find('div').css({'width':'50%'}).append($divs);
 	}
 	this.toptabs = function () {
