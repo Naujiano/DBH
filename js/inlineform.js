@@ -176,6 +176,20 @@ var inlineform2 = ( function ($,undefined) {
 			DBH.area('dbh-histórico').go().setvalues (par).filter()
 		})
 		that.$divinsertform.append ( $divbotonesoperaciones )
+		that.$divinsertform.append ( $divbotonesoperaciones )
+		var $c =that.$divinsertform.find('.dbh_calendar')
+//		console.log ($c.length)
+		$c.appendDtpicker({
+			'locale': 'es'
+			,'firstDayOfWeek':1
+			,"onSelect" : function(handler, targetDate){
+				DBH.date().setcolor($c);
+				$('.datepicker').hide()
+				//console.log(targetDate);
+			}
+		});
+		$c.val('')
+		
 		//that.$lineamodelo.prepend  ( $botoneliminar.wrap ( '<div style="width:15px;margin-left:-15px;float:left;box-sizing:border-box;"/>' ).parent() )
 		that.$lineamodelo.removeClass ( 'lineamodelo' )
 		that.$lineamodelo = that.$lineamodelo.wrap ( '<div class="lineamodelo_wrapper" style="width:100%;padding-left:15px;box-sizing:border-box;clear:both;"/>' ).parent()
@@ -479,16 +493,17 @@ var inlineform2 = ( function ($,undefined) {
 			//that.$divlistado.find('.multistatebutton-button').remove()
 			var $mb = $clone.find('.multistatebutton')
 			if ( $mb ) new multistatebutton($mb[0])
-			/*
-			var $avisosbutton = $clone.find('.dbh_fecha_color')
-			, avisoscount = $registro.find('[fieldname="avisoscount"]').text()
-			, avisosfechamin = $registro.find('[fieldname="avisosfechamin"]').text()
-			, avisosfechamax = $registro.find('[fieldname="avisosfechamax"]').text()
-			, buttontitle = avisoscount + " avisos.\n" + avisosfechamin + " - " + avisosfechamax
-			$avisosbutton.text(avisosfechamin).attr('title',buttontitle)
-			DBH.date().setcolor($avisosbutton)
-			$avisosbutton.text(avisoscount)
-			*/
+/*
+			var $c = $clone.find('.dbh_calendar')
+			$c.appendDtpicker({
+				'locale': 'es'
+				,'firstDayOfWeek':1
+				,"onSelect" : function(handler, targetDate){
+					DBH.date().setcolor($c);
+					$('.datepicker').hide()
+					}
+			});
+*/
 			return $clone
 		}
 		this.saveserie = function () {
