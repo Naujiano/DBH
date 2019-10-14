@@ -159,7 +159,7 @@ var inlineform2 = ( function ($,undefined) {
 		$botoncomentarios.addClass('boton miniboton miniboton-inlineform boton-comentarios fa fa-commenting-o').css({'font-size':'10px',padding:'2px 0 0 3px'})
 		$wrapper.append ( $botoneliminar )
 		$wrapper.css({opacity:1}).append (
-			$('<div style="width:16px;height:16px;overflow:hidden;border:0px solid #ddd;z-index:;background::;position:absolute;margin-top:18px;"><div class="boton miniboton miniboton-inlineform" style="padding:0" title=""><div style="margin:-1px 0 0 3px">+</div></div></div>' ).append ( $botonavisos ).append ( $botoncomentarios ).append ( $botonfiles ).append ( $botonhistorico )
+			$('<div style="width:16px;height:16px;overflow:hidden;border:1px solid #ddd;z-index:;background:white;position:relative;margin-top:0px;"><div class="boton miniboton miniboton-inlineform" style="padding:0" title=""><div style="margin:-1px 0 0 3px">+</div></div></div>' ).append ( $botonavisos ).append ( $botoncomentarios ).append ( $botonfiles ).append ( $botonhistorico )
 			.on ( 'mouseover' , function () {
 			var $this = $(this)
 			$this.width('auto')
