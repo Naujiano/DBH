@@ -958,7 +958,8 @@ function reFilter(listadoWhere,listadoWhereText,levantarTelon){
 		if ( sqlParams ) {
 			var groupedColumnSql = topform.queryEditor.groupedColumnSql(sqlParams)
 			//, columnSql = "(SELECT distinct cast(" + sqlParams.fields + " as varchar(max)) + ', ' FROM " + sqlParams.table + " WHERE (" + groupedColumnSql + ") AND " + sqlParams.where + " FOR XML PATH(''))"
-			, columnSql = "(SELECT distinct convert(varchar(max)," + sqlParams.fields + ",103) + ' ** ' FROM " + sqlParams.table + " WHERE (" + groupedColumnSql + ") AND " + sqlParams.where + " FOR XML PATH(''))"
+			//, columnSql = "(SELECT distinct convert(varchar(max)," + sqlParams.fields + ",103) + ' ** ' FROM " + sqlParams.table + " WHERE (" + groupedColumnSql + ") AND " + sqlParams.where + " FOR XML PATH(''))"
+			, columnSql = "(SELECT distinct convert(varchar(max)," + sqlParams.fields + ",103) + ' ** ' FROM " + sqlParams.table + " WHERE " + sqlParams.where + " FOR XML PATH(''))"
 			etiquetasListado[i][0] = columnSql
 			etiquetasHasInlineformParam = 1
 			console.log(columnSql)
