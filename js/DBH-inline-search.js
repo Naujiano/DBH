@@ -32,9 +32,12 @@ function inlineSearch ($campo,sqlConfig) {
 		, left = inputPosition.left
 		, $field = sqlConfig.$field
 		, cssPosition = {left: left,top: topbody, 'min-width' : inputWidth }
-		console.log ( cssPosition )
+		//console.log ( cssPosition )
 		that.$container.css(cssPosition)
 		that.$container.find('thead').css({'margin-top': -1 * lineheight})
+		const avHeight = $(window).height() - topbody
+		if ( $container.height() > avHeight ) $container.height(avHeight)
+		//console.log($(window).height())
 
 	}
 	this.hide = function (){
