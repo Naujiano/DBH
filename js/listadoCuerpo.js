@@ -537,7 +537,7 @@ var listado = ( function () {
 		, joinhistorico = " INNER JOIN dbh_historico ON his_da_id = " + DBH.area().id + " AND his_pkvalue = " + pkname + " AND his_id IN (select max(his_id) from dbh_historico group by his_da_id,his_pkvalue)"
 		, joinhistorico = ""
 		if(listadoView=='dbh_historico')joinhistorico=""
-		var sql="SELECT " + pkname + "," + nombresCampos + " from " + listadoView + joinhistorico + " where " + pkname + " in (select idlistado from DBH_LISTADO where sessionid='" + sessionid + "' AND pkname='" + pkname + "')"
+		var sql="SELECT " + customview + "." + pkname + "," + nombresCampos + " from " + listadoView + joinhistorico + " where " + customview + "." + pkname + " in (select idlistado from DBH_LISTADO where sessionid='" + sessionid + "' AND pkname='" + pkname + "')"
 		if (listadoOrderBy) sql += " ORDER BY "+listadoOrderBy//+" "+listadoOrderByDesc
 //		console.log(sql)
 		//var res = DBH.ajax.select(sql)
