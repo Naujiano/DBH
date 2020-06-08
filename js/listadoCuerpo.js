@@ -485,7 +485,7 @@ var listado = ( function () {
 			dbh_perfiles_excluidos_condicion = " AND (" + dbh_perfiles_excluidos_condicion + " 1=2 )"
 		}
 		pub.listado_sql_syntax._delete = encodeURIComponent(sqlstr)
-		var sql_sel = "Select '"+sessionid+"',"+idusuario+"," + pkname+",'" + pkname + "' from " + listadoView + " where " + listadoWhere + dbh_perfiles_excluidos_condicion
+		var sql_sel = "Select '"+sessionid+"',"+idusuario+"," + customview + "." + pkname+",'" + pkname + "' from " + listadoView + " where " + listadoWhere + dbh_perfiles_excluidos_condicion
 		, sqlstr="set dateformat dmy insert into DBH_LISTADO (sessionid,idusuario,idlistado,pkname) (" + sql_sel + ")"
 		, vinculada_sql = "Select " + keyname + " from " + listadoView + " where " + final_condition
 		, vinculada_sql = "Select " + pkname + " from " + listadoView + " where " + final_condition
