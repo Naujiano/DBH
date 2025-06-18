@@ -316,7 +316,7 @@ var DBH = ( function () {
 	this.login.checkuser = function (usu_id,template_name) {
 		alert('a')
 		//DBH.login(1)
-		var urll = "http://www.naujcloud.com/DBH/DBHC_checkuser.php?usu_id=" + usu_id + "&template_name=" + template_name.replace("\\",'\\\\\\\\')
+		var urll = "./DBHC_checkuser.php?usu_id=" + usu_id + "&template_name=" + template_name.replace("\\",'\\\\\\\\')
 		//console.log(urll)
 		$.ajax({
 			url:urll,
