@@ -34,7 +34,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/genericons/3.1/genericons.css">
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-<link rel="stylesheet" href="http://dbh.naujcloud.com/jquery-simple-datetimepicker-master/jquery.simple-dtpicker.css">
+<link rel="stylesheet" href="./jquery-simple-datetimepicker-master/jquery.simple-dtpicker.css">
 <link rel="shortcut icon" href="<%=DBHpath%>favicon.ico">
 <link rel="stylesheet" href="<%=DBHpath%>css/main.css">
 <link rel="stylesheet" href="<%=DBHpath%>css/dbh-nauj-tempstyles.css">
@@ -48,7 +48,7 @@
 <script type="text/javascript" src="customCode/customCode.js"></script>
 <script async type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.6.0/mousetrap.min.js'></script>
 <script async type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js'></script>
-<script async type="text/javascript" src="http://dbh.naujcloud.com/jquery-simple-datetimepicker-master/jquery.simple-dtpicker.js"></script>
+<script async type="text/javascript" src="./jquery-simple-datetimepicker-master/jquery.simple-dtpicker.js"></script>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
 <script type="text/javascript" src="<%=DBHpath%>js/DBH.js"></script>

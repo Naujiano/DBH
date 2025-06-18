@@ -16,10 +16,14 @@
     nombreArea = request("titulo")
 	tituloExcel = request("tituloexcel")
 	excelLimit = request("excelLimit")
+	usu_perfil = request("usu_perfil")
+	'response.write usu_perfil
+	'response.end
 	if tituloExcel = "" then tituloExcel = nombreArea
 	if where = "" then where = "1=1"
 	set rs = server.createobject ( "adodb.recordset" )
 	if ( excelLimit <> "" and excelLimit <> "-1" ) then toplimitArgument = "TOP " & excelLimit
+	//if ( usu_perfil <> "" ) then toplimitArgument = "TOP 2"
 	sql = "set dateformat dmy SELECT " & toplimitArgument & " * FROM [" & vista & "] WHERE " & where
 	if orderBy <> "" then sql = sql & " ORDER BY " & orderBy & " " & orderByDesc
 	'response.write sql

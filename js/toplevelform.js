@@ -534,15 +534,15 @@ var toplevelform = function (objpar) {
 		var e = that.createViewForExcel()
 		, view = e.view, tit = e.title
 		, filename = e.filename
-		, $tempfield = $('<div class="dbh-excel-limit-400"/>')
+		, $tempfield = $('<div class="dbh-excel-limit-200"/>')
 		, excelLimit = -1
 		, checkedids = DBH.area().checkedids
 		, where = checkedids.length ? "id in (" + checkedids + ")" : ""
 		if ( $tempfield.is ( sessionStorage["usu_perfil"] ) ) {
-			excelLimit = 400
-			alerta ( 'EXCEL limitado a 400 registros.' )
+			excelLimit = 200
+			alerta ( 'EXCEL limitado a 200 registros.' )
 		}
-		window.open ( 'excelMaker.asp?titulo=' + filename + '&tituloexcel=' + tit + '&vista=' + view + '&where=' + where + '&excelLimit=' + excelLimit )
+		window.open ( 'excelMaker.asp?titulo=' + filename + '&tituloexcel=' + tit + '&vista=' + view + '&where=' + where + '&excelLimit=' + excelLimit + '&usu_perfil=' + sessionStorage["usu_perfil"] )
 	}
 	this.numerarcols = function () {
 		$(parent.document.getElementById('iframeListadoCuerpo').contentWindow.document).find('#tablaEncabezado #trCeldasEncabezados td').each ( function (i) {
